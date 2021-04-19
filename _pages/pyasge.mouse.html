@@ -180,11 +180,65 @@
 <tbody>
 </tbody>
 </table>
+<dl class="py data">
+<dt>
+<code class="sig-prename descclassname"><span class="pre">pyasge.</span></code><code class="sig-name descname"><span class="pre">MOUSE</span></code><em class="property"> <span class="pre">=</span> <span class="pre">&lt;module</span> <span class="pre">'pyasge.MOUSE'&gt;</span></em></dt>
+<dd><p>The mouse submodule is a collection of easy to use constants that
+describe the various codes for mouse buttons and the types of actions
+supported. These can be used to create input handlers that are
+easier to read and maintain.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyasge</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">click_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">pyasge</span><span class="o">.</span><span class="n">ClickEvent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>  <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">button</span> <span class="ow">is</span> <span class="n">pyasge</span><span class="o">.</span><span class="n">MOUSE</span><span class="o">.</span><span class="n">MOUSE_BTN1</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">action</span> <span class="ow">is</span> <span class="n">pyasge</span><span class="o">.</span><span class="n">MOUSE</span><span class="o">.</span><span class="n">BUTTON_PRESSED</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>      <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;MOUSE BUTTON 1 PRESSED&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">else</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>      <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;MOUSE BUTTON 1 RELEASED&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
 <div class="section" id="actions">
 <h2>Actions<a class="headerlink" href="#actions" title="Permalink to this headline">¶</a></h2>
+<dl class="py attribute">
+<dt id="pyasge.MOUSE.BUTTON_PRESSED">
+<code class="sig-prename descclassname"><span class="pre">MOUSE.</span></code><code class="sig-name descname"><span class="pre">BUTTON_PRESSED</span></code><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#pyasge.MOUSE.BUTTON_PRESSED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="pyasge.MOUSE.BUTTON_RELEASED">
+<code class="sig-prename descclassname"><span class="pre">MOUSE.</span></code><code class="sig-name descname"><span class="pre">BUTTON_RELEASED</span></code><em class="property"> <span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#pyasge.MOUSE.BUTTON_RELEASED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 <div class="section" id="buttons">
 <h2>Buttons<a class="headerlink" href="#buttons" title="Permalink to this headline">¶</a></h2>
+<dl class="py attribute">
+<dt id="pyasge.MOUSE.MOUSE_BTN1">
+<code class="sig-prename descclassname"><span class="pre">MOUSE.</span></code><code class="sig-name descname"><span class="pre">MOUSE_BTN1</span></code><em class="property"> <span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#pyasge.MOUSE.MOUSE_BTN1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="pyasge.MOUSE.MOUSE_BTN2">
+<code class="sig-prename descclassname"><span class="pre">MOUSE.</span></code><code class="sig-name descname"><span class="pre">MOUSE_BTN2</span></code><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#pyasge.MOUSE.MOUSE_BTN2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="pyasge.MOUSE.MOUSE_BTN3">
+<code class="sig-prename descclassname"><span class="pre">MOUSE.</span></code><code class="sig-name descname"><span class="pre">MOUSE_BTN3</span></code><em class="property"> <span class="pre">=</span> <span class="pre">2</span></em><a class="headerlink" href="#pyasge.MOUSE.MOUSE_BTN3" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="pyasge.MOUSE.MOUSE_BTN4">
+<code class="sig-prename descclassname"><span class="pre">MOUSE.</span></code><code class="sig-name descname"><span class="pre">MOUSE_BTN4</span></code><em class="property"> <span class="pre">=</span> <span class="pre">3</span></em><a class="headerlink" href="#pyasge.MOUSE.MOUSE_BTN4" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="pyasge.MOUSE.MOUSE_BTN5">
+<code class="sig-prename descclassname"><span class="pre">MOUSE.</span></code><code class="sig-name descname"><span class="pre">MOUSE_BTN5</span></code><em class="property"> <span class="pre">=</span> <span class="pre">4</span></em><a class="headerlink" href="#pyasge.MOUSE.MOUSE_BTN5" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 </div>
 
