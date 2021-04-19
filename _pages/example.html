@@ -89,7 +89,7 @@
 <li class="toctree-l1"><a class="reference internal" href="about.html">PyASGE</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">Modules</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Sample</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Example</a></li>
 </ul>
 
             
@@ -144,7 +144,7 @@
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="../_sources/_pages/sample.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/_pages/example.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -179,6 +179,7 @@
         <span class="sd">&quot;&quot;&quot;load font and create text instance&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">font</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">loadFont</span><span class="p">(</span><span class="s2">&quot;/data/fonts/kenvector_future.ttf&quot;</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">pyasge</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">font</span><span class="p">,</span> <span class="s2">&quot;Hello World&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">pyasge</span><span class="o">.</span><span class="n">Point2D</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
 
         <span class="sd">&quot;&quot;&quot;track key states&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">keys</span> <span class="o">=</span> <span class="p">{</span>
@@ -189,20 +190,15 @@
         <span class="p">}</span>
 
     <span class="k">def</span> <span class="nf">input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">pyasge</span><span class="o">.</span><span class="n">KeyEvent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="ow">is</span> <span class="n">pyasge</span><span class="o">.</span><span class="n">KEYS</span><span class="o">.</span><span class="n">KEY_W</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">[</span><span class="n">pyasge</span><span class="o">.</span><span class="n">KEYS</span><span class="o">.</span><span class="n">KEY_W</span><span class="p">]</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">action</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">pyasge</span><span class="o">.</span><span class="n">KEYS</span><span class="o">.</span><span class="n">KEY_RELEASED</span>
-        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="ow">is</span> <span class="n">pyasge</span><span class="o">.</span><span class="n">KEYS</span><span class="o">.</span><span class="n">KEY_S</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">[</span><span class="n">pyasge</span><span class="o">.</span><span class="n">KEYS</span><span class="o">.</span><span class="n">KEY_S</span><span class="p">]</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">action</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">pyasge</span><span class="o">.</span><span class="n">KEYS</span><span class="o">.</span><span class="n">KEY_RELEASED</span>
-        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="ow">is</span> <span class="n">pyasge</span><span class="o">.</span><span class="n">KEYS</span><span class="o">.</span><span class="n">KEY_A</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">[</span><span class="n">pyasge</span><span class="o">.</span><span class="n">KEYS</span><span class="o">.</span><span class="n">KEY_A</span><span class="p">]</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">action</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">pyasge</span><span class="o">.</span><span class="n">KEYS</span><span class="o">.</span><span class="n">KEY_RELEASED</span>
-        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="ow">is</span> <span class="n">pyasge</span><span class="o">.</span><span class="n">KEYS</span><span class="o">.</span><span class="n">KEY_D</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">[</span><span class="n">pyasge</span><span class="o">.</span><span class="n">KEYS</span><span class="o">.</span><span class="n">KEY_D</span><span class="p">]</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">action</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">pyasge</span><span class="o">.</span><span class="n">KEYS</span><span class="o">.</span><span class="n">KEY_RELEASED</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">pyasge</span><span class="o">.</span><span class="n">KEYS</span><span class="o">.</span><span class="n">KEY_REPEATED</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">[</span><span class="n">event</span><span class="o">.</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">event</span> <span class="n">action</span> <span class="ow">is</span> <span class="n">pyasge</span><span class="o">.</span><span class="n">KEYS</span><span class="o">.</span><span class="n">KEY_PRESSED</span>
 
     <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">game_time</span><span class="p">:</span> <span class="n">pyasge</span><span class="o">.</span><span class="n">GameTime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">pass</span>
 
-    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">game_time</span><span class="p">:</span> <span class="n">pyasge</span><span class="o">.</span><span class="n">GameTime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sprite</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>

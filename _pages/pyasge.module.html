@@ -125,7 +125,7 @@
 <li class="toctree-l2"><a class="reference internal" href="pyasge.mouse.html">pyasge.mouse</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="sample.html">Sample</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example.html">Example</a></li>
 </ul>
 
             
@@ -569,7 +569,7 @@ an inherited class is needed which overrides the update and render functions.</p
 <p>Overloaded function.</p>
 <ol class="arabic simple">
 <li><p>__init__(self: pyasge.ASGEGame) -&gt; None</p></li>
-<li><p>__init__(self: pyasge.ASGEGame, arg0: ASGE::GameSettings) -&gt; None</p></li>
+<li><p>__init__(self: pyasge.ASGEGame, arg0: pyasge.GameSettings) -&gt; None</p></li>
 </ol>
 <dl class="py method">
 <dt id="pyasge.ASGEGame.inputs">
@@ -622,7 +622,7 @@ can result in unexpected graphical issues.</p>
 
 <dl class="py method">
 <dt id="pyasge.ASGEGame.update">
-<code class="sig-name descname"><span class="pre">update</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pyasge.ASGEGame" title="pyasge.ASGEGame"><span class="pre">pyasge.ASGEGame</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">gametime</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><span class="pre">object</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a><a class="headerlink" href="#pyasge.ASGEGame.update" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">update</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pyasge.ASGEGame" title="pyasge.ASGEGame"><span class="pre">pyasge.ASGEGame</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">gametime</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pyasge.GameTime" title="pyasge.GameTime"><span class="pre">pyasge.GameTime</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a><a class="headerlink" href="#pyasge.ASGEGame.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Used to update the game using fixed time-steps instead of the regular frame
 update.</p>
 <p>This is useful when you only want to progress the game world i.e. physics
@@ -1337,7 +1337,7 @@ position or the gamepad status. Much of the underlying implementation will
 be platform specific, whilst offering a compatible interface.</p>
 <dl class="py method">
 <dt id="pyasge.Input.addCallback">
-<code class="sig-name descname"><span class="pre">addCallback</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">self:</span> <span class="pre">pyasge.Input,</span> <span class="pre">arg0:</span> <span class="pre">ASGE::EventType,</span> <span class="pre">arg1:</span> <span class="pre">Callable[[ASGE::EventData],</span> <span class="pre">None]</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a><a class="headerlink" href="#pyasge.Input.addCallback" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">addCallback</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pyasge.Input" title="pyasge.Input"><span class="pre">pyasge.Input</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pyasge.EventType" title="pyasge.EventType"><span class="pre">pyasge.EventType</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">pyasge.EventData</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a><a class="headerlink" href="#pyasge.Input.addCallback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Registers a callback function.</p>
 <p>Registers a function that gets called upon a subscribed event type.
 Supports both keyboard and mouse functions. Gamepads do not use events
@@ -1827,24 +1827,24 @@ management.</p>
 <code class="sig-name descname"><span class="pre">createNonCachedTexture</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyasge.Renderer.createNonCachedTexture" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>createNonCachedTexture(self: pyasge.Renderer, file: str) -&gt; ASGE::Texture2D</p></li>
+<li><p>createNonCachedTexture(self: pyasge.Renderer, file: str) -&gt; pyasge.Texture</p></li>
 </ol>
 <p>Attempts to create a non-cached texture file by loading a local file.</p>
 <ol class="arabic simple" start="2">
-<li><p>createNonCachedTexture(self: pyasge.Renderer, width: int, height: int, format: ASGE::Texture2D::Format, data: capsule) -&gt; ASGE::Texture2D</p></li>
+<li><p>createNonCachedTexture(self: pyasge.Renderer, width: int, height: int, format: pyasge.Texture.Format, data: capsule) -&gt; pyasge.Texture</p></li>
 </ol>
 <p>Creates a non-cached texture of a given size and format.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pyasge.Renderer.getDefaultFont">
-<code class="sig-name descname"><span class="pre">getDefaultFont</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pyasge.Renderer" title="pyasge.Renderer"><span class="pre">pyasge.Renderer</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">ASGE::Font</span><a class="headerlink" href="#pyasge.Renderer.getDefaultFont" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">getDefaultFont</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pyasge.Renderer" title="pyasge.Renderer"><span class="pre">pyasge.Renderer</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyasge.Font" title="pyasge.Font"><span class="pre">pyasge.Font</span></a><a class="headerlink" href="#pyasge.Renderer.getDefaultFont" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the Engine’s default font.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pyasge.Renderer.initPixelShader">
-<code class="sig-name descname"><span class="pre">initPixelShader</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pyasge.Renderer" title="pyasge.Renderer"><span class="pre">pyasge.Renderer</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">ASGE::SHADER_LIB::Shader</span><a class="headerlink" href="#pyasge.Renderer.initPixelShader" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">initPixelShader</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pyasge.Renderer" title="pyasge.Renderer"><span class="pre">pyasge.Renderer</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">shader_source</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyasge.Shader" title="pyasge.Shader"><span class="pre">pyasge.Shader</span></a><a class="headerlink" href="#pyasge.Renderer.initPixelShader" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialises a pixel shader from a str.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -1879,7 +1879,7 @@ management.</p>
 
 <dl class="py method">
 <dt id="pyasge.Renderer.loadFont">
-<code class="sig-name descname"><span class="pre">loadFont</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pyasge.Renderer" title="pyasge.Renderer"><span class="pre">pyasge.Renderer</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">ASGE::Font</span><a class="headerlink" href="#pyasge.Renderer.loadFont" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">loadFont</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pyasge.Renderer" title="pyasge.Renderer"><span class="pre">pyasge.Renderer</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyasge.Font" title="pyasge.Font"><span class="pre">pyasge.Font</span></a><a class="headerlink" href="#pyasge.Renderer.loadFont" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads a font from the file system.</p>
 <p>In order to render fonts the renderer needs to generate a texture atlas.
 This atlas stores each glyph that might need to be rendered along with
@@ -1894,7 +1894,7 @@ font used for debugging will be returned.</p>
 
 <dl class="py method">
 <dt id="pyasge.Renderer.loadPixelShader">
-<code class="sig-name descname"><span class="pre">loadPixelShader</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pyasge.Renderer" title="pyasge.Renderer"><span class="pre">pyasge.Renderer</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">ASGE::SHADER_LIB::Shader</span><a class="headerlink" href="#pyasge.Renderer.loadPixelShader" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">loadPixelShader</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pyasge.Renderer" title="pyasge.Renderer"><span class="pre">pyasge.Renderer</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyasge.Shader" title="pyasge.Shader"><span class="pre">pyasge.Shader</span></a><a class="headerlink" href="#pyasge.Renderer.loadPixelShader" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads and initialises a pixel shader from a local file.</p>
 </dd></dl>
 
@@ -1903,9 +1903,9 @@ font used for debugging will be returned.</p>
 <code class="sig-name descname"><span class="pre">render</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyasge.Renderer.render" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>render(self: pyasge.Renderer, arg0: ASGE::GLSprite) -&gt; None</p></li>
-<li><p>render(self: pyasge.Renderer, arg0: ASGE::Text) -&gt; None</p></li>
-<li><p>render(self: pyasge.Renderer, Texture: ASGE::GLTexture, x: int, y: int) -&gt; None</p></li>
+<li><p>render(self: pyasge.Renderer, sprite: pyasge.Sprite) -&gt; None</p></li>
+<li><p>render(self: pyasge.Renderer, text: pyasge.Text) -&gt; None</p></li>
+<li><p>render(self: pyasge.Renderer, texture: pyasge.Texture, x: int, y: int) -&gt; None</p></li>
 </ol>
 </dd></dl>
 
@@ -1915,13 +1915,13 @@ font used for debugging will be returned.</p>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
 <li><p>setProjectionMatrix(self: pyasge.Renderer, x: float, y: float, width: float, height: float) -&gt; None</p></li>
-<li><p>setProjectionMatrix(self: pyasge.Renderer, camera_view: ASGE::Camera::CameraView) -&gt; None</p></li>
+<li><p>setProjectionMatrix(self: pyasge.Renderer, camera_view: pyasge.CameraView) -&gt; None</p></li>
 </ol>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pyasge.Renderer.setRenderTarget">
-<code class="sig-name descname"><span class="pre">setRenderTarget</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">self:</span> <span class="pre">pyasge.Renderer</span></em>, <em class="sig-param"><span class="pre">arg0:</span> <span class="pre">ASGE::GLRenderTarget</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a><a class="headerlink" href="#pyasge.Renderer.setRenderTarget" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">setRenderTarget</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pyasge.Renderer" title="pyasge.Renderer"><span class="pre">pyasge.Renderer</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pyasge.RenderTarget" title="pyasge.RenderTarget"><span class="pre">pyasge.RenderTarget</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a><a class="headerlink" href="#pyasge.Renderer.setRenderTarget" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets a render target to use for rendering.</p>
 </dd></dl>
 
@@ -1976,7 +1976,7 @@ font used for debugging will be returned.</p>
 <h1>RenderTarget<a class="headerlink" href="#rendertarget" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt id="pyasge.RenderTarget">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyasge.</span></code><code class="sig-name descname"><span class="pre">RenderTarget</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pyasge.RenderTarget" title="pyasge.RenderTarget"><span class="pre">pyasge.RenderTarget</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pyasge.Renderer" title="pyasge.Renderer"><span class="pre">pyasge.Renderer</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pyasge.Texture.Format" title="pyasge.Texture.Format"><span class="pre">pyasge.Texture.Format</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a><a class="headerlink" href="#pyasge.RenderTarget" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyasge.</span></code><code class="sig-name descname"><span class="pre">RenderTarget</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">self:</span> <span class="pre">pyasge.RenderTarget</span></em>, <em class="sig-param"><span class="pre">renderer:</span> <span class="pre">ASGE::GLRenderer</span></em>, <em class="sig-param"><span class="pre">width:</span> <span class="pre">float</span></em>, <em class="sig-param"><span class="pre">height:</span> <span class="pre">float</span></em>, <em class="sig-param"><span class="pre">format:</span> <span class="pre">pyasge.Texture.Format</span></em>, <em class="sig-param"><span class="pre">count:</span> <span class="pre">int</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a><a class="headerlink" href="#pyasge.RenderTarget" title="Permalink to this definition">¶</a></dt>
 <dd><p>An offscreen render target.</p>
 <p>Offscreen render targets can be used to create complex rendering scenes
 and special effects. By rendering to the texture, it is easy to apply
@@ -2116,7 +2116,7 @@ transparent.</p>
 
 <dl class="py method">
 <dt id="pyasge.Sprite.attach">
-<code class="sig-name descname"><span class="pre">attach</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">self:</span> <span class="pre">pyasge.Sprite</span></em>, <em class="sig-param"><span class="pre">texture:</span> <span class="pre">ASGE::GLTexture</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a><a class="headerlink" href="#pyasge.Sprite.attach" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">attach</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pyasge.Sprite" title="pyasge.Sprite"><span class="pre">pyasge.Sprite</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">texture</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pyasge.Texture" title="pyasge.Texture"><span class="pre">pyasge.Texture</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a><a class="headerlink" href="#pyasge.Sprite.attach" title="Permalink to this definition">¶</a></dt>
 <dd><p>Attaches a <code class="docutils literal notranslate"><span class="pre">Texture</span></code> object to the sprite.</p>
 <p>When sprites are rendered they sample images or textures to colour the
 pixels. You can use this function to replace the texture that’s being
@@ -2208,7 +2208,7 @@ samples from the [1,0] domain instead of [0,1].</p>
 
 <dl class="py method">
 <dt id="pyasge.Sprite.getLocalBounds">
-<code class="sig-name descname"><span class="pre">getLocalBounds</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pyasge.Sprite" title="pyasge.Sprite"><span class="pre">pyasge.Sprite</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">ASGE::SpriteBounds</span><a class="headerlink" href="#pyasge.Sprite.getLocalBounds" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">getLocalBounds</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pyasge.Sprite" title="pyasge.Sprite"><span class="pre">pyasge.Sprite</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyasge.SpriteBounds" title="pyasge.SpriteBounds"><span class="pre">pyasge.SpriteBounds</span></a><a class="headerlink" href="#pyasge.Sprite.getLocalBounds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves the sprite’s 4 points in local space.</p>
 <p>Simply returns the sprite’s original and unmodified dimensions. No
 transforms will be applied, meaning rotation and scaling are absent
@@ -2244,7 +2244,7 @@ have the equivalent transforms applied.</p>
 
 <dl class="py method">
 <dt id="pyasge.Sprite.getTexture">
-<code class="sig-name descname"><span class="pre">getTexture</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pyasge.Sprite" title="pyasge.Sprite"><span class="pre">pyasge.Sprite</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">ASGE::GLTexture</span><a class="headerlink" href="#pyasge.Sprite.getTexture" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">getTexture</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pyasge.Sprite" title="pyasge.Sprite"><span class="pre">pyasge.Sprite</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyasge.Texture" title="pyasge.Texture"><span class="pre">pyasge.Texture</span></a><a class="headerlink" href="#pyasge.Sprite.getTexture" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves the texture attached to the sprite.</p>
 <p>Will return a reference to the currently active texture assigned to
 to the sprite. It’s possible that a sprite may have no texture, so
@@ -2279,7 +2279,7 @@ memory is freed, this reference will no longer be valid.</p>
 
 <dl class="py method">
 <dt id="pyasge.Sprite.getWorldBounds">
-<code class="sig-name descname"><span class="pre">getWorldBounds</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pyasge.Sprite" title="pyasge.Sprite"><span class="pre">pyasge.Sprite</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">ASGE::SpriteBounds</span><a class="headerlink" href="#pyasge.Sprite.getWorldBounds" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">getWorldBounds</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pyasge.Sprite" title="pyasge.Sprite"><span class="pre">pyasge.Sprite</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyasge.SpriteBounds" title="pyasge.SpriteBounds"><span class="pre">pyasge.SpriteBounds</span></a><a class="headerlink" href="#pyasge.Sprite.getWorldBounds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves the sprite’s 4 points in transformed world space.</p>
 <p>Returns the 4 vertices that delimit the sprite’s position in world space.
 Any transforms (scaling and rotation) have already been applied. This is
@@ -2341,7 +2341,7 @@ texture attached to it, to ensure it meets the requested height.</p>
 
 <dl class="py method">
 <dt id="pyasge.Sprite.isFlippedOnX">
-<code class="sig-name descname"><span class="pre">isFlippedOnX</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">self:</span> <span class="pre">ASGE::Sprite</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a><a class="headerlink" href="#pyasge.Sprite.isFlippedOnX" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">isFlippedOnX</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pyasge.Sprite" title="pyasge.Sprite"><span class="pre">pyasge.Sprite</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a><a class="headerlink" href="#pyasge.Sprite.isFlippedOnX" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks to see if the texture is flipped on the X axis.</p>
 <p>It is possible to flip the UV coordinates used on the sprite’s texture.
 This will check to see if the X axis is flipped.</p>
@@ -2357,7 +2357,7 @@ This will check to see if the X axis is flipped.</p>
 
 <dl class="py method">
 <dt id="pyasge.Sprite.isFlippedOnY">
-<code class="sig-name descname"><span class="pre">isFlippedOnY</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">self:</span> <span class="pre">ASGE::Sprite</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a><a class="headerlink" href="#pyasge.Sprite.isFlippedOnY" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">isFlippedOnY</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pyasge.Sprite" title="pyasge.Sprite"><span class="pre">pyasge.Sprite</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a><a class="headerlink" href="#pyasge.Sprite.isFlippedOnY" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks to see if the texture is flipped on the Y axis.</p>
 <p>It is possible to flip the UV coordinates used on the sprite’s texture.
 This will check to see if the Y axis is flipped.</p>
@@ -2724,7 +2724,7 @@ than the player’s sprite, to ensure they are rendered first.</p>
 <dd><p>Text is designed to allow rendering of text to the screen.</p>
 <p>Rendering text to a screen is not a simple process. There are lots of
 parameters involved, which can result in many different overloaded
-render functions. To resolve this, the ASGE::Text was created. All the
+render functions. To resolve this, the pyasge.Text was created. All the
 information needed to successfully render text to the screen is stored
 within the struct. This includes positioning, colours, scaling, the text
 and even the font face to use.</p>
@@ -2763,10 +2763,10 @@ the engine’s debug font for rendering.</p>
 </div>
 <p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>__init__(self: pyasge.Text, Font: ASGE::GLFontSet) -&gt; None</p></li>
-<li><p>__init__(self: pyasge.Text, Font: ASGE::GLFontSet, string: str) -&gt; None</p></li>
-<li><p>__init__(self: pyasge.Text, Font: ASGE::GLFontSet, string: str, x: int, y: int) -&gt; None</p></li>
-<li><p>__init__(self: pyasge.Text, Font: ASGE::GLFontSet, string: str, x: int, y: int, colour: pyasge.Colour) -&gt; None</p></li>
+<li><p>__init__(self: pyasge.Text, Font: pyasge.Font) -&gt; None</p></li>
+<li><p>__init__(self: pyasge.Text, Font: pyasge.Font, string: str) -&gt; None</p></li>
+<li><p>__init__(self: pyasge.Text, Font: pyasge.Font, string: str, x: int, y: int) -&gt; None</p></li>
+<li><p>__init__(self: pyasge.Text, Font: pyasge.Font, string: str, x: int, y: int, colour: pyasge.Colour) -&gt; None</p></li>
 </ol>
 <dl class="py method">
 <dt id="pyasge.Text.colour">

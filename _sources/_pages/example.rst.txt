@@ -23,6 +23,7 @@ Example Game
            """load font and create text instance"""
            self.font = self.renderer.loadFont("/data/fonts/kenvector_future.ttf", 40)
            self.text = pyasge.Text(self.font, "Hello World")
+           self.text.position = pyasge.Point2D(200, 200)
 
            """track key states"""
            self.keys = {
@@ -33,20 +34,15 @@ Example Game
            }
 
        def input(self, event: pyasge.KeyEvent) -> None:
-           if event.key is pyasge.KEYS.KEY_W:
-               self.keys[pyasge.KEYS.KEY_W] = event.action is not pyasge.KEYS.KEY_RELEASED
-           if event.key is pyasge.KEYS.KEY_S:
-               self.keys[pyasge.KEYS.KEY_S] = event.action is not pyasge.KEYS.KEY_RELEASED
-           if event.key is pyasge.KEYS.KEY_A:
-               self.keys[pyasge.KEYS.KEY_A] = event.action is not pyasge.KEYS.KEY_RELEASED
-           if event.key is pyasge.KEYS.KEY_D:
-               self.keys[pyasge.KEYS.KEY_D] = event.action is not pyasge.KEYS.KEY_RELEASED
+           if event.key is not pyasge.KEYS.KEY_REPEATED:
+               self.keys[event.key] = event action is pyasge.KEYS.KEY_PRESSED
 
        def update(self, game_time: pyasge.GameTime) -> None:
            pass
 
-       def render(self):
+       def render(self, game_time: pyasge.GameTime) -> None:
            self.renderer.render(self.sprite)
+           self.renderer.render(self.text)
 
 
    def main():

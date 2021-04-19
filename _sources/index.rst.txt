@@ -6,4 +6,4 @@ pyasge Documentation
    PyASGE <_pages/about>
    Changelog <_pages/changelog>
    Modules <_pages/modules>
-   Sample <_pages/sample>
+   Example <_pages/example>
