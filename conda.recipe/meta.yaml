@@ -1,0 +1,59 @@
+{% set data = load_setup_py_data() %}
+
+package:
+  name: pyasge
+  version: {{ data.get('version') }}
+
+source:
+  path: ..
+
+build:
+  number: {{ environ.get('GIT_DESCRIBE_NUMBER', 0) }}
+  script: {{PYTHON}} -m pip install . -vvv
+  string: {{ environ.get('GIT_BUILD_STR', '') }}
+
+requirements:
+  build:
+    - "{{ compiler('cxx') }}"
+    - cmake
+    - ninja
+    - pkgconfig
+    - xorg-libxcursor   # [linux]
+    - xorg-libxi        # [linux]
+    - xorg-libxinerama  # [linux]
+    - xorg-libxrandr    # [linux]
+    - xorg-libxrender   # [linux]
+    - xorg-xproto       # [linux]
+
+  host:
+    - brotli
+    - bzip2
+    - harfbuzz
+    - libpng
+    - pip
+    - python
+    - xorg-libx11       # [linux]
+    - zlib
+
+  run:
+    - numpy
+    - python
+    - vs2015_runtime    # [win]
+
+test:
+  imports:
+    - pyasge
+  source_files:
+    - tests
+  commands:
+    - python tests/test.py
+
+about:
+  home: https://github.com/huxyuk/pyasge
+  summary: Python bindings for ASGE C++ Game Engine
+  license: MIT
+  license_file: LICENSE
+  description: |
+    ASGE is a simple 2D Games Programming Framework. PyASGE provides
+    the python bindings to allow rapid prototyping and development without
+    having to learn C++.

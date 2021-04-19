@@ -1,0 +1,79 @@
+# This is a format job. Pre-commit has a first-party GitHub action, so we use
+# that: https://github.com/pre-commit/action
+
+name: Sphinx
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - latest
+
+jobs:
+  build-and-deploy:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2.3.1
+        with:
+          fetch-depth: 0
+          lfs: true
+          submodules: recursive
+
+      - name: Set up 🐍
+        uses: actions/setup-python@v2
+
+      - name: Display Python version
+        run: python -c "import sys; print(sys.version)"
+
+      - name: Install dependencies
+        run: |
+          echo
+          echo "###################################################################"
+          echo "########################## Setup Clang11 ##########################"
+          echo "###################################################################"
+          sudo apt-get update
+          sudo apt-get install -y binutils libstdc++6 cmake
+          sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-11 90
+          sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-11 90
+          sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 90
+          echo
+          echo "###################################################################"
+          echo "######################## ASGE Dependencies ########################"
+          echo "###################################################################"
+          sudo apt-get install -y --no-install-recommends --no-install-suggests \
+          libharfbuzz-bin libharfbuzz-dev libxrandr-dev libxxf86vm-dev \
+          libxi-dev libxinerama-dev libxcursor-dev libgl1-mesa-dev libglu1-mesa-dev \
+          libpng-dev libbz2-dev mesa-common-dev libx11-dev
+          echo
+          echo "###################################################################"
+          echo "####################### Sphinx Dependencies #######################"
+          echo "###################################################################"
+          pip install sphinx-rtd-theme sphinx-autodoc-typehints sphinx-autoapi \
+          readthedocs-sphinx-search --upgrade
+
+      - name: Setup Ninja
+        uses: seanmiddleditch/gha-setup-ninja@master
+
+      - name: Setup ccache
+        uses: hendrikmuhs/ccache-action@v1
+
+      - name: Configure PyASGE
+        run: |
+          export CC=clang && export CXX=clang++
+          cmake -G Ninja -H. -DASGE_BUILD_DEMOS=OFF -DASGE_ENABLE_DOXYGEN=OFF -Bbuild \
+          -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build PyASGE Docs
+        run: |
+          export CC=clang && export CXX=clang++
+          export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
+          cmake --build build --config Release -t pyasge_docs
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.1
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: build/docs/html # The folder the action should deploy.
