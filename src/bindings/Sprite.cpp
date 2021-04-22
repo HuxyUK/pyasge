@@ -605,7 +605,50 @@ void initSprite(py::module_ & module)
       >>> import pyasge
       >>> sprite = pyasge.Sprite()
       >>> if sprite.loadTexture("/data/game/background.jpg" is True:
-      >>>   print("texture loaded") )");
+      >>>   print("texture loaded")
+  )");
+
+  asge_sprite.def_property(
+      "texture",
+      [](ASGE::GLSprite &self) {
+        return dynamic_cast<ASGE::GLTexture *>(self.getTexture());
+      },
+      [](ASGE::GLSprite &sprite, ASGE::GLTexture *texture) {
+        return sprite.attach(texture);
+      },
+      py::return_value_policy::reference, R"(
+      The texture attached to the sprite.
+
+      When sprites are rendered they sample images or textures to colour the
+      pixels. You can use this property to replace the texture that's being
+      used during the rendering phase or to retrieve the currently attached
+      one.
+
+      :getter: Will return a reference to the currently active texture
+               assigned to to the sprite. It's possible that a sprite may
+               have no texture, so it contents should be checked to make
+               sure it is not ``None`` to prevent undefined behaviour.
+      :setter: Attaches a ``Texture`` object to the sprite. This will replace
+               the texture that's being used during the rendering phase.
+      :type: Texture
+
+      Example
+      -------
+        >>> import pyasge
+        >>> sprite = pyasge.Sprite()
+        >>> if sprite.texture is not None:
+        >>>     print("sprite has a texture attached")
+
+      Warning
+      -------
+      As a reference is being returned, the texture is only safe to
+      access whilst it has not been destroyed. Once the texture's
+      memory is freed, this reference will no longer be valid.
+
+      See Also
+      --------
+      Texture
+  )");
 
   asge_sprite.def(
     "getTexture",
