@@ -88,7 +88,11 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="about.html">PyASGE</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Changelog</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#version-1-0-0b2">Version 1.0.0b2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-1-0-0b1">Version 1.0.0b1</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">Modules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="example.html">Example</a></li>
 </ul>
@@ -160,6 +164,48 @@
             
   <div class="section" id="changelog">
 <h1>ChangeLog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="version-1-0-0b2">
+<h2>Version 1.0.0b2<a class="headerlink" href="#version-1-0-0b2" title="Permalink to this headline">¶</a></h2>
+<dl class="field-list simple">
+<dt class="field-odd">Date</dt>
+<dd class="field-odd"><p>April 26, 2021</p>
+</dd>
+</dl>
+<ul class="simple">
+<li><p>Added shader example (<a class="reference external" href="https://github.com/HuxyUK/pyasge/commit/fb5830612883233278b8f14c09f32540c7b581f9">#fb58306</a>)</p></li>
+<li><p>Added texture to property to sprite (<a class="reference external" href="https://github.com/HuxyUK/pyasge/commit/be46abcd6504ce82cffe1589ad5f8da57fc40b85">#1606af92</a>)</p></li>
+<li><p>Bumped ASGE version to alpha2 [<a class="reference external" href="39aa334e003983f7352b9ae60837b446245b6ce0">39aa334</a>] (<a class="reference external" href="https://github.com/HuxyUK/pyasge/commit/cbf18b73d6da7dcc42550396dd5117b62dee528e">#cbf18b7</a>)</p></li>
+</ul>
+<p><strong>Known Issues</strong></p>
+<ul class="simple">
+<li><p>Nvidia cards on Linux do not render correctly.</p></li>
+<li><p>Setting custom shaders can also effect previous render calls where
+the default shader was in use, resulting in both rendered quads
+using the same custom pixel shader.</p></li>
+</ul>
+</div>
+<hr class="docutils" />
+<div class="section" id="version-1-0-0b1">
+<h2>Version 1.0.0b1<a class="headerlink" href="#version-1-0-0b1" title="Permalink to this headline">¶</a></h2>
+<dl class="field-list simple">
+<dt class="field-odd">Date</dt>
+<dd class="field-odd"><p>April 20, 2021</p>
+</dd>
+</dl>
+<p>🎉 <strong>Initial public release of PyASGE</strong> 🎉</p>
+<p>This is the first public release of PyASGE. It is considered beta quality.
+From this point onwards any changes to v1 will be made with backwards
+compatibility in mind as the API can be considered stable. Changes that break
+the API will result in a major version bump.</p>
+<p><strong>Known Issues</strong></p>
+<ul class="simple">
+<li><p>Nvidia cards on Linux do not render correctly.</p></li>
+<li><p>Setting custom shaders can also effect previous render calls where
+the default shader was in use, resulting in both rendered quads
+using the same custom pixel shader.</p></li>
+</ul>
+<hr class="docutils" />
+</div>
 </div>
 
 
