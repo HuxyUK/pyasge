@@ -8,7 +8,7 @@ Version 1.0.0b2
 
 * Added shader example (`#fb58306 <https://github.com/HuxyUK/pyasge/commit/fb5830612883233278b8f14c09f32540c7b581f9>`__)
 * Added texture to property to sprite (`#1606af92 <https://github.com/HuxyUK/pyasge/commit/be46abcd6504ce82cffe1589ad5f8da57fc40b85>`__)
-* Bumped ASGE version to alpha2 [39aa334_] (`#cbf18b7 <https://github.com/HuxyUK/pyasge/commit/cbf18b73d6da7dcc42550396dd5117b62dee528e>`__)
+* Bumped ASGE version to alpha2 [34d4e67_] (`#cbf18b7 <https://github.com/HuxyUK/pyasge/commit/34d4e67341721fc7f7779ce2e5a2b035aff60f56>`__)
 
 **Known Issues**
 
@@ -18,7 +18,7 @@ Version 1.0.0b2
   the default shader was in use, resulting in both rendered quads
   using the same custom pixel shader.
 
-.. _39aa334: 39aa334e003983f7352b9ae60837b446245b6ce0
+.. _34d4e67: https://github.com/HuxyUK/ASGE/commit/4c061c7f3bcf0e49ce7aa2180e7c1a4c9abf87c8
 ....
 
 Version 1.0.0b1
