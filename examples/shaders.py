@@ -24,7 +24,6 @@ void main()
 class MyASGEGame(pyasge.ASGEGame):
     def __init__(self, settings):
         pyasge.ASGEGame.__init__(self, settings)
-
         self.inline_shader = self.renderer.initPixelShader(frag_shader)
 
         self.sprite = pyasge.Sprite()
