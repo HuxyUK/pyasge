@@ -124,7 +124,7 @@ void initGamesettings(py::module_ & module){
        the data packaged in one of these EventType classes. They contain all
        the relevant information about the event itself. )")
 
-    .value("FULLSCREEN", ASGE::GameSettings::WindowMode::FULLSCREEN,
+    .value("FULLSCREEN", ASGE::GameSettings::WindowMode::EXCLUSIVE_FULLSCREEEN,
            "Present the game in full-screen, changing resolution if necessary.")
     .value("WINDOWED", ASGE::GameSettings::WindowMode::WINDOWED,
            "Present the game in a window.")
