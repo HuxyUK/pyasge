@@ -10,7 +10,10 @@
 namespace py = pybind11;
 
 void initRenderer(py::module_ &module) {
-  py::class_<ASGE::GLRenderer>(module, "Renderer", py::is_final(),
+  py::class_<ASGE::GLRenderer>(
+    module,
+    "Renderer",
+    py::is_final(),
     R"(
     An OpenGL renderer.
 
@@ -45,81 +48,79 @@ void initRenderer(py::module_ &module) {
     >>>
   )")
 
-      .def(
-          "createNonCachedTexture",
-          [](ASGE::GLRenderer &self, const std::string &path) {
-            return dynamic_cast<ASGE::GLTexture *>(
-                self.createNonCachedTexture(path));
-          },
-          py::return_value_policy::automatic, py::arg("file"),
-          "Attempts to create a non-cached texture file by loading a local "
-          "file.")
+    .def(
+      "createNonCachedTexture",
+      [](ASGE::GLRenderer& self, const std::string& path)
+      { return dynamic_cast<ASGE::GLTexture*>(self.createNonCachedTexture(path)); },
+      py::return_value_policy::automatic,
+      py::arg("file"),
+      "Attempts to create a non-cached texture file by loading a local "
+      "file.")
 
-      .def(
-          "createNonCachedTexture",
-          [](ASGE::GLRenderer &self, int width, int height,
-             ASGE::Texture2D::Format format, void *data) {
-            return dynamic_cast<ASGE::GLTexture *>(
-                self.createNonCachedTexture(width, height, format, data));
-          },
-          py::return_value_policy::automatic, py::arg("width"),
-          py::arg("height"), py::arg("format"), py::arg("data"),
-          R"(Creates a non-cached texture of a given size and format.)")
+    .def(
+      "createNonCachedTexture",
+      [](ASGE::GLRenderer& self, int width, int height, ASGE::Texture2D::Format format, void* data)
+      {
+        return dynamic_cast<ASGE::GLTexture*>(
+          self.createNonCachedTexture(width, height, format, data));
+      },
+      py::return_value_policy::automatic,
+      py::arg("width"),
+      py::arg("height"),
+      py::arg("format"),
+      py::arg("data"),
+      R"(Creates a non-cached texture of a given size and format.)")
 
-      .def(
-          "getDefaultFont",
-          [](const ASGE::GLRenderer &self) {
-            return std::ref(
-                dynamic_cast<const ASGE::GLFontSet &>(self.getDefaultFont()));
-          },
-          py::return_value_policy::reference,
-          "Returns the Engine's default font.")
+    .def(
+      "getDefaultFont",
+      [](const ASGE::GLRenderer& self)
+      { return std::ref(dynamic_cast<const ASGE::GLFontSet&>(self.getDefaultFont())); },
+      py::return_value_policy::reference,
+      "Returns the Engine's default font.")
 
-      .def(
-          "render",
-          [](ASGE::GLRenderer &self, const ASGE::GLSprite &sprite) {
-            self.renderSprite(sprite);
-          },
-          py::arg("sprite"))
+    .def(
+      "render",
+      [](ASGE::GLRenderer& self, const ASGE::GLSprite& sprite) { self.renderSprite(sprite); },
+      py::arg("sprite"))
 
-      .def(
-          "render",
-          [](ASGE::GLRenderer &self, const ASGE::Text &text) {
-            self.renderText(text);
-          },
-          py::arg("text"))
+    .def(
+      "render",
+      [](ASGE::GLRenderer& self, const ASGE::Text& text) { self.renderText(text); },
+      py::arg("text"))
 
-      .def(
-          "render",
-          [](ASGE::GLRenderer &self, ASGE::GLTexture &texture, int x, int y) {
-            self.render(texture, x, y);
-          },
-          py::arg("texture"), py::arg("x"), py::arg("y"))
+    .def(
+      "render",
+      [](ASGE::GLRenderer& self, ASGE::GLTexture& texture, int x, int y)
+      { self.render(texture, x, y); },
+      py::arg("texture"),
+      py::arg("x"),
+      py::arg("y"))
 
-      .def("setProjectionMatrix",
-           py::overload_cast<float, float, float, float>(
-               &ASGE::GLRenderer::setProjectionMatrix),
-           py::arg("x"), py::arg("y"), py::arg("width"), py::arg("height"))
+    .def(
+      "setProjectionMatrix",
+      py::overload_cast<float, float, float, float>(&ASGE::GLRenderer::setProjectionMatrix),
+      py::arg("x"),
+      py::arg("y"),
+      py::arg("width"),
+      py::arg("height"))
 
-      .def("setProjectionMatrix",
-           py::overload_cast<const ASGE::Camera::CameraView &>(
-               &ASGE::GLRenderer::setProjectionMatrix),
-           py::arg("camera_view"))
+    .def(
+      "setProjectionMatrix",
+      py::overload_cast<const ASGE::Camera::CameraView&>(&ASGE::GLRenderer::setProjectionMatrix),
+      py::arg("camera_view"))
 
-      .def(
-          "setRenderTarget",
-          [](ASGE::GLRenderer &self, const ASGE::GLRenderTarget *target) {
-            self.setRenderTarget(target);
-          },
-          "Sets a render target to use for rendering.")
+    .def(
+      "setRenderTarget",
+      [](ASGE::GLRenderer& self, const ASGE::GLRenderTarget* target)
+      { self.setRenderTarget(target); },
+      "Sets a render target to use for rendering.")
 
-      .def(
-          "initPixelShader",
-          [](ASGE::GLRenderer &self, const std::string &source) {
-            return dynamic_cast<ASGE::SHADER_LIB::GLShader *>(
-                self.initPixelShader(source));
-          },
-          py::return_value_policy::reference_internal, py::arg("shader_source"),
+    .def(
+      "initPixelShader",
+      [](ASGE::GLRenderer& self, const std::string& source)
+      { return dynamic_cast<ASGE::SHADER_LIB::GLShader*>(self.initPixelShader(source)); },
+      py::return_value_policy::reference_internal,
+      py::arg("shader_source"),
       R"(
       Initialises a pixel shader from a str.
 
@@ -148,21 +149,18 @@ void initRenderer(py::module_ &module) {
       >>> inline_shader = self.renderer.initPixelShader(frag_shader)
     )")
 
-      .def(
-          "loadPixelShader",
-          [](ASGE::GLRenderer &self, const std::string &path) {
-            return dynamic_cast<ASGE::SHADER_LIB::GLShader *>(
-                self.initPixelShaderFromFile(path));
-          },
-          py::return_value_policy::reference_internal,
-          "Loads and initialises a pixel shader from a local file.")
+    .def(
+      "loadPixelShader",
+      [](ASGE::GLRenderer& self, const std::string& path)
+      { return dynamic_cast<ASGE::SHADER_LIB::GLShader*>(self.initPixelShaderFromFile(path)); },
+      py::return_value_policy::reference_internal,
+      "Loads and initialises a pixel shader from a local file.")
 
-      .def_property(
-          "shader",
-          [](ASGE::GLRenderer &self) { return self.getActiveShader(); },
-          [](ASGE::GLRenderer &self, ASGE::SHADER_LIB::GLShader *shader) {
-            self.setActiveShader(shader);
-          },
+    .def_property(
+      "shader",
+      [](ASGE::GLRenderer& self) { return self.getActiveShader(); },
+      [](ASGE::GLRenderer& self, ASGE::SHADER_LIB::GLShader* shader)
+      { self.setActiveShader(shader); },
       R"(
       The renderer's currently assigned shader.
 
@@ -177,8 +175,10 @@ void initRenderer(py::module_ &module) {
       >>> self.renderer.render(self.sprite)
     )")
 
-      .def_property("viewport", &ASGE::GLRenderer::getViewport,
-                    &ASGE::GLRenderer::setViewport,
+    .def_property(
+      "viewport",
+      &ASGE::GLRenderer::getViewport,
+      &ASGE::GLRenderer::setViewport,
       R"(
       The viewport that maps to the rendered window.
 
@@ -191,28 +191,46 @@ void initRenderer(py::module_ &module) {
       >>> self.renderer.viewport = pyasge.Viewport(0, 0, 1024, 768)
     )")
 
-      .def(
-          "loadFont",
-          [](ASGE::GLRenderer &self, const std::string_view path,
-             int size) -> const ASGE::GLFontSet & {
-            const std::filesystem::path FS_PATH(path);
-            if (std::filesystem::exists(FS_PATH)) {
-              return dynamic_cast<const ASGE::GLFontSet &>(
-                  self.getFont(self.loadFont(path.data(), size)));
-            }
+    .def_property_readonly(
+      "resolution",
+      &ASGE::GLRenderer::screenRes,
+      R"(
+      The resolution of the primary monitor.
 
-            // try asge IO now
-            ASGE::FILEIO::File file;
-            if (file.open(path.data())) {
-              ASGE::FILEIO::IOBuffer buffer = file.read();
-              return dynamic_cast<const ASGE::GLFontSet &>(self.getFont(
-                  self.loadFontFromMem(path.data(), buffer.as_unsigned_char(),
-                                       buffer.length, size)));
-            }
+      :getter: Returns the resolution and refresh rate of the primary display.
+      :type: Tuple[int, int, int]
 
-            return dynamic_cast<const ASGE::GLFontSet &>(self.getDefaultFont());
-          },
-          py::return_value_policy::reference, py::arg("path"), py::arg("size"),
+      Example
+      -------
+      >>> resolution = self.renderer.resolution
+      >>> print(f"Desktop Resolution: {resolution[0]}x{resolution[1]}@{resolution[2]}Hz")
+    )")
+
+    .def(
+      "loadFont",
+      [](ASGE::GLRenderer& self, const std::string_view path, int size) -> const ASGE::GLFontSet&
+      {
+        const std::filesystem::path FS_PATH(path);
+        if (std::filesystem::exists(FS_PATH))
+        {
+          return dynamic_cast<const ASGE::GLFontSet&>(
+            self.getFont(self.loadFont(path.data(), size)));
+        }
+
+        // try asge IO now
+        ASGE::FILEIO::File file;
+        if (file.open(path.data()))
+        {
+          ASGE::FILEIO::IOBuffer buffer = file.read();
+          return dynamic_cast<const ASGE::GLFontSet&>(self.getFont(
+            self.loadFontFromMem(path.data(), buffer.as_unsigned_char(), buffer.length, size)));
+        }
+
+        return dynamic_cast<const ASGE::GLFontSet&>(self.getDefaultFont());
+      },
+      py::return_value_policy::reference,
+      py::arg("path"),
+      py::arg("size"),
       R"(
       Loads a font from the file system.
 
