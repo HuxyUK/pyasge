@@ -1,6 +1,24 @@
 ChangeLog
 =========
 
+Version 1.0.0
+---------------
+
+:Date: May 12, 2021
+
+🎉 **v1.0.0 release of PyASGE** 🎉
+
+* Added property to access window's pixelbuffer resolution (`#5b6d043 <https://github.com/HuxyUK/pyasge/commit/5b6d043dcaa894cec672f130f416089fb9b5e01c>`__)
+* Allow texture specific UV wrapping modes (`#b88c4f1 <https://github.com/HuxyUK/pyasge/commit/b88c4f17974ca505ea2d9ad11cd3fd94bb63d3ff>`__)
+* Allow setting of default mag filter when scaling textures (`#e2e27e9 <https://github.com/HuxyUK/pyasge/commit/e2e27e9792b746e276f42292d09b7e676c21236f>`__)
+* Bumped ASGE version [82aef53_] (`#2a0dca0 <https://github.com/HuxyUK/pyasge/commit/2a0dca09b273effac1732ca6c3f183a1d6445782>`__)
+
+**Known Issues**
+
+* None reported as this time
+
+....
+
 Version 1.0.0b3
 ---------------
 
