@@ -107,11 +107,22 @@ void initGamesettings(py::module_ & module){
       .def_readwrite(
           "fps_limit", &ASGE::GameSettings::fps_limit,
           R"(
-          Attempts to limit the game's FPS.
+          Attempts to limit the game's FPS
 
-          :getter: Returns the FPS limit.
-          :setter: Sets desired FPS cap.
+          :getter: Returns the FPS limit
+          :setter: Sets desired FPS cap
           :type: int
+    )")
+
+    .def_readwrite(
+      "mag_filter",
+      &ASGE::GameSettings::mag_filter,
+      R"(
+      Sets the default magnification filter to use for the game.
+
+      :getter: Returns the MagFilter to use by default
+      :setter: Sets the default MagFilter to use when scaling upwards
+      :type: pyasge.MagFilter
     )");
 
   py::enum_<ASGE::GameSettings::WindowMode>(
@@ -161,4 +172,4 @@ void initGamesettings(py::module_ & module){
            "Enables vsync when able to meet monitor's refresh, disables when below.")
     .value("DISABLED", ASGE::GameSettings::Vsync::DISABLED,
            "Allow the game to run unrestricted.");
-};
+}
