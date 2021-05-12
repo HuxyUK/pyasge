@@ -127,10 +127,7 @@ void initGame(py::module_ &m) {
   )");
 
   game.def(
-    "render",
-      [](ASGEGame &self, const py::object &us) {
-        self.render(py::cast<const ASGE::GameTime &>(us));
-      },
+    "render", [](ASGEGame &self,const ASGE::GameTime& us) { self.render(us); },
       py::arg("gametime"),
     R"(
     Renders the game scene.
