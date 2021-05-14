@@ -199,6 +199,9 @@ void initCamera(py::module_ &module)
     R"(Resizes the camera's view.)"
   );
 
+  camera.def_property_readonly(
+    "position", &ASGE::Camera::position, "The camera's position on the XY axis");
+
   camera.def(
     "update", &ASGE::Camera::update, py::arg("game_time"),
     R"(
