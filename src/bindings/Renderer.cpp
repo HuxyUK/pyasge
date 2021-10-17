@@ -231,6 +231,27 @@ void initRenderer(py::module_ &module) {
       >>> print(f"Window Size: [{window_size[0]}, {window_size[1]}]")
     )")
 
+    .def("setClearColour",
+    [](ASGE::GLRenderer& self, const ASGE::Colour colour)
+    {
+      self.setClearColour(colour);
+    },
+      R"(
+      The colour used to clear the buffer each frame.
+
+      When clearing the window's content each tick, the colour to use can
+      easily be adjusted by using this function. Calling it means the
+      an empty non-rendered area of the window will know be the colour
+      passed through to this function.
+
+      :setter: Sets the clear colour for the Window.
+      :type: pyasge.Colour
+
+      Example
+      -------
+      >>> self.renderer.setClearColour(pyasge.COLOURS.BLACK)
+    )")
+
     .def(
       "loadFont",
       [](ASGE::GLRenderer& self, const std::string_view path, int size) -> const ASGE::GLFontSet&
