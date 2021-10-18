@@ -1,10 +1,20 @@
 ChangeLog
 =========
 
+Version 1.0.1
+---------------
+:Date: Oct 17, 2021
+* Expose read-only xy positional property (`#3ed23b3 <https://github.com/HuxyUK/pyasge/commit/3ed23b3f872738c3d55135a55f251dae2248e6b6>`__)
+* Bumped ASGE version [85fd4e2_] (`#4688242 <https://github.com/HuxyUK/pyasge/commit/46882428d29b3c50b779599d34b86d65d00ebaca>`__)
+
+.. _85fd4e2: https://github.com/HuxyUK/ASGE/commit/85fd4e205410653164d50bdb3b3b936fab0a0620
+
+....
+
 Version 1.0.0
 ---------------
 
-:Date: May 12, 2021
+:Date: May 14, 2021
 
 🎉 **v1.0.0 release of PyASGE** 🎉
 
@@ -17,6 +27,7 @@ Version 1.0.0
 
 * None reported as this time
 
+.. _82aef53: https://github.com/HuxyUK/ASGE/commit/82aef536e3939f9892974715f3e0513d3fe50108
 ....
 
 Version 1.0.0b3
