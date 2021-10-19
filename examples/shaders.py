@@ -48,7 +48,6 @@ class MyASGEGame(pyasge.ASGEGame):
         pass
 
     def render(self, game_time) -> None:
-        self.renderer.shader = None
         self.renderer.render(self.sprite)
         self.alpha_shader.uniform("alpha").set(0.1)
         self.renderer.shader = self.alpha_shader

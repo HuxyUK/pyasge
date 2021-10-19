@@ -18,33 +18,60 @@
 #include <pybind11/attr.h>
 #include <pybind11/pybind11.h>
 namespace py = pybind11;
-void initTexture2D(py::module_ & module)
+void initTexture2D(py::module_& module)
 {
-
   // ----------------------------------------------------
   // ASGE GLTexture
   // ----------------------------------------------------
   py::class_<ASGE::GLTexture> texture(
-    module, "Texture", py::is_final(),
-    "A texture which can attach to the GPU");
+    module, "Texture", py::is_final(), "A texture which can attach to the GPU");
 
   py::enum_<ASGE::Texture2D::Format>(
-    texture, "Format",
-    R"(Pixel format of the texture.
+    texture,
+    "Format",
+    R"(
+    Pixel format of the texture.
 
     These types can be used to calculate the bit-depth of each pixel. This is important when
     manually iterating or updating the pixel buffers, as the stride between various pixels
     will depend on the format used.)")
+
     .value("MONOCHROME", ASGE::Texture2D::MONOCHROME, "The texture is monochromatic.")
     .value("MONOCHROME_ALPHA", ASGE::Texture2D::MONOCHROME_ALPHA, "The texture is monochromatic and has an alpha channel.")
     .value("RGB", ASGE::Texture2D::RGB, " There are Red, Green & Blue channels present.")
     .value("RGBA", ASGE::Texture2D::RGBA, "There are RGB plus alpha channels present.");
 
-  texture.def("_test_texture_format_enum", [](ASGE::Texture2D::Format fmt) {
-    return std::string("ASGE::Texture2D::Format::").append(magic_enum::enum_name(fmt));
-  });
+  py::enum_<ASGE::Texture2D::UVWrapMode>(
+    texture,
+    "UVWrapMode",
+    R"(
+    Modes that controlling the UV texture wrapping
 
-  texture.def(py::init<float, float>(), py::arg("width") = 0, py::arg("height") = 0,
+    When sampling textures and using UV coordinates outside of the normalised
+    range, wrapping modes can be used to control the resultant sampled pixel.
+    For example, REPEAT will continuously wrap the texture. This is good for
+    when you want to sample outside the normal [0,1] range but still obtain a
+    resultant pixel. A use case for this is a scrolling background layer.
+
+    .. figure:: https://learnopengl.com/img/getting-started/texture_wrapping.png
+       :alt: https://learnopengl.com/Getting-started/Textures
+
+       learnopengl.com
+    )")
+
+    .value("CLAMP", ASGE::Texture2D::UVWrapMode::CLAMP, "Clamps the texture to [0,1].")
+    .value("REPEAT", ASGE::Texture2D::UVWrapMode::REPEAT, "Repeats the texture.")
+    .value("MIRROR", ASGE::Texture2D::UVWrapMode::MIRRORED, "Mirrors the image with each repeat.");
+
+  texture.def(
+    "_test_texture_format_enum",
+    [](ASGE::Texture2D::Format fmt)
+    { return std::string("ASGE::Texture2D::Format::").append(magic_enum::enum_name(fmt)); });
+
+  texture.def(
+    py::init<float, float>(),
+    py::arg("width")  = 0,
+    py::arg("height") = 0,
     R"(
         Initially the texture is empty and does not get allocated on the GPU.
         On the first retrieval of the pixel buffer, the memory will be allocated
@@ -65,49 +92,46 @@ void initTexture2D(py::module_ & module)
     )");
 
   texture.def_property_readonly(
-    "width", [](const ASGE::GLTexture& self) {
-      return self.getWidth();
-    },
+    "width",
+    [](const ASGE::GLTexture& self) { return self.getWidth(); },
     R"(
         The texture's width in pixels.
 
         Returns
         ------
            int
-              The width of the texture.)");
+              The width of the texture.
+    )");
 
   texture.def_property_readonly(
-    "height", [](const ASGE::GLTexture& self) {
-      return self.getHeight();
-    },
+    "height",
+    [](const ASGE::GLTexture& self) { return self.getHeight(); },
     R"(
         The texture's height in pixels.
 
         Returns
         ------
            int
-              The height of the texture.)"
-  );
+              The height of the texture.
+    )");
 
   texture.def_property(
     "format",
     &ASGE::GLTexture::getFormat,
-    [](ASGE::GLTexture& self, ASGE::Texture2D::Format format) {
-      self.setFormat(format);
-    },
+    [](ASGE::GLTexture& self, ASGE::Texture2D::Format format) { self.setFormat(format); },
     R"(
         The texture's designated pixel format.
 
         Returns
         ------
            Format
-              The pixel format for the texture.)"
-  );
+              The pixel format for the texture.
+    )");
 
   texture.def(
-    "setMagFilter", [](ASGE::GLTexture& self, ASGE::Texture2D::MagFilter filter) {
-      self.updateMagFilter(filter);
-    }, py::arg("filter"),
+    "setMagFilter",
+    [](ASGE::GLTexture& self, ASGE::Texture2D::MagFilter filter) { self.updateMagFilter(filter); },
+    py::arg("filter"),
     R"(
         Updates the magnification filter.
 
@@ -127,12 +151,11 @@ void initTexture2D(py::module_ & module)
         Note
         -----
         |filtering|
-      )"
-  );
+    )");
 
   texture.def_property_readonly(
     "id",
-    static_cast<const unsigned int& (ASGE::GLTexture::*)(void)const>(&ASGE::GLTexture::getID),
+    static_cast<const unsigned int& (ASGE::GLTexture::*)(void) const>(&ASGE::GLTexture::getID),
     R"(
         Retrieves the GPU ID allocated to the texture
 
@@ -144,12 +167,13 @@ void initTexture2D(py::module_ & module)
         Return
         ------
            unsigned int
-              the unique id of the GPU data)"
-    );
+              the unique id of the GPU data
+  )");
 
   texture.def_property(
     "buffer",
-    static_cast<const ASGE::PixelBuffer* (ASGE::GLTexture::*)(void) const>(&ASGE::GLTexture::getPixelBuffer),
+    static_cast<const ASGE::PixelBuffer* (ASGE::GLTexture::*)(void) const>(
+      &ASGE::GLTexture::getPixelBuffer),
     static_cast<ASGE::PixelBuffer* (ASGE::GLTexture::*)(void)>(&ASGE::GLTexture::getPixelBuffer),
     py::return_value_policy::reference,
     R"(
@@ -163,22 +187,63 @@ void initTexture2D(py::module_ & module)
         Returns
         ------
            PixelBuffer
-              The host copy of the texture's pixel data.)"
-  );
+              The host copy of the texture's pixel data.
+  )");
 
-  texture.def("updateMips",
-              &ASGE::Texture2D::updateMips);
+  texture.def("updateMips", &ASGE::Texture2D::updateMips, "Rebuilds the mip-maps used for minification.");
 
-  texture.def("__str__",
-       [](const ASGE::GLTexture& texture) {
+  texture.def(
+    "setUVMode",
+    &ASGE::Texture2D::updateUVWrapping,
+    py::arg("s") = ASGE::Texture2D::UVWrapMode::CLAMP,
+    py::arg("t") = ASGE::Texture2D::UVWrapMode::CLAMP,
+    R"(
+    Set the wrapping mode used for UV coordinates.
 
-         //nolint
-         std::stringstream ss;
-         ss << "ASGE 2D Texture: (";
-         ss << "id:"       << std::to_string(texture.getID()) << "  ";
-         ss << "width:"    << std::to_string(texture.getWidth()) << "  ";
-         ss << "height:"   << std::to_string(texture.getHeight()) << ")";
+    When sampling the texture, UV coordinates outside of the range of [0,1]
 
-         return ss.str();
-  });
+    can either be clamped or repeated. It is also possible to clamp the UV range
+    in one direction, and repeat in another as both directions (s,t) are
+    controlled independently of each other. The repeating technique can be used
+    to create simple animations such as scrolling backgrounds.
+
+    Parameters
+    ----------
+    s : pyasge.Texture.UVWrapMode
+        The wrapping mode to use when sampling outside the [0,1] range in the x axis.
+    t : pyasge.Texture.UVWrapMode
+        The wrapping mode to use when sampling outside the [0,1] range in the y axis.
+
+
+    .. figure:: https://learnopengl.com/img/getting-started/texture_wrapping.png
+       :alt: https://learnopengl.com/Getting-started/Textures
+
+       learnopengl.com
+
+
+    Example
+    -------
+    >>> sprite = pyasge.Sprite()
+    >>> sprite.loadTexture("scrolling_bg.png")
+    >>> sprite.texture.setUVMode(Texture.UVWrapMode.REPEAT, Texture.UVWrapMode.REPEAT)
+
+    See Also
+    --------
+    pyasge.Texture.UVWrapMode
+
+    )");
+
+  texture.def(
+    "__str__",
+    [](const ASGE::GLTexture& texture)
+    {
+      // nolint
+      std::stringstream ss;
+      ss << "ASGE 2D Texture: (";
+      ss << "id:" << std::to_string(texture.getID()) << "  ";
+      ss << "width:" << std::to_string(texture.getWidth()) << "  ";
+      ss << "height:" << std::to_string(texture.getHeight()) << ")";
+
+      return ss.str();
+    });
 }

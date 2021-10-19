@@ -206,6 +206,52 @@ void initRenderer(py::module_ &module) {
       >>> print(f"Desktop Resolution: {resolution[0]}x{resolution[1]}@{resolution[2]}Hz")
     )")
 
+    .def_property_readonly(
+      "window_size",
+      [](const ASGE::GLRenderer& self){
+        return std::make_tuple(self.windowWidth(), self.windowHeight());
+      },
+      R"(
+      The framebuffer size attached to the window.
+
+      There is a slight but important distinction between the window size
+      and the framebuffer size. This is due to the window being described
+      in screen space, where as the framebuffer is in pixel space. Often
+      the mapping is the same, but scaling of the window can result in a
+      window having more units than the equivalent pixels. For the time
+      being it's just easier to expose the width and height of the window
+      in pixel space until a need to differ between the two arises.
+
+      :getter: Returns the size of the framebuffer in pixels.
+      :type: Tuple[int, int]
+
+      Example
+      -------
+      >>> window_size = self.renderer.window_size
+      >>> print(f"Window Size: [{window_size[0]}, {window_size[1]}]")
+    )")
+
+    .def("setClearColour",
+    [](ASGE::GLRenderer& self, const ASGE::Colour colour)
+    {
+      self.setClearColour(colour);
+    },
+      R"(
+      The colour used to clear the buffer each frame.
+
+      When clearing the window's content each tick, the colour to use can
+      easily be adjusted by using this function. Calling it means the
+      an empty non-rendered area of the window will know be the colour
+      passed through to this function.
+
+      :setter: Sets the clear colour for the Window.
+      :type: pyasge.Colour
+
+      Example
+      -------
+      >>> self.renderer.setClearColour(pyasge.COLOURS.BLACK)
+    )")
+
     .def(
       "loadFont",
       [](ASGE::GLRenderer& self, const std::string_view path, int size) -> const ASGE::GLFontSet&
@@ -243,5 +289,5 @@ void initRenderer(py::module_ &module) {
       ----
       If the font file can not be loaded successfully, the renderer's inbuilt
       font used for debugging will be returned.
-  )");
+    )");
 }

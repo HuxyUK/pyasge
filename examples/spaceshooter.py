@@ -10,6 +10,9 @@ from game.gameover import GameOver
 from game.gamescene import GameScene
 from game.gamestate import GameStateID
 
+from pyasge import Texture
+
+
 path = str(Path(Path(__file__).parent.absolute()).parent.absolute())
 sys.path.insert(0, path)
 
@@ -38,11 +41,17 @@ class MyASGEGame(pyasge.ASGEGame):
         self.gamedata.parallax[0].sprite.width = 608
         self.gamedata.parallax[0].sprite.height = 1080
         self.gamedata.parallax[0].sprite.src_rect[3] = 1080 / 6
+        self.gamedata.parallax[0].sprite.texture.setUVMode(
+            Texture.UVWrapMode.REPEAT, Texture.UVWrapMode.REPEAT
+        )
 
         self.gamedata.parallax[1].sprite.z_order = -10
         self.gamedata.parallax[1].sprite.width = 608
         self.gamedata.parallax[1].sprite.height = 1080
         self.gamedata.parallax[1].sprite.src_rect[3] = 1080 / 6
+        self.gamedata.parallax[1].sprite.texture.setUVMode(
+            Texture.UVWrapMode.REPEAT, Texture.UVWrapMode.REPEAT
+        )
 
         self.gamedata.font = self.renderer.loadFont(
             "/data/fonts/kenvector_future.ttf", 96
