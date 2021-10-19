@@ -1,6 +1,36 @@
 ChangeLog
 =========
 
+Version 1.0.1
+---------------
+:Date: Oct 17, 2021
+* Expose read-only xy positional property (`#3ed23b3 <https://github.com/HuxyUK/pyasge/commit/3ed23b3f872738c3d55135a55f251dae2248e6b6>`__)
+* Bumped ASGE version [85fd4e2_] (`#4688242 <https://github.com/HuxyUK/pyasge/commit/46882428d29b3c50b779599d34b86d65d00ebaca>`__)
+
+.. _85fd4e2: https://github.com/HuxyUK/ASGE/commit/85fd4e205410653164d50bdb3b3b936fab0a0620
+
+....
+
+Version 1.0.0
+---------------
+
+:Date: May 14, 2021
+
+🎉 **v1.0.0 release of PyASGE** 🎉
+
+* Added property to access window's pixelbuffer resolution (`#5b6d043 <https://github.com/HuxyUK/pyasge/commit/5b6d043dcaa894cec672f130f416089fb9b5e01c>`__)
+* Allow texture specific UV wrapping modes (`#b88c4f1 <https://github.com/HuxyUK/pyasge/commit/b88c4f17974ca505ea2d9ad11cd3fd94bb63d3ff>`__)
+* Allow setting of default mag filter when scaling textures (`#e2e27e9 <https://github.com/HuxyUK/pyasge/commit/e2e27e9792b746e276f42292d09b7e676c21236f>`__)
+* Bumped ASGE version [82aef53_] (`#2a0dca0 <https://github.com/HuxyUK/pyasge/commit/2a0dca09b273effac1732ca6c3f183a1d6445782>`__)
+
+**Known Issues**
+
+* None reported as this time
+
+.. _82aef53: https://github.com/HuxyUK/ASGE/commit/82aef536e3939f9892974715f3e0513d3fe50108
+
+....
+
 Version 1.0.0b3
 ---------------
 
