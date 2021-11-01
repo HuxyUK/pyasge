@@ -36,7 +36,7 @@ with language features and for learning.**
 * CMake >= 3.14 or Pip 10+
 * Ninja or Pip 10+
 
-> Mac OSX support is currently broken due to ASGE no longer building correctly.
+> Mac OSX support is working, but not fully tested due to lack of hardware access.
 
 **Linux Build Dependencies**
 * X11

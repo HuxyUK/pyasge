@@ -2,6 +2,7 @@
 # General build settings
 #------------------------------------------------------------------------------
 cmake_minimum_required(VERSION 3.4...3.18)
+set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15" CACHE STRING "Minimum OS X deployment version")
 project(pyasge)
 set(ASGE_BUILD_DEMOS ON CACHE BOOL "Disable ASGE demos")
 set(ASGE_ENABLE_DOXYGEN ON CACHE BOOL "Enable ASGE doxygen")

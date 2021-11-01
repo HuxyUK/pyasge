@@ -137,7 +137,7 @@ def readme():
 # logic and declaration, and simpler if you include description/version in a file.
 setup(
     name="pyasge",
-    version="1.0.1",
+    version="1.0.2",
     license="MIT",
     author="James Huxtable",
     author_email="HuxyUK@users.noreply.github.com",
@@ -155,10 +155,12 @@ setup(
         "Intended Audience :: Education",
         "Operating System :: Microsoft :: Windows :: Windows 10",
         "Operating System :: POSIX :: Linux",
+        "Operating System :: MacOS",
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
         "Topic :: Games/Entertainment",
     ],
 )
