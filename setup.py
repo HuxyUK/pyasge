@@ -148,6 +148,11 @@ setup(
     cmdclass={"sdist": sdist_git, "build_ext": CMakeBuild},
     zip_safe=False,
     url="https://github.com/HuxyUK/pyasge",
+    project_urls={
+        'Documentation': 'https//huxyuk.github.io/pyasge',
+        'Source': 'https://github.com/HuxyUK/pyasge',
+        'Tracker': 'https://github.com/HuxyUK/pyasge/issues',
+    },
     install_requires=["numpy"],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
