@@ -45,6 +45,11 @@ class ASGEGame :
     PYBIND11_OVERRIDE_PURE(void, ASGE::OGLGame, update, us);
   }
 
+  void fixedUpdate(const ASGE::GameTime& us) override
+  {
+    PYBIND11_OVERRIDE_NAME(void, ASGE::OGLGame, "fixed_update", fixedUpdate, us);
+  }
+
   void render(const ASGE::GameTime& us) override
   {
     PYBIND11_OVERRIDE_PURE(void, ASGE::OGLGame, render, us);
@@ -99,8 +104,10 @@ void initGame(py::module_ &m) {
   game.def(py::init<ASGE::GameSettings>());
 
   game.def(
-    "update", [](ASGEGame &self, const ASGE::GameTime& us) { self.update(us); },
-      py::arg("gametime"),
+    "fixed_update", [](ASGEGame &self, const ASGE::GameTime& us) {
+      self.fixedUpdate(us);
+      },
+    py::arg("gametime"),
     R"(
     Used to update the game using fixed time-steps instead of the regular frame
     update.
@@ -109,7 +116,40 @@ void initGame(py::module_ &m) {
     with a deterministically known amount. It is best to use fixed updates as
     a divisible or multiple of the FPS count. This allows a smoother delivery of
     frame data. For example: 60/120 would deliver one fixed update per two
-    renders.
+    renders. Under heavy load, code executed in this function will cause the
+    game to become sluggish. Care should be taken to ensure the fixed update rate
+    set can be met.
+
+    :param gametime: Delta game time measurements.
+    :type gametime: pyasge.GameTime
+
+    Note
+    ====
+    You can find the amount of time between fixed time-steps by accessing the
+    fixed_delta and fixed_time fields on the game time instance. This is the
+    requested fixed time-step specified in the game settings.
+
+    See Also
+    ========
+    GameTime
+
+  )");
+
+  game.def(
+    "update", [](ASGEGame &self, const ASGE::GameTime& us) { self.update(us); },
+      py::arg("gametime"),
+    R"(
+    Used to update the game world using variable time-steps. You can think of
+    this as the \"render update\" and will always run once before the frame
+    is rendered.
+
+    Typically this is where you would process objects that are changed over
+    time but do not need to be deterministic in their nature. Examples include
+    operations such as animation and skinning. If the CPU becomes bogged down
+    in FixedUpdate, a frame will be drawn but the amount of game time will be
+    shortened, resulting in slower movement. Unity suggests that physics
+    related code goes in ``fixed_update`` and the rest of your logic goes here.
+    **This is generally good advice to beginners who lack experience.**
 
     :param gametime: Delta game time measurements.
     :type gametime: pyasge.GameTime
@@ -150,6 +190,16 @@ void initGame(py::module_ &m) {
 
   game.def(
     "signalExit",
+    [](ASGEGame& self) {
+      self.signalExit();
+      PyErr_WarnEx(PyExc_DeprecationWarning,
+                   "signalExit() is deprecated, use signal_exit() instead.",
+                   1);
+    },
+    R"(Calling this will cause the window and the game to shutdown.)");
+
+  game.def(
+    "signal_exit",
     [](ASGEGame& self) { self.signalExit(); },
     R"(Calling this will cause the window and the game to shutdown.)");
 
