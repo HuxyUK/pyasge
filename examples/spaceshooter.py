@@ -78,6 +78,9 @@ class MyASGEGame(pyasge.ASGEGame):
             else:
                 self.signalExit()
 
+    def fixed_update(self, game_time: pyasge.GameTime):
+        self.scene.fixed_update(self.inputs, game_time)
+
     def render(self, game_time: pyasge.GameTime):
         self.scene.render(self.renderer, game_time)
 
@@ -86,9 +89,16 @@ def main():
     settings = pyasge.GameSettings()
     settings.window_width = 608
     settings.window_height = 1080
-    settings.window_mode = pyasge.WindowMode.BORDERLESS_FULLSCREEN
+    settings.window_mode = pyasge.WindowMode.WINDOWED
     settings.fixed_ts = 60
-    settings.fps_limit = 60
+    settings.fps_limit = 280
+    settings.vsync = pyasge.Vsync.DISABLED
+
+    pyasge.LOG("Gellp")
+    pyasge.ERROR("HELLO")
+    pyasge.DEBUG("HELLO1")
+    pyasge.TRACE("HELLO2")
+    pyasge.INFO("HELLO2")
     game = MyASGEGame(settings)
     game.run()
 

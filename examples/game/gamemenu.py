@@ -47,6 +47,9 @@ class GameMenu(GameState):
             pyasge.EventType.E_MOUSE_CLICK, self.click_event
         )
 
+    def fixed_update(self, inputs, game_time: pyasge.GameTime) -> None:
+        pass
+
     def update(self, inputs, game_time: pyasge.GameTime) -> GameStateID:
         if self.start_button.clicked is True:
             self.gamedata.inputs.removeCallback(self.move_handle)

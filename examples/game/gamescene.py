@@ -12,14 +12,14 @@ class GameScene(GameState):
         self.id = GameStateID.GAMEPLAY
 
         self.player = GameObject("/data/images/player_ship_type_l.png")
-        self.player.sprite.scale = 0.50
+        self.player.sprite.scale = 1
         self.player.sprite.z_order = 50
         self.player.lives = 3
 
         self.enemy = GameObject("/data/images/enemy_type_e.png")
-        self.enemy.sprite.scale = 0.50
+        self.enemy.sprite.scale = 0.5
         self.enemy.sprite.x = 200
-        self.enemy.velocity.y = 0.154
+        self.enemy.velocity.y = 2
 
     def key_handler(self, event: pyasge.KeyEvent) -> None:
         if event.key is pyasge.KEYS.KEY_W and event.action is pyasge.KEYS.KEY_PRESSED:
@@ -75,6 +75,9 @@ class GameScene(GameState):
             return GameStateID.GAME_OVER
 
         return self.id
+
+    def fixed_update(self, inputs, game_time: pyasge.GameTime):
+        pass
 
     def respawn(self):
         self.player.sprite.x = 100
