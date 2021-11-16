@@ -22,7 +22,7 @@ build_script:
 - ps: |
     python -m build -s
     cd dist
-    python -m pip install --verbose pyasge-1.0.2.tar.gz
+    python -m pip install --verbose pyasge-1.0.3.tar.gz
     cd ..
 test_script:
 - ps: python tests\test.py

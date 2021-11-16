@@ -1,6 +1,28 @@
 ChangeLog
 =========
 
+Version 1.03
+---------------
+
+:Date: Nov 16, 2021
+
+* Bumped ASGE version [c9f1012_] (`#126fb00 <https://github.com/HuxyUK/pyasge/commit/e7f01fc0e2081c9a6c6fd16c4c9b9ba6b8be32f4>`__)
+* Added a new logger that can be used for output to stdout(`#a27f39e <https://github.com/HuxyUK/pyasge/commit/a27f39ea98e52dd1c73723ac6538830e9f0426d5>`__)
+* Introduction of Unity style fixed updates(`#a0aed58 <https://github.com/HuxyUK/pyasge/commit/a0aed5893f11cdbb9c6078ef705cb580ae902ddd>`__)
+* Added field for MSAA support in Game Settings(`#cdb1768 <https://github.com/HuxyUK/pyasge/commit/cdb1768af7813fe63d30855a550085cb4f322445>`__)
+* Support for MSAA Render Targets(`#4a5e736 <https://github.com/HuxyUK/pyasge/commit/4a5e7360ff6beef6bfdfb6c3988b3be182365264>`__)
+* Updated documentation and examples
+
+**Notes**
+
+* Fixes bug with flipping sprites on the X axis
+* Fixes bug with only DEBUG channel working for std out
+* Removes sub-pixel clamping in the vertex shader, instead relying on the use of MSAA
+* Introduces but does not force the use of a fixed update function. Update is now variable and can be considered a frame update
+
+.. _c9f1012: https://github.com/HuxyUK/ASGE/commit/c9f10124722ea159521dcbde32efb3b3cb62385b
+....
+
 Version 1.02
 ---------------
 
@@ -17,7 +39,7 @@ Version 1.0.1
 
 :Date: Oct 17, 2021
 
-* Expose read-only xy positional property (`#3ed23b3 <https://github.com/HuxyUK/pyasge/commit/3ed23b3f872738c3d55135a55f251dae2248e6b6>`__)
+
 * Bumped ASGE version [85fd4e2_] (`#4688242 <https://github.com/HuxyUK/pyasge/commit/46882428d29b3c50b779599d34b86d65d00ebaca>`__)
 
 .. _85fd4e2: https://github.com/HuxyUK/ASGE/commit/85fd4e205410653164d50bdb3b3b936fab0a0620

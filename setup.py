@@ -137,7 +137,7 @@ def readme():
 # logic and declaration, and simpler if you include description/version in a file.
 setup(
     name="pyasge",
-    version="1.0.2",
+    version="1.0.3",
     license="MIT",
     author="James Huxtable",
     author_email="HuxyUK@users.noreply.github.com",
@@ -149,9 +149,9 @@ setup(
     zip_safe=False,
     url="https://github.com/HuxyUK/pyasge",
     project_urls={
-        'Documentation': 'https//huxyuk.github.io/pyasge',
-        'Source': 'https://github.com/HuxyUK/pyasge',
-        'Tracker': 'https://github.com/HuxyUK/pyasge/issues',
+        "Documentation": "https//huxyuk.github.io/pyasge",
+        "Source": "https://github.com/HuxyUK/pyasge",
+        "Tracker": "https://github.com/HuxyUK/pyasge/issues",
     },
     install_requires=["numpy"],
     classifiers=[
