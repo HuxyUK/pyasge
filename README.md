@@ -108,6 +108,7 @@ terms and conditions of this license.
 
 ```python
 import pyasge
+pyasge.INFO("Tis a good day to make a GAME!")
 pyasge.ERROR("Oh noooes")
 ```
 

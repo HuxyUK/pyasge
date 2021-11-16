@@ -47,23 +47,28 @@ class GameMenu(GameState):
             pyasge.EventType.E_MOUSE_CLICK, self.click_event
         )
 
+    def fixed_update(self, inputs, game_time: pyasge.GameTime) -> None:
+        pass
+
     def update(self, inputs, game_time: pyasge.GameTime) -> GameStateID:
-        if self.start_button.clicked is True:
+        if self.start_button.clicked or self.user_clicked:
             self.gamedata.inputs.removeCallback(self.move_handle)
             self.gamedata.inputs.removeCallback(self.click_handle)
             return GameStateID.GAMEPLAY
 
-        if self.exit_button.clicked is True:
+        if self.exit_button.clicked:
             self.gamedata.inputs.removeCallback(self.move_handle)
             self.gamedata.inputs.removeCallback(self.click_handle)
             return GameStateID.EXIT_GAME
 
         self.gamedata.parallax[0].sprite.src_rect[1] = (
-            self.gamedata.parallax[0].sprite.src_rect[1] - 0.50
+            self.gamedata.parallax[0].sprite.src_rect[1] - 40.00 * game_time.frame_time
         )
+
         self.gamedata.parallax[1].sprite.src_rect[1] = (
-            self.gamedata.parallax[1].sprite.src_rect[1] - 1.00
+            self.gamedata.parallax[1].sprite.src_rect[1] - 80.00 * game_time.frame_time
         )
+
         return self.id
 
     def render(self, renderer: pyasge.Renderer, gametime: pyasge.GameTime) -> None:

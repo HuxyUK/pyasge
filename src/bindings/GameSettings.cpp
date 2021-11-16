@@ -104,14 +104,24 @@ void initGamesettings(py::module_ & module){
           :type: int
     )")
 
-      .def_readwrite(
-          "fps_limit", &ASGE::GameSettings::fps_limit,
-          R"(
-          Attempts to limit the game's FPS
+    .def_readwrite(
+      "msaa_level", &ASGE::GameSettings::msaa_level,
+      R"(
+          Controls the pacing of the fixed time-step update function.
 
-          :getter: Returns the FPS limit
-          :setter: Sets desired FPS cap
+          :getter: Returns the desired delta between update calls.
+          :setter: Sets the desired fixed time-step delta.
           :type: int
+    )")
+
+    .def_readwrite(
+        "fps_limit", &ASGE::GameSettings::fps_limit,
+        R"(
+        Attempts to limit the game's FPS
+
+        :getter: Returns the FPS limit
+        :setter: Sets desired FPS cap
+        :type: int
     )")
 
     .def_readwrite(

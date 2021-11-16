@@ -37,6 +37,10 @@ class GameState(ABC):
         self.gamedata = data
 
     @abstractmethod
+    def fixed_update(self, inputs, game_time: pyasge.GameTime) -> None:
+        pass
+
+    @abstractmethod
     def update(self, inputs, game_time: pyasge.GameTime) -> GameStateID:
         pass
 
