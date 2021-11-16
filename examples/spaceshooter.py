@@ -63,20 +63,20 @@ class MyASGEGame(pyasge.ASGEGame):
             self.signalExit()
 
         new_state = self.scene.update(self.inputs, game_time)
-        if new_state is not self.scene.id:
+        if new_state != self.scene.id:
             self.inputs.removeCallback(self.handler)
-            if new_state is GameStateID.GAMEPLAY:
+            if new_state == GameStateID.GAMEPLAY:
                 self.scene = GameScene(self.gamedata)
                 self.handler = self.inputs.addCallback(
                     pyasge.EventType.E_KEY, self.scene.key_handler
                 )
-            elif new_state is GameStateID.GAME_OVER:
+            elif new_state == GameStateID.GAME_OVER:
                 self.scene = GameOver(self.gamedata)
                 self.handler = self.inputs.addCallback(
                     pyasge.EventType.E_KEY, self.scene.key_handler
                 )
             else:
-                self.signalExit()
+                self.signal_exit()
 
     def fixed_update(self, game_time: pyasge.GameTime):
         self.scene.fixed_update(self.inputs, game_time)
@@ -93,12 +93,13 @@ def main():
     settings.fixed_ts = 60
     settings.fps_limit = 280
     settings.vsync = pyasge.Vsync.DISABLED
+    settings.msaa_level = 32
 
-    pyasge.LOG("Gellp")
-    pyasge.ERROR("HELLO")
-    pyasge.DEBUG("HELLO1")
-    pyasge.TRACE("HELLO2")
-    pyasge.INFO("HELLO2")
+    pyasge.LOG("HELLO LOG CHANNEL")
+    pyasge.ERROR("HELLO ERROR CHANNEL")
+    pyasge.DEBUG("HELLO DEBUG CHANNEL")
+    pyasge.TRACE("HELLO TRACE CHANNEL")
+    pyasge.INFO("HELLO INFO CHANNEL")
     game = MyASGEGame(settings)
     game.run()
 

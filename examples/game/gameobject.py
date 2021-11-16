@@ -4,10 +4,11 @@ import pyasge
 
 class GameObject:
     def __init__(self, texture):
+        self.clicked = None
         self.sprite = pyasge.Sprite()
         self.sprite.loadTexture(texture)
         self.velocity = pyasge.Point2D(0, 0)
-        self.sprite.setMagFilter(pyasge.MagFilter.NEAREST)
+        self.sprite.setMagFilter(pyasge.MagFilter.LINEAR)
 
         self.colour = pyasge.Colour(0, 0, 0)
 

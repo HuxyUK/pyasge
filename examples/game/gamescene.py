@@ -17,32 +17,36 @@ class GameScene(GameState):
         self.player.lives = 3
 
         self.enemy = GameObject("/data/images/enemy_type_e.png")
-        self.enemy.sprite.scale = 0.5
+        self.enemy.sprite.scale = 1
         self.enemy.sprite.x = 200
         self.enemy.velocity.y = 2
 
+        self.move_handle = data.inputs.addCallback(
+            pyasge.EventType.E_KEY, self.key_handler
+        )
+
     def key_handler(self, event: pyasge.KeyEvent) -> None:
         if event.key is pyasge.KEYS.KEY_W and event.action is pyasge.KEYS.KEY_PRESSED:
-            self.player.velocity.y = -0.5
+            self.player.velocity.y = -0.5 * 1000
 
         if event.key is pyasge.KEYS.KEY_W and event.action is pyasge.KEYS.KEY_RELEASED:
             self.player.velocity.y = 0
 
         if event.key is pyasge.KEYS.KEY_S:
             if event.action is pyasge.KEYS.KEY_PRESSED:
-                self.player.velocity.y = 0.5
+                self.player.velocity.y = 0.5 * 1000
             elif event.action is pyasge.KEYS.KEY_RELEASED:
                 self.player.velocity.y = 0
 
         if event.key is pyasge.KEYS.KEY_A:
             if event.action is pyasge.KEYS.KEY_PRESSED:
-                self.player.velocity.x = -0.5
+                self.player.velocity.x = -0.5 * 1000
             elif event.action is pyasge.KEYS.KEY_RELEASED:
                 self.player.velocity.x = 0
 
         if event.key is pyasge.KEYS.KEY_D:
             if event.action is pyasge.KEYS.KEY_PRESSED:
-                self.player.velocity.x = 0.5
+                self.player.velocity.x = 0.5 * 1000
             elif event.action is pyasge.KEYS.KEY_RELEASED:
                 self.player.velocity.x = 0
 

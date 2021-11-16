@@ -48,16 +48,17 @@ class GameOver(GameState):
         pass
 
     def update(self, inputs, game_time: pyasge.GameTime) -> GameStateID:
-        if self.exit_button.clicked is True:
+        if self.exit_button.clicked:
             self.gamedata.inputs.removeCallback(self.move_handle)
             self.gamedata.inputs.removeCallback(self.click_handle)
             return GameStateID.EXIT_GAME
 
         self.gamedata.parallax[0].sprite.src_rect[1] = (
-                self.gamedata.parallax[0].sprite.src_rect[1] - 0.50
+            self.gamedata.parallax[0].sprite.src_rect[1] - 40.00 * game_time.frame_time
         )
+
         self.gamedata.parallax[1].sprite.src_rect[1] = (
-                self.gamedata.parallax[1].sprite.src_rect[1] - 1.00
+            self.gamedata.parallax[1].sprite.src_rect[1] - 80.00 * game_time.frame_time
         )
         return self.id
 
@@ -79,7 +80,7 @@ class GameOver(GameState):
         self.mouse_cursor.sprite.y = event.y
 
     def click_event(self, event: pyasge.ClickEvent) -> None:
-        bounds = self.exit_button.sprite.getLocalBounds()
+        bounds = self.exit_button.sprite.getWorldBounds()
         cursor_pos = pyasge.Point2D(event.x, event.y)
 
         if bounds.v1.x <= cursor_pos.x <= bounds.v2.x:
