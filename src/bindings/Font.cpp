@@ -63,5 +63,24 @@ void initFont(py::module_ &module) {
   font.def(
     "pxHeight",
     &ASGE::GLFontSet::pxHeight, py::arg("string"), py::arg("scale"),
-    "How tall the string will be in pixels.");
+    "How tall the the bearing on the first line or text will be in pixels.");
+
+  font.def(
+      "boundsY",
+      &ASGE::GLFontSet::boundsY, py::arg("string"), py::arg("scale"),
+      R"(Calculates the bounding height for the string.
+
+       Calculates the deviation in the Y axis from the top of the rendered
+       string to the bottom. The function takes in to account the multiple lines
+       by adding appropriate amounts of spacing and also the individual
+       bearings of each character glpyh.
+
+       Example
+       -------
+         >>> '''load font using renderer'''
+         >>> self.font = self.renderer.loadFont("/data/fonts/kenvector_future.ttf", 40)
+         >>>
+         >>> '''attach font to a text object'''
+         >>> print(self.font.boundsY("Where are you?", 2.0))
+      )");
 }
