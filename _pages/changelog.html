@@ -42,8 +42,9 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="about.html">PyASGE</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Changelog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#version-1-03">Version 1.03</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#version-1-02">Version 1.02</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-1-1-0">Version 1.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-1-0-3">Version 1.0.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Version 1.0.3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#version-1-0-1">Version 1.0.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#version-1-0-0">Version 1.0.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#version-1-0-0b3">Version 1.0.0b3</a></li>
@@ -81,8 +82,27 @@
              
   <section id="changelog">
 <h1>ChangeLog<a class="headerlink" href="#changelog" title="Permalink to this headline"></a></h1>
-<section id="version-1-03">
-<h2>Version 1.03<a class="headerlink" href="#version-1-03" title="Permalink to this headline"></a></h2>
+<section id="version-1-1-0">
+<h2>Version 1.1.0<a class="headerlink" href="#version-1-1-0" title="Permalink to this headline"></a></h2>
+<dl class="field-list simple">
+<dt class="field-odd">Date</dt>
+<dd class="field-odd"><p>Nov 17, 2021</p>
+</dd>
+</dl>
+<ul class="simple">
+<li><p>Bumped ASGE version [<a class="reference external" href="https://github.com/HuxyUK/ASGE/commit/620596bce52b284d488fb887b7febb51ec559712">620596b</a>] (<a class="reference external" href="https://github.com/HuxyUK/pyasge/commit/7b773c196b7fcc66c4ada3b8d7350518439ad080">#7b773c1</a>)</p></li>
+<li><p>Added a new function to calculate Y bounds for text(<a class="reference external" href="https://github.com/HuxyUK/pyasge/commit/bdb3a546c6bb9951b3f0e0269b225638ecb1a2ac">#bdb3a54</a>)</p></li>
+</ul>
+<p><strong>Notes</strong></p>
+<ul class="simple">
+<li><p>Attempts to fix the font bounds calculations again. However, existing fonts may now render smaller.
+The solution to this is to simply increase the imported size of the font.</p></li>
+<li><p>Mipmaps have been enabled for font rendering in ASGE</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="version-1-0-3">
+<h2>Version 1.0.3<a class="headerlink" href="#version-1-0-3" title="Permalink to this headline"></a></h2>
 <dl class="field-list simple">
 <dt class="field-odd">Date</dt>
 <dd class="field-odd"><p>Nov 16, 2021</p>
@@ -100,21 +120,20 @@
 <ul class="simple">
 <li><p>Fixes bug with flipping sprites on the X axis</p></li>
 <li><p>Fixes bug with only DEBUG channel working for std out</p></li>
-<li><p>Fixed bug with world bounds being incorrectly calculated for Text</p></li>
 <li><p>Removes sub-pixel clamping in the vertex shader, instead relying on the use of MSAA</p></li>
 <li><p>Introduces but does not force the use of a fixed update function. Update is now variable and can be considered a frame update</p></li>
 </ul>
 </section>
 <hr class="docutils" />
-<section id="version-1-02">
-<h2>Version 1.02<a class="headerlink" href="#version-1-02" title="Permalink to this headline"></a></h2>
+<section id="id1">
+<h2>Version 1.0.3<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h2>
 <dl class="field-list simple">
 <dt class="field-odd">Date</dt>
 <dd class="field-odd"><p>Oct 1, 2021</p>
 </dd>
 </dl>
 <ul class="simple">
-<li><p>Bumped ASGE version [<a class="reference external" href="https://github.com/HuxyUK/ASGE/commit/435d35ddbe209e026bd991fcc001dd28c0b1c3c9">435d35d</a>] (<a class="reference external" href="https://github.com/HuxyUK/pyasge/commit/f7269f44e1e90ea75a5987b015d5cd2d4a881016">#f7269f4</a>)</p></li>
+<li><p>Bumped ASGE version [<a href="#id2"><span class="problematic" id="id3">435d35d_</span></a>] (<a class="reference external" href="https://github.com/HuxyUK/pyasge/commit/f7269f44e1e90ea75a5987b015d5cd2d4a881016">#f7269f4</a>)</p></li>
 </ul>
 </section>
 <hr class="docutils" />
