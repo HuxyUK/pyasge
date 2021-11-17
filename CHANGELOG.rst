@@ -6,8 +6,8 @@ Version 1.1.0
 
 :Date: Nov 17, 2021
 
-* Bumped ASGE version [515f9db_] (`#a64d8db <https://github.com/HuxyUK/pyasge/commit/a64d8db2fd56f6d3c0c55f053a457d1f2441eb23>`__)
-* Added a new function to calculate Y bounds for text(`#6e7ea1e <https://github.com/HuxyUK/pyasge/commit/6e7ea1e20e97c5c946ab89eb0b83a2da34e79ba4>`__)
+* Bumped ASGE version [620596b_] (`#7b773c1 <https://github.com/HuxyUK/pyasge/commit/7b773c196b7fcc66c4ada3b8d7350518439ad080>`__)
+* Added a new function to calculate Y bounds for text(`#bdb3a54 <https://github.com/HuxyUK/pyasge/commit/bdb3a546c6bb9951b3f0e0269b225638ecb1a2ac>`__)
 
 **Notes**
 
@@ -15,7 +15,7 @@ Version 1.1.0
   The solution to this is to simply increase the imported size of the font.
 * Mipmaps have been enabled for font rendering in ASGE
 
-.. _515f9db: https://github.com/HuxyUK/ASGE/commit/515f9dbd21053f6b90c7a2851dc0ab64ec7c1a1b
+.. _620596b: https://github.com/HuxyUK/ASGE/commit/620596bce52b284d488fb887b7febb51ec559712
 ....
 
 Version 1.0.3
