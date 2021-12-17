@@ -16,25 +16,29 @@
 #include <Engine/Sprite.hpp>
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
+#include <pybind11/operators.h>
+
 namespace py = pybind11;
 using namespace pybind11::literals;
 
-py::array_t<float> srcRect(ASGE::GLSprite &sprite) {
-  auto length = 4;
-  py::capsule free_when_done(sprite.srcRect(), [](void * /*data*/) {
-    Logging::TRACE("destroying capsule");
-  });
+namespace {
+  py::array_t<float> srcRect(ASGE::GLSprite &sprite) {
+    auto length = 4;
+    py::capsule free_when_done(sprite.srcRect(), [](void * /*data*/) {
+      Logging::TRACE("destroying capsule");
+    });
 
-  py::array_t<float> out{
-      {length}, {sizeof(float)}, sprite.srcRect(), free_when_done};
-  return out;
-}
+    py::array_t<float> out{
+        {length}, {sizeof(float)}, sprite.srcRect(), free_when_done};
+    return out;
+  }
 
-void setSrcRect(ASGE::GLSprite &sprite, const py::array_t<float, 4> &array) {
-  sprite.srcRect()[0] = array.at(0);
-  sprite.srcRect()[1] = array.at(1);
-  sprite.srcRect()[2] = array.at(2);
-  sprite.srcRect()[3] = array.at(3);
+  void setSrcRect(ASGE::GLSprite &sprite, const py::array_t<float, 4> &array) {
+    sprite.srcRect()[0] = array.at(0);
+    sprite.srcRect()[1] = array.at(1);
+    sprite.srcRect()[2] = array.at(2);
+    sprite.srcRect()[3] = array.at(3);
+  }
 }
 
 void initSprite(py::module_ &module) {
@@ -68,6 +72,8 @@ void initSprite(py::module_ &module) {
              "Texture is flipped on the x axis.")
       .value("FLIP_Y", ASGE::Sprite::FlipFlags::FLIP_Y,
              "Texture is flipped on the y axis.")
+      .value("FLIP_XY", ASGE::Sprite::FlipFlags::FLIP_XY,
+             "Texture is flipped diagonally.")
       .value("FLIP_BOTH", ASGE::Sprite::FlipFlags::FLIP_BOTH,
              "Texture is flipped on both axis.");
 
@@ -87,6 +93,30 @@ void initSprite(py::module_ &module) {
              "The length on the x axis")
       .value("LENGTH_Y", ASGE::Sprite::SourceRectIndex::SRC_LENGTH_Y,
              "The length on the y axis");
+
+  py::enum_<ASGE::Sprite::AttachMode>(
+      asge_sprite, "AttachFlags", py::arithmetic(),
+      R"(Attach mode flags.
+
+      When attaching a texture to the sprite, by default the sprite's
+      settings will be reset to match the newly attached texture. These
+      flags allow the user to prevent certain resets from occurs. )")
+
+      .value("DEFAULT", ASGE::Sprite::AttachMode::DEFAULT,
+             "Clobbers the existing sprite's settings")
+      .value("KEEP_DIMS", ASGE::Sprite::AttachMode::KEEP_DIMS,
+             "Retain the sprite's dimensions")
+      .value("KEEP_UVS", ASGE::Sprite::AttachMode::KEEP_UVS,
+             "Retain the sprite's UV settings")
+      .value("KEEP_TINT", ASGE::Sprite::AttachMode::KEEP_TINT,
+             "Retain the sprite's tint")
+      .value("KEEP_ROTATION", ASGE::Sprite::AttachMode::KEEP_ROTATION,
+             "Retain the sprite's rotation")
+      .value("GENERATE_MIPS", ASGE::Sprite::AttachMode::GENERATE_MIPS,
+             "Generate a new set of MipMaps for the texture")
+
+      .def(py::self | py::self)
+      .def(py::self & py::self);
 
   asge_sprite.def_property(
       "src_rect", &srcRect, &setSrcRect, R"(
@@ -387,11 +417,8 @@ void initSprite(py::module_ &module) {
 
       :getter: The sprite's colour.
       :setter: Sets the sprite's colour.
-      :type: Colour
+      :type: pyasge.Colour
 
-      See Also
-      --------
-      Colour
   )");
 
   asge_sprite.def(
@@ -441,6 +468,20 @@ void initSprite(py::module_ &module) {
       ----------
       bool
         If the texture is flipped on the Y axis.
+  )");
+
+  asge_sprite.def(
+      "isFlippedOnXY",
+      [](const ASGE::GLSprite &self) { return self.isFlippedOnXY(); }, R"(
+      Checks to see if the texture is flipped  diagonally.
+
+      It is possible to flip the UV coordinates used on the sprite's texture.
+      This will check to see if the XY axis are flipped with each other.
+
+      Returns
+      ----------
+      bool
+        If the texture is flipped diagonally.
   )");
 
   asge_sprite.def(
@@ -549,29 +590,56 @@ void initSprite(py::module_ &module) {
 
   asge_sprite.def(
       "attach",
-      [](ASGE::GLSprite &sprite, ASGE::GLTexture *texture) {
-        return sprite.attach(texture);
-      }, py::arg("texture"), R"(
-      Attaches a ``Texture`` object to the sprite.
+      [](ASGE::GLSprite &sprite, ASGE::GLTexture *texture, ASGE::Sprite::AttachMode mode) {
+        return sprite.attach(texture, static_cast<ASGE::Sprite::AttachMode>(mode));
+      }, py::arg("texture"), py::arg("attach_mode"), R"(
+      Attaches a :class:`Texture` object to the sprite.
 
       When sprites are rendered they sample images or textures to colour the
       pixels. You can use this function to replace the texture that's being
       used during the rendering phase.
 
-      Parameters
-      ----------
-      texture : Texture
-        The replacement texture to attach.
+      :texture: The replacement texture to attach
+      :type: :class:`pyasge.Texture`
+      :attach_mode: The flags to apply when attaching the texture to the sprite
+      :type: :class:`pyasge.Sprite.AttachMode`
 
-      Example
-      -------
+      .. code-block::
+        :caption: Example
+
+        >>> self.sprite = pyasge.Sprite()
+        >>> self.texture = self.renderer.createNonCachedTexture("/data/image.png")
+        >>> self.sprite.attach(texture, pyasge.Sprite.AttachFlags(
+            pyasge.Sprite.AttachFlags.KEEP_UVS |
+            pyasge.Sprite.AttachFlags.KEEP_ROTATION))
+
+      .. seealso::
+        pyasge.Texture
+  )");
+
+  asge_sprite.def(
+      "attach",
+      [](ASGE::GLSprite &sprite, ASGE::GLTexture *texture) {
+        return sprite.attach(texture, ASGE::Sprite::AttachMode::DEFAULT);
+      }, py::arg("texture"), R"(
+      Attaches a :class:`Texture` object to the sprite.
+
+      When sprites are rendered they sample images or textures to colour the
+      pixels. You can use this function to replace the texture that's being
+      used during the rendering phase.
+
+      :texture: The replacement texture to attach
+      :type: :class:`pyasge.Texture`
+
+      .. code-block::
+        :caption: Example
+
         >>> self.sprite = pyasge.Sprite()
         >>> self.texture = self.renderer.createNonCachedTexture("/data/image.png")
         >>> self.sprite.attach(self.texture)
 
-      See Also
-      --------
-      Texture
+      .. seealso::
+        pyasge.Texture
   )");
 
   asge_sprite.def(
@@ -610,7 +678,7 @@ void initSprite(py::module_ &module) {
         return dynamic_cast<ASGE::GLTexture *>(self.getTexture());
       },
       [](ASGE::GLSprite &sprite, ASGE::GLTexture *texture) {
-        return sprite.attach(texture, ASGE::Sprite::DEFAULT);
+        return sprite.attach(texture, ASGE::Sprite::AttachMode::DEFAULT);
       },
       py::return_value_policy::reference, R"(
       The texture attached to the sprite.
@@ -684,6 +752,28 @@ void initSprite(py::module_ &module) {
       Texture
   )");
 
+  asge_sprite.def_property_readonly("midpoint", &ASGE::Sprite::midpoint, R"(
+      Calculates the mid-point of the sprite.
+
+      Sprites origins are normally 0,0, which maps to the top left. This
+      function returns the mid-point of the sprite based on its width and height
+      and also the x,y position it's currently in.
+
+      :getter: Will return the calculated midpoint of the sprite based on its
+               position in the world and its length and width. This function
+               automatically applies the sprite's scale.
+      :type: Point2D
+
+      Note
+      -------
+      This midpoint is scaled using the sprites scale factor.
+
+      Example
+      -------
+      >>> # set a camera to follow the player's mid-point
+      >>> self.camera.lookAt(self.data.player.midpoint)
+  )");
+
   asge_sprite.def("__repr__", [](const ASGE::GLSprite &sprite) {
 
     // nolint
@@ -710,4 +800,32 @@ void initSprite(py::module_ &module) {
     return ss.str();
   });
 
+    asge_sprite.def(py::pickle(
+    [](const ASGE::GLSprite &p) { // __getstate__
+        /* Return a tuple that fully encodes the state of the object */
+        return py::make_tuple(
+                p.dimensions(),
+                p.srcRect()[0], p.srcRect()[1], p.srcRect()[2], p.srcRect()[3],
+                p.getGlobalZOrder(), p.rotationInRadians(), p.scale(),
+                p.opacity(), p.flipFlags(), p.colour(), p.getPixelShader(),
+                p.getTexture()
+                );
+    },
+    [](py::tuple t) { // __setstate__
+        if (t.size() != 2)
+            throw std::runtime_error("Invalid state!");
+
+        auto p = ASGE::GLSprite();
+
+        auto dims = t[0].cast<std::tuple<int, int>>();
+        p.width(std::get<0>(dims));
+        p.height(std::get<1>(dims));
+        p.srcRect()[0] = t[1].cast<float>();
+        p.srcRect()[1] = t[2].cast<float>();
+        p.srcRect()[2] = t[3].cast<float>();
+        p.srcRect()[3] = t[4].cast<float>();
+        p.setGlobalZOrder(t[5].cast<int16_t>());
+
+        return p;
+    }));
 }
