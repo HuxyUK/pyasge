@@ -91,10 +91,29 @@ void initRenderer(py::module_ &module) {
     .def(
       "render",
       [](ASGE::GLRenderer& self, ASGE::GLTexture& texture, int x, int y)
-      { self.render(texture, x, y); },
+      {
+          self.ASGE::Renderer::render(
+          texture, {static_cast<float>(x),static_cast<float>(y)});
+      },
       py::arg("texture"),
       py::arg("x"),
       py::arg("y"))
+
+    .def(
+        "render",
+        [](ASGE::GLRenderer& self, ASGE::GLTexture& texture, const py::list& rect, int x, int y, int width, int height)
+        {
+            self.render(
+            texture,
+            {rect[0].cast<float>(), rect[1].cast<float>(), rect[2].cast<float>(), rect[3].cast<float>()},
+            ASGE::Point2D{static_cast<float>(x),static_cast<float>(y)}, width, height);
+        },
+        py::arg("texture"),
+        py::arg("rect"),
+        py::arg("x"),
+        py::arg("y"),
+        py::arg("width"),
+        py::arg("height"))
 
     .def(
       "setProjectionMatrix",

@@ -575,8 +575,10 @@ void initSprite(py::module_ &module) {
   )");
 
   asge_sprite.def(
-      "loadTexture", &ASGE::GLSprite::loadTexture,
-      py::arg("filename"), R"(
+      "loadTexture",
+      [](ASGE::GLSprite &self, const std::string& file_path) {
+        return self.ASGE::Sprite::loadTexture(file_path);
+      }, py::arg("file_path"), R"(
       Loads a texture and attaches it to the sprite.
 
       Uses a texture caching system to attempt to load the file from the ASGE
@@ -608,7 +610,7 @@ void initSprite(py::module_ &module) {
         return dynamic_cast<ASGE::GLTexture *>(self.getTexture());
       },
       [](ASGE::GLSprite &sprite, ASGE::GLTexture *texture) {
-        return sprite.attach(texture);
+        return sprite.attach(texture, ASGE::Sprite::DEFAULT);
       },
       py::return_value_policy::reference, R"(
       The texture attached to the sprite.
