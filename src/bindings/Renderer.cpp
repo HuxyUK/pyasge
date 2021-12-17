@@ -37,13 +37,13 @@ void initRenderer(py::module_ &module) {
     >>>
     >>> ''' render to texture '''
     >>> self.renderer.setRenderTarget(self.rt)
-    >>> self.renderer.viewport = pyasge.ViewPort(0, 0, 1024, 768)
+    >>> self.renderer.setViewport(pyasge.ViewPort(0, 0, 1024, 768))
     >>> self.renderer.setProjectionMatrix(self.camera.view)
     >>> self.renderer.render(self.sprite)
     >>>
     >>> ''' render texture to screen '''
     >>> self.renderer.setRenderTarget(None)
-    >>> self.renderer.viewport = pyasge.ViewPort(0, 0, 1024, 768)
+    >>> self.renderer.setViewport(pyasge.ViewPort(0, 0, 1024, 768))
     >>> self.renderer.render(self.sprite)
     >>>
   )")
@@ -72,6 +72,18 @@ void initRenderer(py::module_ &module) {
       R"(Creates a non-cached texture of a given size and format.)")
 
     .def(
+        "createCachedTexture",
+        py::overload_cast<const std::string&>(&ASGE::GLRenderer::createCachedTexture),
+        py::arg("id"),py::return_value_policy::automatic_reference,
+        "Loads a texture using the rendering cache subsystem.")
+
+    .def(
+        "loadTexture",
+        py::overload_cast<const std::string&>(&ASGE::GLRenderer::createCachedTexture),
+        py::arg("path"), py::return_value_policy::automatic_reference,
+        "Loads a texture using the rendering cache subsystem.")
+
+    .def(
       "getDefaultFont",
       [](const ASGE::GLRenderer& self)
       { return std::ref(dynamic_cast<const ASGE::GLFontSet&>(self.getDefaultFont())); },
@@ -80,40 +92,65 @@ void initRenderer(py::module_ &module) {
 
     .def(
       "render",
-      [](ASGE::GLRenderer& self, const ASGE::GLSprite& sprite) { self.renderSprite(sprite); },
+      [](ASGE::GLRenderer& self, const ASGE::GLSprite& sprite) { self.render(sprite); },
       py::arg("sprite"))
 
     .def(
       "render",
-      [](ASGE::GLRenderer& self, const ASGE::Text& text) { self.renderText(text); },
-      py::arg("text"))
-
-    .def(
-      "render",
-      [](ASGE::GLRenderer& self, ASGE::GLTexture& texture, int x, int y)
-      {
-          self.ASGE::Renderer::render(
-          texture, {static_cast<float>(x),static_cast<float>(y)});
-      },
-      py::arg("texture"),
+      [](ASGE::GLRenderer& self, const ASGE::Tile& tile, float x, float y) { self.render(tile, {x, y}); },
+      py::arg("tile"),
       py::arg("x"),
       py::arg("y"))
 
     .def(
+      "render",
+      [](ASGE::GLRenderer& self, const ASGE::Text& text) { self.render(text); },
+      py::arg("text"))
+
+    .def(
+      "render",
+      [](ASGE::GLRenderer& self, ASGE::GLTexture& texture, int x, int y, int16_t z)
+      {
+        self.ASGE::Renderer::render(
+        texture, {static_cast<float>(x),static_cast<float>(y)}, z);
+      },
+      py::arg("texture"),
+      py::arg("x"),
+      py::arg("y"),
+      py::arg("z") = 0)
+
+    .def(
         "render",
-        [](ASGE::GLRenderer& self, ASGE::GLTexture& texture, const py::list& rect, int x, int y, int width, int height)
+        [](ASGE::GLRenderer& self, ASGE::GLTexture& texture, int x, int y, int width, int height, int16_t z)
         {
-            self.render(
-            texture,
-            {rect[0].cast<float>(), rect[1].cast<float>(), rect[2].cast<float>(), rect[3].cast<float>()},
-            ASGE::Point2D{static_cast<float>(x),static_cast<float>(y)}, width, height);
+          self.render(
+          texture,
+          {0, 0, static_cast<float>(texture.getWidth()), static_cast<float>(texture.getHeight())},
+          ASGE::Point2D{static_cast<float>(x),static_cast<float>(y)}, width, height, z);
+        },
+        py::arg("texture"),
+        py::arg("x"),
+        py::arg("y"),
+        py::arg("width"),
+        py::arg("height"),
+        py::arg("z") = 0)
+
+    .def(
+        "render",
+        [](ASGE::GLRenderer& self, ASGE::GLTexture& texture, const py::list& rect, int x, int y, int width, int height, int16_t z)
+        {
+          self.render(
+          texture,
+          {rect[0].cast<float>(), rect[1].cast<float>(), rect[2].cast<float>(), rect[3].cast<float>()},
+          ASGE::Point2D{static_cast<float>(x),static_cast<float>(y)}, width, height, z);
         },
         py::arg("texture"),
         py::arg("rect"),
         py::arg("x"),
         py::arg("y"),
         py::arg("width"),
-        py::arg("height"))
+        py::arg("height"),
+        py::arg("z") = 0)
 
     .def(
       "setProjectionMatrix",
@@ -130,7 +167,7 @@ void initRenderer(py::module_ &module) {
 
     .def(
       "setRenderTarget",
-      [](ASGE::GLRenderer& self, const ASGE::GLRenderTarget* target)
+      [](ASGE::GLRenderer& self, ASGE::GLRenderTarget* target)
       { self.setRenderTarget(target); },
       "Sets a render target to use for rendering.")
 
@@ -194,67 +231,47 @@ void initRenderer(py::module_ &module) {
       >>> self.renderer.render(self.sprite)
     )")
 
-    .def_property(
-      "viewport",
-      &ASGE::GLRenderer::getViewport,
+    .def(
+      "setViewport",
       &ASGE::GLRenderer::setViewport,
       R"(
       The viewport that maps to the rendered window.
 
-      :getter: Returns the renderer's current viewport.
       :setter: Updates the renderer's viewport used for mapping to the window.
-      :type: pyasge.ViewPort
+      :type: :class:`Viewport`
 
       Example
       -------
-      >>> self.renderer.viewport = pyasge.Viewport(0, 0, 1024, 768)
+      >>> self.renderer.setViewport(pyasge.Viewport(0, 0, 1024, 768))
     )")
 
     .def_property_readonly(
-      "resolution",
-      &ASGE::GLRenderer::screenRes,
+      "resolution_info",
+      &ASGE::GLRenderer::getResolutionInfo,
       R"(
-      The resolution of the primary monitor.
+      The renderer's resolution information.
 
-      :getter: Returns the resolution and refresh rate of the primary display.
-      :type: Tuple[int, int, int]
+      The renderer is responsible for overseeing the current window and
+      desktop resolutions as well as the most recently applied viewport
+      and camera views. All of this information can easily be retrieved
+      using this function. For example, it's simple to obtain the window's
+      width and height or the currently set viewport.
 
-      Example
-      -------
-      >>> resolution = self.renderer.resolution
-      >>> print(f"Desktop Resolution: {resolution[0]}x{resolution[1]}@{resolution[2]}Hz")
-    )")
+      .. note::
+        When the user requests a new viewport or camera view, the renderer
+        stores this request in a render state. This state is then attached
+        to the rendering batches and they will apply these settings when it
+        comes time to dispatch the draw counts.
 
-    .def_property_readonly(
-      "window_size",
-      [](const ASGE::GLRenderer& self){
-        return std::make_tuple(self.windowWidth(), self.windowHeight());
-      },
-      R"(
-      The framebuffer size attached to the window.
-
-      There is a slight but important distinction between the window size
-      and the framebuffer size. This is due to the window being described
-      in screen space, where as the framebuffer is in pixel space. Often
-      the mapping is the same, but scaling of the window can result in a
-      window having more units than the equivalent pixels. For the time
-      being it's just easier to expose the width and height of the window
-      in pixel space until a need to differ between the two arises.
-
-      :getter: Returns the size of the framebuffer in pixels.
-      :type: Tuple[int, int]
-
-      Example
-      -------
-      >>> window_size = self.renderer.window_size
-      >>> print(f"Window Size: [{window_size[0]}, {window_size[1]}]")
+      :getter: Returns the resolution and current render view settings.
+      :type: pyasge.Resolution
     )")
 
     .def("setClearColour",
     [](ASGE::GLRenderer& self, const ASGE::Colour colour)
     {
       self.setClearColour(colour);
-    },
+    }, py::arg("colour"),
       R"(
       The colour used to clear the buffer each frame.
 
@@ -270,6 +287,39 @@ void initRenderer(py::module_ &module) {
       -------
       >>> self.renderer.setClearColour(pyasge.COLOURS.BLACK)
     )")
+
+    .def(
+        "setBaseResolution",
+        &ASGE::GLRenderer::setBaseResolution,
+        py::arg("width"), py::arg("height"), py::arg("policy"), R"(
+        The base design resolution of the game.
+
+        When designing the game this resolution is used to control how the screen is
+        mapped when using a different resolution, whether that be smaller or larger.
+        When used correctly sprites positioned on the screen will remain in their
+        relative location (depending on the chosen resolution policy).)")
+
+    .def(
+        "setResolutionPolicy",
+        &ASGE::GLRenderer::setResolutionPolicy, py::arg("policy"), R"(
+        Sets the resolution policy to use.
+
+        The resolution policy controls how the game's view will be mapped to the window
+        or to any attached render target. Depending on the policy applied, the view may
+        be centered, bordered, stretched or even maintain it's aspect ration. This is
+        used when the game view does not directly map to the viewport.
+
+        .. code-block::
+           :caption: Example
+
+           >>> self.renderer.setResolutionPolicy(pyasge.ResolutionPolicy.CENTER)
+
+        .. note::
+          If using a custom viewport, it's recommended to set it after this function
+          call, to ensure its size is correct.
+
+        .. seealso::
+          pyasge.ResolutionPolicy )")
 
     .def(
       "loadFont",
