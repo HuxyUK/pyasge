@@ -61,6 +61,7 @@ endif ()
 target_include_directories(
         ${PROJECT_NAME}
         PRIVATE
+        "${CMAKE_SOURCE_DIR}/libs/asge/engine/include/Engine"
         "${CMAKE_SOURCE_DIR}/libs/asge/engine/src"
         "${CMAKE_SOURCE_DIR}/libs/asge/engine/libs/glm")
 
