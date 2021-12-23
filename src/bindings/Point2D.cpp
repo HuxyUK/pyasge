@@ -26,6 +26,8 @@ void initPoint2D(py::module_ &m)
     .def(py::init<float, float>(), "x"_a=0, "y"_a=0)
     .def(py::init<const ASGE::Point2D&>())
     .def(py::init([](std::array<float, 2> point) { return ASGE::Point2D(point[0], point[1]); }))
+    .def(py::self == py::self)
+    .def(py::self != py::self)
     .def(py::self += py::self)
     .def(py::self *= float())
     .def(py::self *  float())
@@ -34,7 +36,8 @@ void initPoint2D(py::module_ &m)
     .def("midpoint", &ASGE::Point2D::midpoint, "Calculates the midpoint between two different points.")
     .def_readwrite("x", &ASGE::Point2D::x, "x coordinate")
     .def_readwrite("y", &ASGE::Point2D::y, "y coordinate")
-    .def("__repr__", &ASGE::Point2D::toString, py::return_value_policy::move);
+    .def("__repr__", &ASGE::Point2D::toString, py::return_value_policy::move)
+    .def("__str__",  &ASGE::Point2D::toString, py::return_value_policy::move);
 
     py::implicitly_convertible<py::tuple, ASGE::Point2D>();
     py::implicitly_convertible<py::list, ASGE::Point2D>();
