@@ -41,6 +41,7 @@ void initSprite(py::module_ &);
 void initSpritebounds(py::module& module);
 void initText(py::module&);
 void initTexture2D(py::module&);
+void initTile(py::module&);
 void initValue(py::module&);
 void initViewPort(py::module&);
 
@@ -71,6 +72,7 @@ PYBIND11_MODULE(pyasge, module)
   initInput(module);
   initRenderer(module);
   initGame(module);
+  initTile(module);
 
 #ifdef VERSION_INFO
   module.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);

@@ -40,6 +40,7 @@ pybind11_add_module(
         "${CMAKE_CURRENT_SOURCE_DIR}/src/bindings/SpriteBounds.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/bindings/Texture2D.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/bindings/Text.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/bindings/Tile.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/bindings/Value.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/bindings/Viewport.cpp")
 
