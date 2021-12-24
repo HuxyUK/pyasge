@@ -70,6 +70,7 @@ void initViewPort(py::module_ &module)
 
   viewport.def(py::init());
   viewport.def(py::init<float, float, float, float>());
+  viewport.def(py::init<const ASGE::Viewport&>());
   viewport.def_readwrite("x", &ASGE::Viewport::x, "The viewports starting x position.");
   viewport.def_readwrite("y", &ASGE::Viewport::y, "The viewports starting y position.");
   viewport.def_readwrite("w", &ASGE::Viewport::w, "The viewports width.");
