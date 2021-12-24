@@ -111,8 +111,8 @@ void initRenderer(py::module_ &module) {
       "render",
       [](ASGE::GLRenderer& self, ASGE::GLTexture& texture, int x, int y, int16_t z)
       {
-        self.ASGE::Renderer::render(
-        texture, {static_cast<float>(x),static_cast<float>(y)}, z);
+          self.ASGE::Renderer::render(
+          texture, {static_cast<float>(x),static_cast<float>(y)}, z);
       },
       py::arg("texture"),
       py::arg("x"),
