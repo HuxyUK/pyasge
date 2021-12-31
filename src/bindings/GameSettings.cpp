@@ -75,7 +75,7 @@ void initGamesettings(py::module_ & module){
     )")
 
     .def_readwrite(
-      "window_title", &ASGE::GameSettings::window_title,
+      "window_title", &ASGE::GameSettings::game_title,
       R"(
           Each window has a title, customise yours.
 
