@@ -35,7 +35,9 @@ namespace {
 
   auto loadTexture(ASGE::Tile& tile, std::string_view file)
   {
-    auto* texture = ASGE::GLTextureCache::getInstance().createCached(file.data(), 0, 0, ASGE::Texture2D::MONOCHROME_ALPHA, nullptr);
+    auto* texture = ASGE::GLTextureCache::getInstance().createCached(
+        file.data(), 0, 0, ASGE::Texture2D::MONOCHROME_ALPHA, nullptr);
+
     if (texture != nullptr)
     {
       tile.texture = texture;

@@ -143,6 +143,13 @@ Texture
 .. autoclass:: Texture
    :members:
 
+Tile
+=====================
+.. autoclass:: Tile
+   :members:
+.. autosummary::
+   :toctree: _generate
+
 Value
 =====================
 .. autoclass:: Value

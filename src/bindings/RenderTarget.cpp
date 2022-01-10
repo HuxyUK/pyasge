@@ -148,12 +148,8 @@ void initRenderTarget(py::module_& module)
           :returns: A list of all the resultant updated texture.
           :type: list[Texture]
 
-          Warning
-          -------
-          You need to call resolve to sample the buffers correctly.
+          .. warning:: You need to call resolve to sample the buffers correctly.
 
-          See Also
-          --------
-          Texture
+          .. seealso:: :class:`Texture`
       )");
 }
