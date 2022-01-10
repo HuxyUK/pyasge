@@ -49,9 +49,9 @@ void initViewPort(py::module_ &module)
       >>>
       >>> def render(self) -> None:
       >>>   self.renderer.setProjectionMatrix(self.camera.view)
-      >>>   self.renderer.viewport = pyasge.Viewport(0, 0, 384 / 2, 256)
+      >>>   self.renderer.setViewport(pyasge.Viewport(0, 0, 384 / 2, 256))
       >>>   self.renderer.render(self.sprite)
-      >>>   self.renderer.viewport = pyasge.Viewport(384 / 2, 0, 384 / 2, 256)
+      >>>   self.renderer.setViewport(pyasge.Viewport(384 / 2, 0, 384 / 2, 256))
       >>>   self.renderer.render(self.sprite2)
 
       .. image:: ../_static/images/viewports.png

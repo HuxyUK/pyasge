@@ -18,7 +18,11 @@ CameraView
 Colour
 =====================
 .. autoclass:: Colour
-   :members:
+.. rubric:: Attributes
+.. autosummary::
+      ~Colour.r
+      ~Colour.g
+      ~Colour.b
 
 CursorMode
 =====================

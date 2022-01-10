@@ -16,6 +16,7 @@ Version 1.1.0
 * Mipmaps have been enabled for font rendering in ASGE
 
 .. _620596b: https://github.com/HuxyUK/ASGE/commit/620596bce52b284d488fb887b7febb51ec559712
+
 ....
 
 Version 1.0.3
@@ -38,6 +39,7 @@ Version 1.0.3
 * Introduces but does not force the use of a fixed update function. Update is now variable and can be considered a frame update
 
 .. _c9f1012: https://github.com/HuxyUK/ASGE/commit/c9f10124722ea159521dcbde32efb3b3cb62385b
+
 ....
 
 Version 1.0.3
@@ -47,7 +49,7 @@ Version 1.0.3
 
 * Bumped ASGE version [435d35d_] (`#f7269f4 <https://github.com/HuxyUK/pyasge/commit/f7269f44e1e90ea75a5987b015d5cd2d4a881016>`__)
 
-.. _9d42f9b: https://github.com/HuxyUK/ASGE/commit/9d42f9bd075af0a86b2e3cc1f28a8eda04050422
+.. _435d35d: https://github.com/HuxyUK/ASGE/commit/9d42f9bd075af0a86b2e3cc1f28a8eda04050422
 
 ....
 
@@ -80,6 +82,7 @@ Version 1.0.0
 * None reported as this time
 
 .. _82aef53: https://github.com/HuxyUK/ASGE/commit/82aef536e3939f9892974715f3e0513d3fe50108
+
 ....
 
 Version 1.0.0b3

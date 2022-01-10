@@ -27,7 +27,7 @@ void initColours(py::module_ & module) {
     Example
     -------
       >>> self.colour = pyasge.COLOURS.AQUA      # predefined
-      >>> self.colour = pyasge.Colour(0, 0, 1)   # red
+      >>> self.colour = pyasge.Colour(1, 0, 0)   # red
       >>> self.colour = [0, 1, 0]                # green
       >>> self.colour = (1, 0, 1)                # purple
 

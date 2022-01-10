@@ -214,20 +214,24 @@ void initCamera(py::module_ &module)
     values, representing `min_x`, `max_x`, `min_y` and `max_y`. These would
     then be used to simply clamp the view's x and y positions.
 
-    :param view_bounds: The four bounds to use in xy space:
-    :type view_bounds: list
+    :param view_bounds: The four bounds to use in xy space.
+    :type view_bounds: :class:`CameraView`
 
-    Note
-    -------
-    This version of the function uses the :class:`pyasge.CameraView` data structure.
+    .. code-block::
+       :caption: An example of clamping to a map made from 128x128 tiles. The
+                 games design resolution is used to ensure only the visible
+                 game map is shown. The camera's view is taken into consideration
+                 as this can affect the visible viewing area.
 
-    Example
-    -------
-    >>> view = pyasge.CameraView()
-    >>> view.min_x = self.data.game_res[0] * 0.5 * self.camera.zoom
-    >>> view.max_x = self.data.game_map.width * 128 - self.data.game_res[0] * 0.5 * self.camera.zoom
-    >>> view.min_y = self.data.game_res[1] * 0.5 * self.camera.zoom
-    >>> view.max_y = self.data.game_map.height * 128 - self.data.game_res[1] * 0.5 * self.camera.zoom
+       >>> view = pyasge.CameraView()
+       >>> view.min_x = self.game_res[0] * 0.5 * self.camera.zoom,
+       >>> view.max_x = self.map.width   * 128 - self.game_res[0] * 0.5 * self.camera.zoom,
+       >>> view.min_y = self.game_res[1] * 0.5 * self.camera.zoom,
+       >>> view.max_y = self.map.height  * 128 - self.game_res[1] * 0.5 * self.camera.zoom
+       >>> self.camera.clamp(view)
+
+    .. note::
+      This version of the function uses the :class:`CameraView` data structure.
   )");
 
   camera.def(
@@ -253,22 +257,27 @@ void initCamera(py::module_ &module)
     values, representing `min_x`, `max_x`, `min_y` and `max_y`. These would
     then be used to simply clamp the view's x and y positions.
 
-    :param view_bounds: The four bounds to use in xy space:
-    :type view_bounds: list
+    :param view_bounds: The four bounds to use in xy space
+    :type view_bounds: :class:`CameraView`
 
-    Note
-    -------
-    This version of the function uses a python style list, comprising of
-    four float values, representing the bounds of the view.
+    .. note::
+      This version of the function uses a python style list, comprising of
+      four float values, representing the bounds of the view.
 
-    Example
-    -------
-    >>> view = [
-    >>>   self.data.game_res[0] * 0.5 * self.camera.zoom,
-    >>>   self.data.game_map.width * 128 - self.data.game_res[0] * 0.5 * self.camera.zoom,
-    >>>   self.data.game_res[1] * 0.5 * self.camera.zoom,
-    >>>   self.data.game_map.height * 128 - self.data.game_res[1] * 0.5 * self.camera.zoom
-    >>> ]
+    .. code-block::
+       :caption: An example of clamping to a map made from 128x128 tiles. The
+                 games design resolution is used to ensure only the visible
+                 game map is shown. The camera's view is taken into consideration
+                 as this can affect the visible viewing area.
+
+       >>> view = [
+       >>>   self.game_res[0] * 0.5 * self.camera.zoom,
+       >>>   self.map.width   * 128 - self.game_res[0] * 0.5 * self.camera.zoom,
+       >>>   self.game_res[1] * 0.5 * self.camera.zoom,
+       >>>   self.map.height  * 128 - self.game_res[1] * 0.5 * self.camera.zoom
+       >>> ]
+       >>> self.camera.clamp(view)
+
   )");
 
   camera.def_property_readonly(

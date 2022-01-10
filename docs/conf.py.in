@@ -37,10 +37,12 @@ extensions = [
     'sphinx_autodoc_typehints',
     "sphinx_rtd_theme",
     'sphinx_search.extension',
+    'sphinx_copybutton',
 ]
 
 autoclass_content = 'both'
 autosummary_generate = True
+copybutton_prompt_text = ">>> "
 
 # Auto params
 napoleon_use_param = True
