@@ -98,6 +98,13 @@ RenderTarget
 .. autoclass:: RenderTarget
    :members:
 
+Resolution
+=====================
+.. autoclass:: Resolution
+   :members:
+.. autoclass:: ResolutionPolicy
+   :members:
+
 Shader
 =====================
 .. autoclass:: Shader

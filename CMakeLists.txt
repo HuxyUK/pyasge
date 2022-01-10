@@ -35,6 +35,7 @@ pybind11_add_module(
         "${CMAKE_CURRENT_SOURCE_DIR}/src/bindings/Point2D.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/bindings/Renderer.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/bindings/RenderTarget.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/bindings/Resolution.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/bindings/Shader.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/bindings/Sprite.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/bindings/SpriteBounds.cpp"
