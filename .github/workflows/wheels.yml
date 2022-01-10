@@ -6,6 +6,7 @@ on:
   push:
     branches:
       - latest
+      - dev
   release:
     types:
       - published

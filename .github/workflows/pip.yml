@@ -7,7 +7,7 @@ on:
     branches:
       - latest
       - dev
-
+      - next
 jobs:
   build:
     strategy:
@@ -34,12 +34,12 @@ jobs:
         run: |
           echo
           echo "###################################################################"
-          echo "########################## Setup Clang11 ##########################"
+          echo "########################## Setup Clang12 ##########################"
           echo "###################################################################"
           sudo apt-get update
           sudo apt-get install -y binutils libstdc++6 cmake
-          sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-11 90
-          sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-11 90
+          sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-12 90
+          sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-12 90
           sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 90
           echo
           echo "###################################################################"
@@ -67,6 +67,9 @@ jobs:
 
       - name: Build and install
         run:  pip install --verbose .
+        env:
+          CC: clang
+          CXX: clang++
 
       - name: Test
         run: python tests/test.py
