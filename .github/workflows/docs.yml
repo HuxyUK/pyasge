@@ -52,7 +52,7 @@ jobs:
           echo "####################### Sphinx Dependencies #######################"
           echo "###################################################################"
           pip install sphinx-rtd-theme sphinx-autodoc-typehints sphinx-autoapi \
-          readthedocs-sphinx-search --upgrade
+          readthedocs-sphinx-search sphinx-copybutton --upgrade
 
       - name: Setup Ninja
         uses: seanmiddleditch/gha-setup-ninja@master
