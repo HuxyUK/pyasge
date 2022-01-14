@@ -1,13 +1,30 @@
 ChangeLog
 =========
 
+Version 2.0.0a1
+---------------
+
+:Date: Jan 14, 2022
+
+**Notes**
+A pre-release version of the upcoming 2.0.0 release. There have been a
+significant number of improvements and features added to ASGE including
+support for proper viewport scaling, SDF font rendering and a new Tile
+data structure. Due to the wide spread changes a pre-release cycle is
+being used.
+
+*Some of the changes have broken API compatibility so users upgrading
+should expect some minor issues that would need resolving.*
+
+....
+
 Version 1.1.0
 ---------------
 
 :Date: Nov 17, 2021
 
 * Bumped ASGE version [620596b_] (`#7b773c1 <https://github.com/HuxyUK/pyasge/commit/7b773c196b7fcc66c4ada3b8d7350518439ad080>`__)
-* Added a new function to calculate Y bounds for text(`#bdb3a54 <https://github.com/HuxyUK/pyasge/commit/bdb3a546c6bb9951b3f0e0269b225638ecb1a2ac>`__)
+* Added a new function to calculate Y bounds for text (`#bdb3a54 <https://github.com/HuxyUK/pyasge/commit/bdb3a546c6bb9951b3f0e0269b225638ecb1a2ac>`__)
 
 **Notes**
 
