@@ -323,13 +323,12 @@ void initRenderer(py::module_ &module) {
 
     .def(
       "loadFont",
-      [](ASGE::GLRenderer& self, const std::string_view path, int size) -> const ASGE::GLFontSet&
+      [](ASGE::GLRenderer& self, const std::string_view path, int size, double range) -> const ASGE::GLFontSet*
       {
         const std::filesystem::path FS_PATH(path);
         if (std::filesystem::exists(FS_PATH))
         {
-          return dynamic_cast<const ASGE::GLFontSet&>(
-            self.getFont(self.loadFont(path.data(), size)));
+          return dynamic_cast<const ASGE::GLFontSet*>(self.loadFont(path.data(), size, range));
         }
 
         // try asge IO now
@@ -337,15 +336,16 @@ void initRenderer(py::module_ &module) {
         if (file.open(path.data()))
         {
           ASGE::FILEIO::IOBuffer buffer = file.read();
-          return dynamic_cast<const ASGE::GLFontSet&>(self.getFont(
-            self.loadFontFromMem(path.data(), buffer.as_unsigned_char(), buffer.length, size)));
+          return dynamic_cast<const ASGE::GLFontSet*>(
+                  self.loadFontFromMem(path.data(), buffer.as_unsigned_char(), buffer.length, size, range));
         }
 
-        return dynamic_cast<const ASGE::GLFontSet&>(self.getDefaultFont());
+        return dynamic_cast<const ASGE::GLFontSet*>(&self.getDefaultFont());
       },
       py::return_value_policy::reference,
       py::arg("path"),
       py::arg("size"),
+      py::arg("range") = 2.0,
       R"(
       Loads a font from the file system.
 
