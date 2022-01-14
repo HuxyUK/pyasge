@@ -124,7 +124,7 @@ void initTile(py::module_& module)
   Sprite
 
   )");
-  
+
   tile.def(py::init());
   tile.def(py::init<const ASGE::Tile&>());
   tile.def_readwrite("tint",     &ASGE::Tile::tint,     "Rotation for the tile" );
