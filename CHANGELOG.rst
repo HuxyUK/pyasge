@@ -1,6 +1,18 @@
 ChangeLog
 =========
 
+Version 2.0.0a2
+---------------
+
+:Date: Jan 17, 2022
+
+* Added support for loading font atlases directly from the file system.
+
+**Notes**
+Pleas see previous notes on alpha1 regarding compatibility.
+
+....
+
 Version 2.0.0a1
 ---------------
 
