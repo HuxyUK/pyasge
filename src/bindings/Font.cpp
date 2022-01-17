@@ -18,6 +18,17 @@
 #include <pybind11/pybind11.h>
 namespace py = pybind11;
 void initFont(py::module_ &module) {
+
+  py::class_<ASGE::Font::AtlasMetrics> metrics( module, "AtlasMetrics");
+  metrics.def(py::init());
+  metrics.def_readwrite("id", &ASGE::Font::AtlasMetrics::id);
+  metrics.def_readwrite("ascender", &ASGE::Font::AtlasMetrics::ascender);
+  metrics.def_readwrite("descender", &ASGE::Font::AtlasMetrics::descender);
+  metrics.def_readwrite("em_size", &ASGE::Font::AtlasMetrics::em_size);
+  metrics.def_readwrite("line_height", &ASGE::Font::AtlasMetrics::line_height);
+  metrics.def_readwrite("range", &ASGE::Font::AtlasMetrics::range);
+  metrics.def_readwrite("size", &ASGE::Font::AtlasMetrics::size);
+
   py::class_<ASGE::GLFontSet> font(
     module, "Font", py::is_final(),
     R"(A loaded instance of a Font.
@@ -49,6 +60,8 @@ void initFont(py::module_ &module) {
 
 
   font.def(py::init());
+
+  font.def("setMagFilter", (&ASGE::GLFontSet::setMagFilter), py::arg("mag_filter"));
 
   font.def(
     "pxWide",
