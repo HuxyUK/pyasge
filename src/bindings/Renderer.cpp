@@ -340,7 +340,7 @@ void initRenderer(py::module_ &module) {
                   self.loadFontFromMem(path.data(), buffer.as_unsigned_char(), buffer.length, size, range));
         }
 
-        return dynamic_cast<const ASGE::GLFontSet*>(&self.getDefaultFont());
+        return nullptr;
       },
       py::return_value_policy::reference,
       py::arg("path"),
@@ -356,7 +356,32 @@ void initRenderer(py::module_ &module) {
 
       Note
       ----
-      If the font file can not be loaded successfully, the renderer's inbuilt
-      font used for debugging will be returned.
+      If the font file can not be loaded successfully, None will be returned.
+    )")
+
+    .def(
+      "loadFontAtlas",
+       [](ASGE::GLRenderer &self, ASGE::Font::AtlasMetrics metrics, const std::string &img_path,
+          const std::string &csv_path) -> const ASGE::GLFontSet *
+      {
+         return dynamic_cast<const ASGE::GLFontSet *>(self.loadFontAtlas(std::move(metrics), img_path, csv_path));
+       },
+       py::return_value_policy::reference,
+       py::arg("metrics"),
+       py::arg("img_path"),
+       py::arg("csv_path"),
+      R"(
+      Loads a font atlas from the file system.
+
+      Use msdf-atlas-gen to create a font atlas, which can then be imported
+      in to the game. In order to successfully map the glyph information it
+      needs additional data on both the font face metrics but also the glyph
+      positioning. The metrics are provided using a `AtlasMetric` data structure
+      and the UV positioning and unicode information via a CSV file. Using these
+      a font can be loaded without having to rely on runtime generation.
+
+      Note
+      ----
+      If the font file can not be loaded successfully, None will be returned.
     )");
 }
