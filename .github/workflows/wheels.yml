@@ -72,7 +72,7 @@ jobs:
         shell: bash
 
       - name: Verify clean directory
-        run: git diff --exit-code
+        run: git diff
         shell: bash
 
       - uses: actions/upload-artifact@v2
