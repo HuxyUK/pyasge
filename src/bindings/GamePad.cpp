@@ -30,18 +30,18 @@ void initGamepad(py::module_ &m)
 
         Example
         -------
-        >>> if self.inputs.getGamePad(0).connected:
+        >>> if self.inputs.getGamePad().connected:
         >>>
         >>>    '''use gamepad to adjust players velocity'''
-        >>>    self.player.velocity.x = self.inputs.getGamePad(0).x
-        >>>    self.player.velocity.y = self.inputs.getGamePad(0).y
+        >>>    self.player.velocity.x = self.inputs.getGamePad().AXIS_LEFT_X
+        >>>    self.player.velocity.y = self.inputs.getGamePad().AXIS_LEFT_Y
         >>>
         >>>    '''check to see if we should fire a at the enemy'''
-        >>>    if self.inputs.getGamePad(0).A:
+        >>>    if self.inputs.getGamePad().A:
         >>>       self.player.fire()
         >>>
         >>>    '''check to see if we should exit the game'''
-        >>>    if self.inputs.getGamePad(0).START:
+        >>>    if self.inputs.getGamePad().START:
         >>>       self.signalExit()
 
 
@@ -50,6 +50,21 @@ void initGamepad(py::module_ &m)
         You must ensure the device is connected before attempting to use it as the
         axis and button data will be invalid if it is not and accessing it will
         lead to undefined behaviour or crashing)")
+
+    .def_readonly(
+      "name", &ASGE::GamePadData::name,
+      R"( Whether or not the gamepad is currently connected. It's possible that
+        a gamepad device may get disconnected during use, this can be used to
+        ensure it's still connected.
+
+        :getter: Returns True if connected
+        :type: bool
+
+        Example
+        -------
+        >>> if self.inputs.getGamePad().connected:
+        >>>   print("Gamepad at idx is connected) )")
+
 
     .def_readonly(
       "connected", &ASGE::GamePadData::is_connected,
@@ -62,11 +77,11 @@ void initGamepad(py::module_ &m)
 
           Example
           -------
-          >>> if self.inputs.getGamePad(0).connected:
-          >>>   print("Gamepad at idx 0 is connected) )")
+          >>> if self.inputs.getGamePad().connected:
+          >>>   print("Gamepad at idx is connected) )")
 
     .def_property_readonly(
-      "x",
+      "AXIS_LEFT_X",
       [](const ASGE::GamePadData& data) { return data.axis[ASGE::GAMEPAD::AXIS_LEFT_X]; },
       R"(
           The reading of the x-axis on the left stick.
@@ -77,10 +92,10 @@ void initGamepad(py::module_ &m)
           Example
           -------
           >>> if self.inputs.getGamePad(0).connected:
-          >>>   print(f"axis reads: {self.inputs.getGamePad(0).x}") )")
+          >>>   print(f"axis reads: {self.inputs.getGamePad(0).AXIS_LEFT_X}") )")
 
     .def_property_readonly(
-      "y",
+      "AXIS_LEFT_Y",
       [](const ASGE::GamePadData& data) { return data.axis[ASGE::GAMEPAD::AXIS_LEFT_Y]; },
       R"(
           The reading of the y-axis on the left stick.
@@ -91,10 +106,10 @@ void initGamepad(py::module_ &m)
           Example
           -------
           >>> if self.inputs.getGamePad(0).connected:
-          >>>   print(f"axis reads: {self.inputs.getGamePad(0).y}") )")
+          >>>   print(f"axis reads: {self.inputs.getGamePad(0).AXIS_LEFT_Y}") )")
 
     .def_property_readonly(
-      "x_right_axis",
+      "AXIS_RIGHT_X",
       [](const ASGE::GamePadData& data) { return data.axis[ASGE::GAMEPAD::AXIS_RIGHT_X]; },
       R"(
           The reading of the x-axis on the right stick.
@@ -105,10 +120,10 @@ void initGamepad(py::module_ &m)
           Example
           -------
           >>> if self.inputs.getGamePad(0).connected:
-          >>>   print(f"axis reads: {self.inputs.getGamePad(0).x_right_axis}") )")
+          >>>   print(f"axis reads: {self.inputs.getGamePad(0).AXIS_RIGHT_X}") )")
 
     .def_property_readonly(
-      "y_right_axis",
+      "AXIS_RIGHT_Y",
       [](const ASGE::GamePadData& data) { return data.axis[ASGE::GAMEPAD::AXIS_RIGHT_Y]; },
       R"(
           The reading of the y-axis on the right stick.
@@ -119,7 +134,7 @@ void initGamepad(py::module_ &m)
           Example
           -------
           >>> if self.inputs.getGamePad(0).connected:
-          >>>   print(f"axis reads: {self.inputs.getGamePad(0).y_right_axis}") )")
+          >>>   print(f"axis reads: {self.inputs.getGamePad(0).AXIS_RIGHT_Y}") )")
 
     .def_property_readonly(
       "RIGHT_TRIGGER",
@@ -282,20 +297,5 @@ void initGamepad(py::module_ &m)
 
           Example
           -------
-          >>> print(f"index of controller reads: {self.inputs.getGamePad(0).index}") )")
-
-
-    .def_readonly(
-      "axis_count", &ASGE::GamePadData::no_of_axis,
-      R"( "The number of axis available for this controller."
-
-          :getter: Returns the number of supported axis for the attached controller.
-          :type: int )")
-
-    .def_readonly(
-      "button_count", &ASGE::GamePadData::no_of_buttons,
-      R"( "The number of buttons available for this controller."
-
-          :getter: Returns the number for the attached controller.
-          :type: int )");
+          >>> print(f"index of controller reads: {self.inputs.getGamePad().index}") )");
 }
