@@ -1,6 +1,30 @@
 ChangeLog
 =========
 
+Version 2.0.0
+---------------
+
+:Date: Feb 28, 2022
+
+🎉 **v2.0.0 release of PyASGE** 🎉
+
+Moving to 2.0.0 due to general stability in the wild. Whilst performance still needs further optimisations
+the engine has been stable under use and the features implemented are working as intended.
+
+* Upgraded to ASGE v3.2.0 [fffe04f_] (`#7283642 <https://github.com/HuxyUK/pyasge/commit/7283642bb14b87d29bb8751c86fd6a742292b987>`__)
+* Fixed crash in shader due to memory deallocation(`#69daca2 <https://github.com/HuxyUK/pyasge/commit/69daca2184db70123b1e6e16a773ec57940fa20d>`__)
+* Support for GamePad lists(`#4ad2c28 <https://github.com/HuxyUK/pyasge/commit/4ad2c28e80fa0f5454b1bcaf66d77a196314fd48>`__)
+
+.. _0d2bfde: https://github.com/HuxyUK/ASGE/tree/0d2bfdec9b2e5f691dfaa851f36ad59d69f203cd
+
+**Known Issues**
+
+- Generating SDFs for font faces can be slow.
+- Rendering large numbers of sprites i.e. many thousands can bottleneck the CPU. This appears to be the cost
+  of "casting" them back to the correct types in the C++ library.
+
+....
+
 Version 2.0.0a2
 ---------------
 
