@@ -20,7 +20,7 @@ namespace py = pybind11;
 void initCamera(py::module_ &module)
 {
   PYBIND11_NUMPY_DTYPE(ASGE::Camera::CameraView, min_x, max_x, min_y, max_y);
-  py::class_<ASGE::Camera::CameraView> camera_view(module, "CameraView",
+  py::class_<ASGE::Camera::CameraView> camera_view(module, "CameraView", py::buffer_protocol(),
     R"(A an orthogonal camera view class.
 
        The camera view class describes a bounding box that is used to map
@@ -45,10 +45,22 @@ void initCamera(py::module_ &module)
   )");
 
   camera_view.def(py::init());
+  camera_view.def(py::init<const ASGE::Camera::CameraView&>());
   camera_view.def_readwrite("min_x", &ASGE::Camera::CameraView::min_x, "The minimum x world position.");
   camera_view.def_readwrite("max_x", &ASGE::Camera::CameraView::max_x, "The maximum x world position.");
   camera_view.def_readwrite("min_y", &ASGE::Camera::CameraView::min_y, "The minimum y world position.");
   camera_view.def_readwrite("max_y", &ASGE::Camera::CameraView::max_y, "The maximum y world position.");
+
+  camera_view.def_buffer([](ASGE::Camera::CameraView &view) -> py::buffer_info {
+    return py::buffer_info(
+        &view,                                  /* Pointer to buffer */
+        sizeof(float),                          /* Size of one scalar */
+        py::format_descriptor<float>::format(), /* Python struct-style format descriptor */
+        1,                                      /* Number of dimensions */
+        {4},                                    /* Buffer dimensions */
+        {sizeof(float)}                         /* Strides (in bytes) for each index */
+    );
+  });
 
   py::implicitly_convertible<py::tuple, ASGE::Camera::CameraView>();
   py::implicitly_convertible<py::list, ASGE::Camera::CameraView>();

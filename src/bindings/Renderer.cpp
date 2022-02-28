@@ -7,6 +7,7 @@
 #include <filesystem>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
+#include <pybind11/numpy.h>
 namespace py = pybind11;
 
 void initRenderer(py::module_ &module) {
@@ -120,37 +121,37 @@ void initRenderer(py::module_ &module) {
       py::arg("z") = 0)
 
     .def(
-        "render",
-        [](ASGE::GLRenderer& self, ASGE::GLTexture& texture, int x, int y, int width, int height, int16_t z)
-        {
-          self.render(
-          texture,
-          {0, 0, static_cast<float>(texture.getWidth()), static_cast<float>(texture.getHeight())},
-          ASGE::Point2D{static_cast<float>(x),static_cast<float>(y)}, width, height, z);
-        },
-        py::arg("texture"),
-        py::arg("x"),
-        py::arg("y"),
-        py::arg("width"),
-        py::arg("height"),
-        py::arg("z") = 0)
+      "render",
+      [](ASGE::GLRenderer& self, ASGE::GLTexture& texture, int x, int y, int width, int height, int16_t z)
+      {
+        self.render(
+        texture,
+        {0, 0, static_cast<float>(texture.getWidth()), static_cast<float>(texture.getHeight())},
+        ASGE::Point2D{static_cast<float>(x),static_cast<float>(y)}, width, height, z);
+      },
+      py::arg("texture"),
+      py::arg("x"),
+      py::arg("y"),
+      py::arg("width"),
+      py::arg("height"),
+      py::arg("z") = 0)
 
     .def(
-        "render",
-        [](ASGE::GLRenderer& self, ASGE::GLTexture& texture, const py::list& rect, int x, int y, int width, int height, int16_t z)
-        {
-          self.render(
-          texture,
-          {rect[0].cast<float>(), rect[1].cast<float>(), rect[2].cast<float>(), rect[3].cast<float>()},
-          ASGE::Point2D{static_cast<float>(x),static_cast<float>(y)}, width, height, z);
-        },
-        py::arg("texture"),
-        py::arg("rect"),
-        py::arg("x"),
-        py::arg("y"),
-        py::arg("width"),
-        py::arg("height"),
-        py::arg("z") = 0)
+      "render",
+      [](ASGE::GLRenderer& self, ASGE::GLTexture& texture, const py::list& rect, int x, int y, int width, int height, int16_t z)
+      {
+        self.render(
+        texture,
+        {rect[0].cast<float>(), rect[1].cast<float>(), rect[2].cast<float>(), rect[3].cast<float>()},
+        ASGE::Point2D{static_cast<float>(x),static_cast<float>(y)}, width, height, z);
+      },
+      py::arg("texture"),
+      py::arg("rect"),
+      py::arg("x"),
+      py::arg("y"),
+      py::arg("width"),
+      py::arg("height"),
+      py::arg("z") = 0)
 
     .def(
       "setProjectionMatrix",
@@ -163,6 +164,26 @@ void initRenderer(py::module_ &module) {
     .def(
       "setProjectionMatrix",
       py::overload_cast<const ASGE::Camera::CameraView&>(&ASGE::GLRenderer::setProjectionMatrix),
+      py::arg("camera_view"))
+
+    .def(
+      "setProjectionMatrix",
+      [](ASGE::GLRenderer& self, py::array_t<float, py::array::c_style | py::array::forcecast> array){
+        py::buffer_info info = array.request();
+
+        if (info.format != py::format_descriptor<float>::format())
+          throw std::runtime_error("Incompatible format: expected a float array!");
+
+        if (info.ndim != 1)
+          throw std::runtime_error("Incompatible array dimension!");
+
+        if (info.size != 4)
+          throw std::runtime_error("Incompatible number of elements!");
+
+        ASGE::Camera::CameraView view{};
+        memcpy(&view, array.data(), sizeof(float) * 4);
+        self.setProjectionMatrix(view);
+        },
       py::arg("camera_view"))
 
     .def(
