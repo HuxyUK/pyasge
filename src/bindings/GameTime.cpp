@@ -31,7 +31,7 @@ void initGametime(py::module_ & module) {
 
     .def(py::init<>())
     .def_readonly("frame_delta", &ASGE::GameTime::frame_delta, "Returns the delta time between rendered frames. Use for ``render`` function.")
-    .def_readonly("fixed_delta", &ASGE::GameTime::fixed_delta, "Returns the fixed time-step interval. Use for ``update`` function.")
+    .def_readonly("fixed_delta", &ASGE::GameTime::fixed_delta, "Returns the fixed time-step interval. Use for ``fixedUpdate`` function.")
     .def_readonly("elapsed", &ASGE::GameTime::elapsed, "Total elapsed game time.")
     .def_property_readonly("frame_time", &ASGE::GameTime::deltaInSecs, "The delta time between rendered frames in seconds.")
     .def_property_readonly("fixed_timestep", &ASGE::GameTime::fixedTsInSecs, "The time-step between fixed updates in seconds.");

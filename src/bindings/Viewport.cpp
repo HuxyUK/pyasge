@@ -49,9 +49,9 @@ void initViewPort(py::module_ &module)
       >>>
       >>> def render(self) -> None:
       >>>   self.renderer.setProjectionMatrix(self.camera.view)
-      >>>   self.renderer.viewport = pyasge.Viewport(0, 0, 384 / 2, 256)
+      >>>   self.renderer.setViewport(pyasge.Viewport(0, 0, 384 / 2, 256))
       >>>   self.renderer.render(self.sprite)
-      >>>   self.renderer.viewport = pyasge.Viewport(384 / 2, 0, 384 / 2, 256)
+      >>>   self.renderer.setViewport(pyasge.Viewport(384 / 2, 0, 384 / 2, 256))
       >>>   self.renderer.render(self.sprite2)
 
       .. image:: ../_static/images/viewports.png
@@ -70,6 +70,7 @@ void initViewPort(py::module_ &module)
 
   viewport.def(py::init());
   viewport.def(py::init<float, float, float, float>());
+  viewport.def(py::init<const ASGE::Viewport&>());
   viewport.def_readwrite("x", &ASGE::Viewport::x, "The viewports starting x position.");
   viewport.def_readwrite("y", &ASGE::Viewport::y, "The viewports starting y position.");
   viewport.def_readwrite("w", &ASGE::Viewport::w, "The viewports width.");

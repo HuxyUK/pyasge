@@ -75,7 +75,7 @@ void initGamesettings(py::module_ & module){
     )")
 
     .def_readwrite(
-      "window_title", &ASGE::GameSettings::window_title,
+      "window_title", &ASGE::GameSettings::game_title,
       R"(
           Each window has a title, customise yours.
 
@@ -149,7 +149,7 @@ void initGamesettings(py::module_ & module){
            "Present the game in full-screen, changing resolution if necessary.")
     .value("WINDOWED", ASGE::GameSettings::WindowMode::WINDOWED,
            "Present the game in a window.")
-    .value("BORDERLESS_WINDOW", ASGE::GameSettings::WindowMode::WINDOWED,
+    .value("BORDERLESS_WINDOW", ASGE::GameSettings::WindowMode::BORDERLESS_WINDOWED,
            "Present the game in a borderless window.")
     .value("BORDERLESS_FULLSCREEN", ASGE::GameSettings::WindowMode::BORDERLESS_FULLSCREEN,
            "Present the game in a fullscreen borderless window, maintaining the "

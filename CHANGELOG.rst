@@ -1,13 +1,66 @@
 ChangeLog
 =========
 
+Version 2.0.0
+---------------
+
+:Date: Feb 28, 2022
+
+🎉 **v2.0.0 release of PyASGE** 🎉
+
+Moving to 2.0.0 due to general stability in the wild. Whilst performance still needs further optimisations
+the engine has been stable under use and the features implemented are working as intended.
+
+* Upgraded to ASGE v3.2.0 [fffe04f_] (`#69f1dc1 <https://github.com/HuxyUK/pyasge/commit/69f1dc1f1d75148c9ba052c5bbb0943adde05335>`__)
+* Bumped ASGE version [c9f1012_] (`#126fb00 <https://github.com/HuxyUK/pyasge/commit/e7f01fc0e2081c9a6c6fd16c4c9b9ba6b8be32f4>`__)
+* Support for GamePad lists(`#4ad2c28 <https://github.com/HuxyUK/pyasge/commit/4ad2c28e80fa0f5454b1bcaf66d77a196314fd48>`__)
+
+.. _fffe04f: https://github.com/HuxyUK/ASGE/commit/fffe04fda5542b4d06d6398e38cfe02c8f6ab1c6
+
+**Known Issues**
+
+- Generating SDFs for font faces can be slow.
+- Rendering large numbers of sprites i.e. many thousands can bottleneck the CPU. This appears to be the cost
+  of "casting" them back to the correct types in the C++ library.
+
+....
+
+Version 2.0.0a2
+---------------
+
+:Date: Jan 17, 2022
+
+* Added support for loading font atlases directly from the file system.
+
+**Notes**
+Pleas see previous notes on alpha1 regarding compatibility.
+
+....
+
+Version 2.0.0a1
+---------------
+
+:Date: Jan 14, 2022
+
+**Notes**
+A pre-release version of the upcoming 2.0.0 release. There have been a
+significant number of improvements and features added to ASGE including
+support for proper viewport scaling, SDF font rendering and a new Tile
+data structure. Due to the wide spread changes a pre-release cycle is
+being used.
+
+*Some of the changes have broken API compatibility so users upgrading
+should expect some minor issues that would need resolving.*
+
+....
+
 Version 1.1.0
 ---------------
 
 :Date: Nov 17, 2021
 
 * Bumped ASGE version [620596b_] (`#7b773c1 <https://github.com/HuxyUK/pyasge/commit/7b773c196b7fcc66c4ada3b8d7350518439ad080>`__)
-* Added a new function to calculate Y bounds for text(`#bdb3a54 <https://github.com/HuxyUK/pyasge/commit/bdb3a546c6bb9951b3f0e0269b225638ecb1a2ac>`__)
+* Added a new function to calculate Y bounds for text (`#bdb3a54 <https://github.com/HuxyUK/pyasge/commit/bdb3a546c6bb9951b3f0e0269b225638ecb1a2ac>`__)
 
 **Notes**
 
@@ -16,6 +69,7 @@ Version 1.1.0
 * Mipmaps have been enabled for font rendering in ASGE
 
 .. _620596b: https://github.com/HuxyUK/ASGE/commit/620596bce52b284d488fb887b7febb51ec559712
+
 ....
 
 Version 1.0.3
@@ -38,6 +92,7 @@ Version 1.0.3
 * Introduces but does not force the use of a fixed update function. Update is now variable and can be considered a frame update
 
 .. _c9f1012: https://github.com/HuxyUK/ASGE/commit/c9f10124722ea159521dcbde32efb3b3cb62385b
+
 ....
 
 Version 1.0.3
@@ -47,7 +102,7 @@ Version 1.0.3
 
 * Bumped ASGE version [435d35d_] (`#f7269f4 <https://github.com/HuxyUK/pyasge/commit/f7269f44e1e90ea75a5987b015d5cd2d4a881016>`__)
 
-.. _9d42f9b: https://github.com/HuxyUK/ASGE/commit/9d42f9bd075af0a86b2e3cc1f28a8eda04050422
+.. _435d35d: https://github.com/HuxyUK/ASGE/commit/9d42f9bd075af0a86b2e3cc1f28a8eda04050422
 
 ....
 
@@ -80,6 +135,7 @@ Version 1.0.0
 * None reported as this time
 
 .. _82aef53: https://github.com/HuxyUK/ASGE/commit/82aef536e3939f9892974715f3e0513d3fe50108
+
 ....
 
 Version 1.0.0b3

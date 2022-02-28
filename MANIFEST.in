@@ -5,6 +5,7 @@ graft docs
 graft libs/asge/cmake/build
 graft libs/asge/cmake/functions
 graft libs/asge/cmake/libs
+graft libs/asge/engine/examples
 graft libs/asge/engine/include
 graft libs/asge/engine/libs/freetype2/builds
 graft libs/asge/engine/libs/freetype2/devel
@@ -17,6 +18,7 @@ graft libs/asge/engine/libs/glfw/deps
 graft libs/asge/engine/libs/glfw/include
 graft libs/asge/engine/libs/glfw/src
 graft libs/asge/engine/libs/glm/glm
+graft libs/asge/engine/libs/msdfgen
 graft libs/asge/engine/libs/physfs/src
 graft libs/asge/engine/src
 graft libs/pybind11/include
@@ -28,12 +30,15 @@ include CMakeLists.txt
 include libs/asge/CMakeLists.txt
 include libs/asge/cmake/CMakeLists.txt
 include libs/asge/engine/CMakeLists.txt
+include libs/asge/examples/CMakeLists.txt
+include libs/asge/examples/helloasge/ASGEGame.cpp
 include libs/asge/engine/libs/CMakeLists.txt
 include libs/asge/engine/libs/freetype2/CMakeLists.txt
 include libs/asge/engine/libs/freetype2/README
 include libs/asge/engine/libs/glfw/CMakeLists.txt
 include libs/asge/engine/libs/glfw/cmake_uninstall.cmake.in
 include libs/asge/engine/libs/glm/CMakeLists.txt
+include libs/asge/engine/libs/msdfgen/msdfgen.cmake
 include libs/asge/engine/libs/physfs++/CMakeLists.txt
 include libs/asge/engine/libs/physfs++/include/PhysFS/PhysFS.hpp
 include libs/asge/engine/libs/physfs++/source/CMakeLists.txt

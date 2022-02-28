@@ -18,7 +18,11 @@ CameraView
 Colour
 =====================
 .. autoclass:: Colour
-   :members:
+.. rubric:: Attributes
+.. autosummary::
+      ~Colour.r
+      ~Colour.g
+      ~Colour.b
 
 CursorMode
 =====================
@@ -98,6 +102,13 @@ RenderTarget
 .. autoclass:: RenderTarget
    :members:
 
+Resolution
+=====================
+.. autoclass:: Resolution
+   :members:
+.. autoclass:: ResolutionPolicy
+   :members:
+
 Shader
 =====================
 .. autoclass:: Shader
@@ -131,6 +142,13 @@ Texture
 =====================
 .. autoclass:: Texture
    :members:
+
+Tile
+=====================
+.. autoclass:: Tile
+   :members:
+.. autosummary::
+   :toctree: _generate
 
 Value
 =====================

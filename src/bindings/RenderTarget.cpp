@@ -41,13 +41,13 @@ void initRenderTarget(py::module_& module)
       >>> # Render Function
       >>> """ render to texture """
       >>> self.renderer.setRenderTarget(self.rt)
-      >>> self.renderer.viewport = pyasge.Viewport(0, 0, 1024 / 2, 768 / 2)
+      >>> self.renderer.setViewport(pyasge.Viewport(0, 0, 1024 / 2, 768 / 2))
       >>> self.renderer.render(self.sprite)
       >>>
       >>> """ render the resultant texture """
       >>> self.renderer.setRenderTarget(None)
       >>> self.rt.resolve(0)
-      >>> self.renderer.viewport = pyasge.Viewport(0, 0, 1024, 768)
+      >>> self.renderer.setViewport(pyasge.Viewport(0, 0, 1024, 768))
       >>> self.renderer.render(self.rt_texture)
   )")
 
@@ -119,13 +119,9 @@ void initRenderTarget(py::module_& module)
           :returns: A handle to the resultant updated textures.
           :type: Texture
 
-          Warning
-          -------
-          You need to call resolve to sample the buffers correctly.
+          .. warning:: You need to call resolve to sample the buffers correctly.
 
-          See Also
-          --------
-          Texture
+          .. seealso:: :class:`Texture`
       )")
 
       .def(
@@ -152,12 +148,8 @@ void initRenderTarget(py::module_& module)
           :returns: A list of all the resultant updated texture.
           :type: list[Texture]
 
-          Warning
-          -------
-          You need to call resolve to sample the buffers correctly.
+          .. warning:: You need to call resolve to sample the buffers correctly.
 
-          See Also
-          --------
-          Texture
+          .. seealso:: :class:`Texture`
       )");
 }

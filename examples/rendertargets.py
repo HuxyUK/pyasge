@@ -54,7 +54,7 @@ class MyASGEGame(pyasge.ASGEGame):
         pass
 
     def render(self, game_time: pyasge.GameTime) -> None:
-        """ render to texture """
+        """render to texture"""
         self.renderer.setRenderTarget(self.rt)
         self.renderer.viewport = pyasge.Viewport(0, 0, 1024 / 2, 768 / 2)
         self.renderer.render(self.sprite)

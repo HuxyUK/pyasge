@@ -2,7 +2,7 @@
 # General build settings
 #------------------------------------------------------------------------------
 cmake_minimum_required(VERSION 3.4...3.18)
-set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15" CACHE STRING "Minimum OS X deployment version")
+set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15" CACHE STRING "Minimum OSX deployment version")
 project(pyasge)
 set(ASGE_BUILD_DEMOS ON CACHE BOOL "Disable ASGE demos")
 set(ASGE_ENABLE_DOXYGEN ON CACHE BOOL "Enable ASGE doxygen")
@@ -36,11 +36,13 @@ pybind11_add_module(
         "${CMAKE_CURRENT_SOURCE_DIR}/src/bindings/Point2D.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/bindings/Renderer.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/bindings/RenderTarget.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/bindings/Resolution.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/bindings/Shader.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/bindings/Sprite.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/bindings/SpriteBounds.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/bindings/Texture2D.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/bindings/Text.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/bindings/Tile.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/bindings/Value.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/bindings/Viewport.cpp")
 
@@ -62,6 +64,7 @@ endif ()
 target_include_directories(
         ${PROJECT_NAME}
         PRIVATE
+        "${CMAKE_SOURCE_DIR}/libs/asge/engine/include/Engine"
         "${CMAKE_SOURCE_DIR}/libs/asge/engine/src"
         "${CMAKE_SOURCE_DIR}/libs/asge/engine/libs/glm")
 

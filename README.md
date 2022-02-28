@@ -1,11 +1,11 @@
 # PyASGE - Python Bindings for ASGE
 
-|      CI              | status |
-|----------------------|--------|
-| docs                 | [![Docs Actions Status][actions-docs]][actions-docs-link]
-| conda.recipe         | [![Conda Actions Status][actions-conda-badge]][actions-conda-link] |
-| pip builds           | [![Pip Actions Status][actions-pip-badge]][actions-pip-link] |
-| [`cibuildwheel`][]   | [![Wheels Actions Status][actions-wheels-badge]][actions-wheels-link] |
+|      CI              | status                                                                 |
+|----------------------|------------------------------------------------------------------------|
+| docs                 | [![Docs Actions Status][actions-docs]][actions-docs-link]              |
+| conda.recipe         | [![Conda Actions Status][actions-conda-badge]][actions-conda-link]     |
+| pip builds           | [![Pip Actions Status][actions-pip-badge]][actions-pip-link]           |
+| [`cibuildwheel`][]   | [![Wheels Actions Status][actions-wheels-badge]][actions-wheels-link]  |
 
 [actions-docs]:            https://github.com/HuxyUK/pyasge/workflows/Sphinx/badge.svg
 [actions-docs-link]:       https://github.com/HuxyUK/pyasge/actions?query=workflow%3ASphinx
@@ -23,10 +23,6 @@ game framework designed to allow rapid prototyping of games. It provides the min
 of fuss when it comes to creating windows and moving sprites around the virtual
 game-world. Though it had humble beginnings, it's evolved to support a number of
 additional features over the years.
-
-**It's focus has never been on performance. Rather it's a tool for experimenting
-with language features and for learning.**
-
 
 ## Prerequisites
 

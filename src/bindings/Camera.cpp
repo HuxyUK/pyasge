@@ -50,6 +50,9 @@ void initCamera(py::module_ &module)
   camera_view.def_readwrite("min_y", &ASGE::Camera::CameraView::min_y, "The minimum y world position.");
   camera_view.def_readwrite("max_y", &ASGE::Camera::CameraView::max_y, "The maximum y world position.");
 
+  py::implicitly_convertible<py::tuple, ASGE::Camera::CameraView>();
+  py::implicitly_convertible<py::list, ASGE::Camera::CameraView>();
+
   class PyCamera : public ASGE::Camera
   {
    public:
@@ -76,7 +79,7 @@ void initCamera(py::module_ &module)
     }
   };
 
-  py::class_<ASGE::Camera, PyCamera> camera(module, "Camera",
+  py::class_<ASGE::Camera, PyCamera> camera(module, "Camera", py::dynamic_attr(),
     R"(A 2D orthogonal camera class.
 
        The Camera class is designed as a simple way to alter the view being
@@ -198,6 +201,87 @@ void initCamera(py::module_ &module)
     "resize", &ASGE::Camera::resize, py::arg("width"), py::arg("height"),
     R"(Resizes the camera's view.)"
   );
+
+  camera.def_property_readonly(
+    "position", &ASGE::Camera::position, "The camera's position on the XY axis");
+
+  camera.def(
+    "clamp", &ASGE::Camera::clamp, py::arg("view_bounds"),
+    R"(
+    Clamps the camera's view.
+
+    It is often desirable to clamp the field of vision for the camera to
+    ensure only specific regions of the game screen are shown. Consider a
+    tile map where the camera should not exceed the width or height of the
+    map. This function can be used to clamp the view to a set of predefined
+    values, representing `min_x`, `max_x`, `min_y` and `max_y`. These would
+    then be used to simply clamp the view's x and y positions.
+
+    :param view_bounds: The four bounds to use in xy space.
+    :type view_bounds: :class:`CameraView`
+
+    .. code-block::
+       :caption: An example of clamping to a map made from 128x128 tiles. The
+                 games design resolution is used to ensure only the visible
+                 game map is shown. The camera's view is taken into consideration
+                 as this can affect the visible viewing area.
+
+       >>> view = pyasge.CameraView()
+       >>> view.min_x = self.game_res[0] * 0.5 * self.camera.zoom,
+       >>> view.max_x = self.map.width   * 128 - self.game_res[0] * 0.5 * self.camera.zoom,
+       >>> view.min_y = self.game_res[1] * 0.5 * self.camera.zoom,
+       >>> view.max_y = self.map.height  * 128 - self.game_res[1] * 0.5 * self.camera.zoom
+       >>> self.camera.clamp(view)
+
+    .. note::
+      This version of the function uses the :class:`CameraView` data structure.
+  )");
+
+  camera.def(
+    "clamp", [](ASGE::Camera& self, py::list& list) {
+        if(list.size() != 4)
+        {
+          throw std::length_error("Lists for clamping the camera should contain 4 values only");
+        }
+
+        ASGE::Camera::CameraView view;
+        view.min_x = list[0].cast<float>();
+        view.max_x = list[1].cast<float>();
+        view.min_y = list[2].cast<float>();
+        view.max_y = list[3].cast<float>();
+        self.clamp(view);}, py::arg("view_bounds"),
+    R"(
+    Clamps the camera's view.
+
+    It is often desirable to clamp the field of vision for the camera to
+    ensure only specific regions of the game screen are shown. Consider a
+    tile map where the camera should not exceed the width or height of the
+    map. This function can be used to clamp the view to a set of predefined
+    values, representing `min_x`, `max_x`, `min_y` and `max_y`. These would
+    then be used to simply clamp the view's x and y positions.
+
+    :param view_bounds: The four bounds to use in xy space
+    :type view_bounds: :class:`CameraView`
+
+    .. note::
+      This version of the function uses a python style list, comprising of
+      four float values, representing the bounds of the view.
+
+    .. code-block::
+       :caption: An example of clamping to a map made from 128x128 tiles. The
+                 games design resolution is used to ensure only the visible
+                 game map is shown. The camera's view is taken into consideration
+                 as this can affect the visible viewing area.
+
+       >>> view = [
+       >>>   self.game_res[0] * 0.5 * self.camera.zoom,
+       >>>   self.map.width   * 128 - self.game_res[0] * 0.5 * self.camera.zoom,
+       >>>   self.game_res[1] * 0.5 * self.camera.zoom,
+       >>>   self.map.height  * 128 - self.game_res[1] * 0.5 * self.camera.zoom
+       >>> ]
+       >>> self.camera.clamp(view)
+
+  )");
 
   camera.def_property_readonly(
     "position", &ASGE::Camera::position, "The camera's position on the XY axis");

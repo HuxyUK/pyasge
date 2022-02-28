@@ -20,27 +20,29 @@
 
 namespace py = pybind11;
 
-void initGamesettings(py::module_& module);
-void initGametime(py::module_& module);
+void initGamesettings(py::module_&);
+void initGametime(py::module_&);
 void initCamera(py::module&);
 void initColours(py::module&);
 void initFont(py::module&);
-void initGame(py::module_& m);
-void initGamepad(py::module& m);
-void initInput(py::module_& module);
+void initGame(py::module_&);
+void initGamepad(py::module&);
+void initInput(py::module_&);
 void initInputEvents(py::module&);
 void initKeyMacros(py::module&);
 void initLogger(py::module&);
 void initMouseMacros(py::module&);
 void initPixelBuffer(py::module&);
-void initPoint2D(py::module_& m);
+void initPoint2D(py::module_&);
+void initResolution(py::module&);
 void initRenderTarget(py::module&);
-void initRenderer(py::module_& module);
+void initRenderer(py::module_&);
 void initShader(py::module&);
 void initSprite(py::module_ &);
-void initSpritebounds(py::module& module);
+void initSpritebounds(py::module&);
 void initText(py::module&);
 void initTexture2D(py::module&);
+void initTile(py::module&);
 void initValue(py::module&);
 void initViewPort(py::module&);
 
@@ -69,6 +71,8 @@ PYBIND11_MODULE(pyasge, module)
   initShader(module);
   initSprite(module);
   initInput(module);
+  initTile(module);
+  initResolution(module);
   initRenderer(module);
   initGame(module);
 

@@ -18,6 +18,17 @@
 #include <pybind11/pybind11.h>
 namespace py = pybind11;
 void initFont(py::module_ &module) {
+
+  py::class_<ASGE::Font::AtlasMetrics> metrics( module, "AtlasMetrics");
+  metrics.def(py::init());
+  metrics.def_readwrite("id", &ASGE::Font::AtlasMetrics::id);
+  metrics.def_readwrite("ascender", &ASGE::Font::AtlasMetrics::ascender);
+  metrics.def_readwrite("descender", &ASGE::Font::AtlasMetrics::descender);
+  metrics.def_readwrite("em_size", &ASGE::Font::AtlasMetrics::em_size);
+  metrics.def_readwrite("line_height", &ASGE::Font::AtlasMetrics::line_height);
+  metrics.def_readwrite("range", &ASGE::Font::AtlasMetrics::range);
+  metrics.def_readwrite("size", &ASGE::Font::AtlasMetrics::size);
+
   py::class_<ASGE::GLFontSet> font(
     module, "Font", py::is_final(),
     R"(A loaded instance of a Font.
@@ -50,6 +61,8 @@ void initFont(py::module_ &module) {
 
   font.def(py::init());
 
+  font.def("setMagFilter", (&ASGE::GLFontSet::setMagFilter), py::arg("mag_filter"));
+
   font.def(
     "pxWide",
     static_cast<float (ASGE::GLFontSet::*) (const std::string&, float) const>(&ASGE::GLFontSet::pxWide),
@@ -68,19 +81,20 @@ void initFont(py::module_ &module) {
   font.def(
       "boundsY",
       &ASGE::GLFontSet::boundsY, py::arg("string"), py::arg("scale"),
-      R"(Calculates the bounding height for the string.
+      R"(
+      Calculates the bounding height for the string.
 
-       Calculates the deviation in the Y axis from the top of the rendered
-       string to the bottom. The function takes in to account the multiple lines
-       by adding appropriate amounts of spacing and also the individual
-       bearings of each character glpyh.
+      Calculates the deviation in the Y axis from the top of the rendered
+      string to the bottom. The function takes in to account the multiple lines
+      by adding appropriate amounts of spacing and also the individual
+      bearings of each character glpyh.
 
-       Example
-       -------
-         >>> '''load font using renderer'''
-         >>> self.font = self.renderer.loadFont("/data/fonts/kenvector_future.ttf", 40)
-         >>>
-         >>> '''attach font to a text object'''
-         >>> print(self.font.boundsY("Where are you?", 2.0))
-      )");
+      Example
+      -------
+      >>> '''load font using renderer'''
+      >>> self.font = self.renderer.loadFont("/data/fonts/kenvector_future.ttf", 40)
+      >>>
+      >>> '''attach font to a text object'''
+      >>> print(self.font.boundsY("Where are you?", 2.0))
+    )");
 }
