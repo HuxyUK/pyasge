@@ -34,9 +34,37 @@ class MyASGEGame(pyasge.ASGEGame):
         self.inputs.addCallback(pyasge.EventType.E_KEY, key_handler)
         self.inputs.addCallback(pyasge.EventType.E_MOUSE_MOVE, move_event)
         self.inputs.addCallback(pyasge.EventType.E_MOUSE_CLICK, click_event)
+        self.buttons: dict[str, bool] = {"A": False, "B": False}
+        self.gamepad: pyasge.GamePad = None
 
     def update(self, game_time: pyasge.GameTime) -> None:
-        pass
+
+        # first connected gamepad
+        if self.inputs.getGamePad().connected:
+            pyasge.INFO(self.inputs.getGamePad().name)
+
+        # specific gamepad via its index
+        if self.inputs.getGamePad(2).connected:
+            pyasge.INFO(self.inputs.getGamePad(2).name)
+
+        # all connected gamepads
+        for gamepad in self.inputs.gamepads:
+            pyasge.INFO(gamepad.name)
+
+        for gamepad in self.inputs.gamepads:
+            if self.gamepad:
+                if not self.gamepad.A and gamepad.A:
+                    pyasge.INFO("A pressed")
+                elif self.gamepad.A and gamepad.A:
+                    pyasge.INFO("A held")
+                elif self.gamepad.A and not gamepad.A:
+                    pyasge.INFO("A released")
+
+            # update the gamepad states so we can track changes
+            self.update_gamepad_state(gamepad)
+
+    def update_gamepad_state(self, pad: pyasge.GamePad) -> None:
+        self.gamepad = pad
 
     def render(self, game_time: pyasge.GameTime) -> None:
         pass

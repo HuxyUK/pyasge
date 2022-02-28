@@ -51,9 +51,10 @@ class GameScene(GameState):
                 self.player.velocity.x = 0
 
     def update(self, inputs, game_time: pyasge.GameTime) -> GameStateID:
-        if inputs.getGamePad(0).connected:
-            self.player.velocity.x = inputs.getGamePad(0).x
-            self.player.velocity.y = inputs.getGamePad(0).y
+        # first connected gamepad
+        if inputs.getGamePad().connected:
+            self.player.velocity.x = inputs.getGamePad().AXIS_LEFT_X * 500
+            self.player.velocity.y = inputs.getGamePad().AXIS_LEFT_Y * 500
 
         self.player.update(game_time)
         self.enemy.update(game_time)
