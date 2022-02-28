@@ -3,15 +3,12 @@
 |      CI              | status                                                                 |
 |----------------------|------------------------------------------------------------------------|
 | docs                 | [![Docs Actions Status][actions-docs]][actions-docs-link]              |
-| conda.recipe         | [![Conda Actions Status][actions-conda-badge]][actions-conda-link]     |
 | pip builds           | [![Pip Actions Status][actions-pip-badge]][actions-pip-link]           |
 | [`cibuildwheel`][]   | [![Wheels Actions Status][actions-wheels-badge]][actions-wheels-link]  |
 
 [actions-docs]:            https://github.com/HuxyUK/pyasge/workflows/Sphinx/badge.svg
 [actions-docs-link]:       https://github.com/HuxyUK/pyasge/actions?query=workflow%3ASphinx
 [actions-badge]:           https://github.com/HuxyUK/pyasge/workflows/Tests/badge.svg
-[actions-conda-link]:      https://github.com/HuxyUK/pyasge/actions?query=workflow%3AConda
-[actions-conda-badge]:     https://github.com/HuxyUK/pyasge/workflows/Conda/badge.svg
 [actions-pip-link]:        https://github.com/HuxyUK/pyasge/actions?query=workflow%3APip
 [actions-pip-badge]:       https://github.com/HuxyUK/pyasge/workflows/Pip/badge.svg
 [actions-wheels-link]:     https://github.com/HuxyUK/pyasge/actions?query=workflow%3AWheels
