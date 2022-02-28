@@ -7,6 +7,7 @@
   <title>Camera &mdash; pyasge  documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/rtd_sphinx_search.min.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,8 +17,10 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
         <script src="../_static/js/rtd_sphinx_search.min.js"></script>
-        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -62,11 +65,13 @@
 <li class="toctree-l3"><a class="reference internal" href="#pixelbuffer">PixelBuffer</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#renderer">Renderer</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rendertarget">RenderTarget</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#resolution">Resolution</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#shader">Shader</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#sprite">Sprite</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#spritebounds">SpriteBounds</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#text">Text</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#texture">Texture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tile">Tile</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#value">Value</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#viewport">Viewport</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#vsync">Vsync</a></li>
@@ -145,6 +150,90 @@ overridden.</p>
 <li><p>__init__(self: pyasge.Camera, focal_point: pyasge.Point2D, width: float, height: float) -&gt; None</p></li>
 </ol>
 <dl class="py method">
+<dt class="sig sig-object py" id="pyasge.Camera.clamp">
+<span class="sig-name descname"><span class="pre">clamp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyasge.Camera.clamp" title="Permalink to this definition"></a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic">
+<li><p>clamp(self: pyasge.Camera, view_bounds: pyasge.CameraView) -&gt; None</p>
+<blockquote>
+<div><p>Clamps the camera’s view.</p>
+<p>It is often desirable to clamp the field of vision for the camera to
+ensure only specific regions of the game screen are shown. Consider a
+tile map where the camera should not exceed the width or height of the
+map. This function can be used to clamp the view to a set of predefined
+values, representing <cite>min_x</cite>, <cite>max_x</cite>, <cite>min_y</cite> and <cite>max_y</cite>. These would
+then be used to simply clamp the view’s x and y positions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">param view_bounds</dt>
+<dd class="field-odd"><p>The four bounds to use in xy space.</p>
+</dd>
+<dt class="field-even">type view_bounds</dt>
+<dd class="field-even"><p><a class="reference internal" href="#pyasge.CameraView" title="pyasge.CameraView"><code class="xref py py-class docutils literal notranslate"><span class="pre">CameraView</span></code></a></p>
+</dd>
+</dl>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">An example of clamping to a map made from 128x128 tiles. The
+games design resolution is used to ensure only the visible
+game map is shown. The camera’s view is taken into consideration
+as this can affect the visible viewing area.</span><a class="headerlink" href="#id2" title="Permalink to this code"></a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">view</span> <span class="o">=</span> <span class="n">pyasge</span><span class="o">.</span><span class="n">CameraView</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">view</span><span class="o">.</span><span class="n">min_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_res</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">zoom</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">view</span><span class="o">.</span><span class="n">max_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">map</span><span class="o">.</span><span class="n">width</span>   <span class="o">*</span> <span class="mi">128</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_res</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">zoom</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">view</span><span class="o">.</span><span class="n">min_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_res</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">zoom</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">view</span><span class="o">.</span><span class="n">max_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">map</span><span class="o">.</span><span class="n">height</span>  <span class="o">*</span> <span class="mi">128</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_res</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">zoom</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">view</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This version of the function uses the <a class="reference internal" href="#pyasge.CameraView" title="pyasge.CameraView"><code class="xref py py-class docutils literal notranslate"><span class="pre">CameraView</span></code></a> data structure.</p>
+</div>
+</div></blockquote>
+</li>
+<li><p>clamp(self: pyasge.Camera, view_bounds: list) -&gt; None</p>
+<blockquote>
+<div><p>Clamps the camera’s view.</p>
+<p>It is often desirable to clamp the field of vision for the camera to
+ensure only specific regions of the game screen are shown. Consider a
+tile map where the camera should not exceed the width or height of the
+map. This function can be used to clamp the view to a set of predefined
+values, representing <cite>min_x</cite>, <cite>max_x</cite>, <cite>min_y</cite> and <cite>max_y</cite>. These would
+then be used to simply clamp the view’s x and y positions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">param view_bounds</dt>
+<dd class="field-odd"><p>The four bounds to use in xy space</p>
+</dd>
+<dt class="field-even">type view_bounds</dt>
+<dd class="field-even"><p><a class="reference internal" href="#pyasge.CameraView" title="pyasge.CameraView"><code class="xref py py-class docutils literal notranslate"><span class="pre">CameraView</span></code></a></p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This version of the function uses a python style list, comprising of
+four float values, representing the bounds of the view.</p>
+</div>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">An example of clamping to a map made from 128x128 tiles. The
+games design resolution is used to ensure only the visible
+game map is shown. The camera’s view is taken into consideration
+as this can affect the visible viewing area.</span><a class="headerlink" href="#id3" title="Permalink to this code"></a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">view</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">&gt;&gt;&gt; </span>  <span class="bp">self</span><span class="o">.</span><span class="n">game_res</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">zoom</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>  <span class="bp">self</span><span class="o">.</span><span class="n">map</span><span class="o">.</span><span class="n">width</span>   <span class="o">*</span> <span class="mi">128</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_res</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">zoom</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>  <span class="bp">self</span><span class="o">.</span><span class="n">game_res</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">zoom</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>  <span class="bp">self</span><span class="o">.</span><span class="n">map</span><span class="o">.</span><span class="n">height</span>  <span class="o">*</span> <span class="mi">128</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">game_res</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">zoom</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">view</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div></blockquote>
+</li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="pyasge.Camera.lookAt">
 <span class="sig-name descname"><span class="pre">lookAt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyasge.Camera" title="pyasge.Camera"><span class="pre">pyasge.Camera</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">focal_point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyasge.Point2D" title="pyasge.Point2D"><span class="pre">pyasge.Point2D</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#pyasge.Camera.lookAt" title="Permalink to this definition"></a></dt>
 <dd><p>Sets the camera’s focal point, which controls the centering of the frame.
@@ -210,11 +299,11 @@ view can be used directly to control the projection matrix used for mapping
 to the game window. Everything inside the view will be mapped directly to
 the screens viewport. The bounding volume controls the depth of items
 rendered.</p>
-<figure class="align-center" id="id2">
+<figure class="align-center" id="id4">
 <a class="reference internal image-reference" href="http://www.pbr-book.org/3ed-2018/Camera_Models/Ortho%20viewing%20volume.svg"><img alt="pbr-book.org" src="http://www.pbr-book.org/3ed-2018/Camera_Models/Ortho%20viewing%20volume.svg" width="280px" /></a>
 <figcaption>
 <p><span class="caption-text">Physically Based Rendering: From Theory To Implementation,
-© 2004-2019 Matt Pharr, Wenzel Jakob, and Greg Humphreys</span><a class="headerlink" href="#id2" title="Permalink to this image"></a></p>
+© 2004-2019 Matt Pharr, Wenzel Jakob, and Greg Humphreys</span><a class="headerlink" href="#id4" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 <div class="admonition note">
@@ -272,10 +361,10 @@ during the drawing phase of the game. It’s possible to swap camera
 views during a render cycle. The easiest way to generate the view
 is to use a Camera class, assign it a width and height and update
 its focal point using <code class="docutils literal notranslate"><span class="pre">lookAt</span></code>.</p>
-<figure class="align-default" id="id3">
+<figure class="align-default" id="id5">
 <img alt="© Knowww 2017" src="https://cdn.knowww.eu/59b8e93cd54a862e9d7e4049//R21wxTK0kJBo.png" />
 <figcaption>
-<p><span class="caption-text">glm::ortho, © Knowww 2017</span><a class="headerlink" href="#id3" title="Permalink to this image"></a></p>
+<p><span class="caption-text">glm::ortho, © Knowww 2017</span><a class="headerlink" href="#id5" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 <p class="rubric">Example</p>
@@ -317,7 +406,7 @@ its focal point using <code class="docutils literal notranslate"><span class="pr
 <dd><p>Used to represent the RGB values of a colour.</p>
 <p class="rubric">Example</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">colour</span> <span class="o">=</span> <span class="n">pyasge</span><span class="o">.</span><span class="n">COLOURS</span><span class="o">.</span><span class="n">AQUA</span>      <span class="c1"># predefined</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">colour</span> <span class="o">=</span> <span class="n">pyasge</span><span class="o">.</span><span class="n">Colour</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>   <span class="c1"># red</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">colour</span> <span class="o">=</span> <span class="n">pyasge</span><span class="o">.</span><span class="n">Colour</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>   <span class="c1"># red</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">colour</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>                <span class="c1"># green</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">colour</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>                <span class="c1"># purple</span>
 </pre></div>
@@ -328,26 +417,26 @@ its focal point using <code class="docutils literal notranslate"><span class="pr
 <li><p>__init__(self: pyasge.Colour, rgb: List[float[3]]) -&gt; None</p></li>
 <li><p>__init__(self: pyasge.Colour, arg0: pyasge.Colour) -&gt; None</p></li>
 </ol>
-<dl class="py property">
-<dt class="sig sig-object py" id="pyasge.Colour.b">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">b</span></span><a class="headerlink" href="#pyasge.Colour.b" title="Permalink to this definition"></a></dt>
-<dd><p>The blue component of the colour.</p>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="pyasge.Colour.g">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">g</span></span><a class="headerlink" href="#pyasge.Colour.g" title="Permalink to this definition"></a></dt>
-<dd><p>The green component of the colour.</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="pyasge.Colour.r">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">r</span></span><a class="headerlink" href="#pyasge.Colour.r" title="Permalink to this definition"></a></dt>
-<dd><p>The red component of the colour.</p>
-</dd></dl>
-
-</dd></dl>
-
+<p class="rubric">Attributes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">r</span></code></p></td>
+<td><p>The red component of the colour.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">g</span></code></p></td>
+<td><p>The green component of the colour.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">b</span></code></p></td>
+<td><p>The blue component of the colour.</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="cursormode">
 <h1>CursorMode<a class="headerlink" href="#cursormode" title="Permalink to this headline"></a></h1>
@@ -429,11 +518,11 @@ engine.</p>
 <dt class="sig sig-object py" id="pyasge.Font.boundsY">
 <span class="sig-name descname"><span class="pre">boundsY</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyasge.Font" title="pyasge.Font"><span class="pre">pyasge.Font</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#pyasge.Font.boundsY" title="Permalink to this definition"></a></dt>
 <dd><p>Calculates the bounding height for the string.</p>
-<blockquote>
-<div><p>Calculates the deviation in the Y axis from the top of the rendered
+<p>Calculates the deviation in the Y axis from the top of the rendered
 string to the bottom. The function takes in to account the multiple lines
 by adding appropriate amounts of spacing and also the individual
 bearings of each character glpyh.</p>
+<p class="rubric">Example</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="sd">&#39;&#39;&#39;load font using renderer&#39;&#39;&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">font</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">loadFont</span><span class="p">(</span><span class="s2">&quot;/data/fonts/kenvector_future.ttf&quot;</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span>
 <span class="go">&gt;&gt;&gt;</span>
@@ -441,7 +530,6 @@ bearings of each character glpyh.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">font</span><span class="o">.</span><span class="n">boundsY</span><span class="p">(</span><span class="s2">&quot;Where are you?&quot;</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">))</span>
 </pre></div>
 </div>
-</div></blockquote>
 </dd></dl>
 
 <dl class="py method">
@@ -463,6 +551,11 @@ bearings of each character glpyh.</p>
 </ol>
 <p>How wide the character will be in pixels.</p>
 </dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyasge.Font.setMagFilter">
+<span class="sig-name descname"><span class="pre">setMagFilter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyasge.Font" title="pyasge.Font"><span class="pre">pyasge.Font</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mag_filter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyasge.MagFilter" title="pyasge.MagFilter"><span class="pre">pyasge.MagFilter</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#pyasge.Font.setMagFilter" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -832,18 +925,18 @@ will be false. Do not work with non connected devices as it will
 lead to undefined behaviour. Currently, gamepad support is via
 polling and not events.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">getGamePad</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">getGamePad</span><span class="p">()</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
 <span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span>   <span class="sd">&#39;&#39;&#39;use gamepad to adjust players velocity&#39;&#39;&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span>   <span class="bp">self</span><span class="o">.</span><span class="n">player</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">getGamePad</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">x</span>
-<span class="gp">&gt;&gt;&gt; </span>   <span class="bp">self</span><span class="o">.</span><span class="n">player</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">getGamePad</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">y</span>
+<span class="gp">&gt;&gt;&gt; </span>   <span class="bp">self</span><span class="o">.</span><span class="n">player</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">getGamePad</span><span class="p">()</span><span class="o">.</span><span class="n">AXIS_LEFT_X</span>
+<span class="gp">&gt;&gt;&gt; </span>   <span class="bp">self</span><span class="o">.</span><span class="n">player</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">getGamePad</span><span class="p">()</span><span class="o">.</span><span class="n">AXIS_LEFT_Y</span>
 <span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span>   <span class="sd">&#39;&#39;&#39;check to see if we should fire a at the enemy&#39;&#39;&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span>   <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">getGamePad</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">A</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>   <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">getGamePad</span><span class="p">()</span><span class="o">.</span><span class="n">A</span><span class="p">:</span>
 <span class="gp">&gt;&gt;&gt; </span>      <span class="bp">self</span><span class="o">.</span><span class="n">player</span><span class="o">.</span><span class="n">fire</span><span class="p">()</span>
 <span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span>   <span class="sd">&#39;&#39;&#39;check to see if we should exit the game&#39;&#39;&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span>   <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">getGamePad</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">START</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>   <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">getGamePad</span><span class="p">()</span><span class="o">.</span><span class="n">START</span><span class="p">:</span>
 <span class="gp">&gt;&gt;&gt; </span>      <span class="bp">self</span><span class="o">.</span><span class="n">signalExit</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -865,6 +958,82 @@ lead to undefined behaviour or crashing</p>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyasge.GamePad.AXIS_LEFT_X">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">AXIS_LEFT_X</span></span><a class="headerlink" href="#pyasge.GamePad.AXIS_LEFT_X" title="Permalink to this definition"></a></dt>
+<dd><p>The reading of the x-axis on the left stick.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Getter</dt>
+<dd class="field-odd"><p>Returns the the x-axis value between [-1,1]</p>
+</dd>
+<dt class="field-even">Type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">getGamePad</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;axis reads: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">getGamePad</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">AXIS_LEFT_X</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyasge.GamePad.AXIS_LEFT_Y">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">AXIS_LEFT_Y</span></span><a class="headerlink" href="#pyasge.GamePad.AXIS_LEFT_Y" title="Permalink to this definition"></a></dt>
+<dd><p>The reading of the y-axis on the left stick.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Getter</dt>
+<dd class="field-odd"><p>Returns the the x-axis value between [-1,1]</p>
+</dd>
+<dt class="field-even">Type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">getGamePad</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;axis reads: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">getGamePad</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">AXIS_LEFT_Y</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyasge.GamePad.AXIS_RIGHT_X">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">AXIS_RIGHT_X</span></span><a class="headerlink" href="#pyasge.GamePad.AXIS_RIGHT_X" title="Permalink to this definition"></a></dt>
+<dd><p>The reading of the x-axis on the right stick.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Getter</dt>
+<dd class="field-odd"><p>Returns the the x-axis value between [-1,1]</p>
+</dd>
+<dt class="field-even">Type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">getGamePad</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;axis reads: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">getGamePad</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">AXIS_RIGHT_X</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyasge.GamePad.AXIS_RIGHT_Y">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">AXIS_RIGHT_Y</span></span><a class="headerlink" href="#pyasge.GamePad.AXIS_RIGHT_Y" title="Permalink to this definition"></a></dt>
+<dd><p>The reading of the y-axis on the right stick.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Getter</dt>
+<dd class="field-odd"><p>Returns the the y-axis value between [-1,1]</p>
+</dd>
+<dt class="field-even">Type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">getGamePad</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;axis reads: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">getGamePad</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">AXIS_RIGHT_Y</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py property">
@@ -1148,34 +1317,6 @@ lead to undefined behaviour or crashing</p>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="pyasge.GamePad.axis_count">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">axis_count</span></span><a class="headerlink" href="#pyasge.GamePad.axis_count" title="Permalink to this definition"></a></dt>
-<dd><p>“The number of axis available for this controller.”</p>
-<dl class="field-list simple">
-<dt class="field-odd">Getter</dt>
-<dd class="field-odd"><p>Returns the number of supported axis for the attached controller.</p>
-</dd>
-<dt class="field-even">Type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="pyasge.GamePad.button_count">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">button_count</span></span><a class="headerlink" href="#pyasge.GamePad.button_count" title="Permalink to this definition"></a></dt>
-<dd><p>“The number of buttons available for this controller.”</p>
-<dl class="field-list simple">
-<dt class="field-odd">Getter</dt>
-<dd class="field-odd"><p>Returns the number for the attached controller.</p>
-</dd>
-<dt class="field-even">Type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
 <dt class="sig sig-object py" id="pyasge.GamePad.connected">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">connected</span></span><a class="headerlink" href="#pyasge.GamePad.connected" title="Permalink to this definition"></a></dt>
 <dd><p>Whether or not the gamepad is currently connected. It’s possible that
@@ -1190,8 +1331,8 @@ ensure it’s connected.</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">getGamePad</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
-<span class="gp">&gt;&gt;&gt; </span>  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Gamepad at idx 0 is connected)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">getGamePad</span><span class="p">()</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Gamepad at idx is connected)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1209,83 +1350,28 @@ ensure it’s connected.</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;index of controller reads: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">getGamePad</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;index of controller reads: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">getGamePad</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="pyasge.GamePad.x">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">x</span></span><a class="headerlink" href="#pyasge.GamePad.x" title="Permalink to this definition"></a></dt>
-<dd><p>The reading of the x-axis on the left stick.</p>
+<dt class="sig sig-object py" id="pyasge.GamePad.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pyasge.GamePad.name" title="Permalink to this definition"></a></dt>
+<dd><p>Whether or not the gamepad is currently connected. It’s possible that
+a gamepad device may get disconnected during use, this can be used to
+ensure it’s still connected.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Getter</dt>
-<dd class="field-odd"><p>Returns the the x-axis value between [-1,1]</p>
+<dd class="field-odd"><p>Returns True if connected</p>
 </dd>
 <dt class="field-even">Type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">getGamePad</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
-<span class="gp">&gt;&gt;&gt; </span>  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;axis reads: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">getGamePad</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="pyasge.GamePad.x_right_axis">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">x_right_axis</span></span><a class="headerlink" href="#pyasge.GamePad.x_right_axis" title="Permalink to this definition"></a></dt>
-<dd><p>The reading of the x-axis on the right stick.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Getter</dt>
-<dd class="field-odd"><p>Returns the the x-axis value between [-1,1]</p>
-</dd>
-<dt class="field-even">Type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
-</dd>
-</dl>
-<p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">getGamePad</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
-<span class="gp">&gt;&gt;&gt; </span>  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;axis reads: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">getGamePad</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">x_right_axis</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="pyasge.GamePad.y">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">y</span></span><a class="headerlink" href="#pyasge.GamePad.y" title="Permalink to this definition"></a></dt>
-<dd><p>The reading of the y-axis on the left stick.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Getter</dt>
-<dd class="field-odd"><p>Returns the the x-axis value between [-1,1]</p>
-</dd>
-<dt class="field-even">Type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
-</dd>
-</dl>
-<p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">getGamePad</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
-<span class="gp">&gt;&gt;&gt; </span>  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;axis reads: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">getGamePad</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">y</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="pyasge.GamePad.y_right_axis">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">y_right_axis</span></span><a class="headerlink" href="#pyasge.GamePad.y_right_axis" title="Permalink to this definition"></a></dt>
-<dd><p>The reading of the y-axis on the right stick.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Getter</dt>
-<dd class="field-odd"><p>Returns the the y-axis value between [-1,1]</p>
-</dd>
-<dt class="field-even">Type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
-</dd>
-</dl>
-<p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">getGamePad</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
-<span class="gp">&gt;&gt;&gt; </span>  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;axis reads: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">getGamePad</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">y_right_axis</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">getGamePad</span><span class="p">()</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Gamepad at idx is connected)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1313,7 +1399,7 @@ non-fixed time steps.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="pyasge.GameTime.fixed_delta">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fixed_delta</span></span><a class="headerlink" href="#pyasge.GameTime.fixed_delta" title="Permalink to this definition"></a></dt>
-<dd><p>Returns the fixed time-step interval. Use for <code class="docutils literal notranslate"><span class="pre">update</span></code> function.</p>
+<dd><p>Returns the fixed time-step interval. Use for <code class="docutils literal notranslate"><span class="pre">fixedUpdate</span></code> function.</p>
 </dd></dl>
 
 <dl class="py property">
@@ -1378,6 +1464,20 @@ and must be individually polled.</p>
 </div>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="pyasge.Input.gamepads">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">gamepads</span></span><a class="headerlink" href="#pyasge.Input.gamepads" title="Permalink to this definition"></a></dt>
+<dd><p>Returns all connected gamepad states.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Getter</dt>
+<dd class="field-odd"><p>Returns the down state of the A button.</p>
+</dd>
+<dt class="field-even">Type</dt>
+<dd class="field-even"><p>pyasge.GamePads</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="pyasge.Input.getCursorPos">
 <span class="sig-name descname"><span class="pre">getCursorPos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyasge.Input" title="pyasge.Input"><span class="pre">pyasge.Input</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pyasge.Point2D" title="pyasge.Point2D"><span class="pre">pyasge.Point2D</span></a></span></span><a class="headerlink" href="#pyasge.Input.getCursorPos" title="Permalink to this definition"></a></dt>
@@ -1394,16 +1494,40 @@ and must be individually polled.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyasge.Input.getGamePad">
-<span class="sig-name descname"><span class="pre">getGamePad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyasge.Input" title="pyasge.Input"><span class="pre">pyasge.Input</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pyasge.GamePad" title="pyasge.GamePad"><span class="pre">pyasge.GamePad</span></a></span></span><a class="headerlink" href="#pyasge.Input.getGamePad" title="Permalink to this definition"></a></dt>
-<dd><p>Retrieves gamepad data for the controller at the requested index.</p>
+<span class="sig-name descname"><span class="pre">getGamePad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyasge.Input.getGamePad" title="Permalink to this definition"></a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic">
+<li><p>getGamePad(self: pyasge.Input, index: int) -&gt; pyasge.GamePad</p>
+<blockquote>
+<div><p>Retrieves gamepad data for the controller at the requested index.</p>
+<p>If no gamepad can be found at the given index the boolean connected
+is set to false. This can be used to check if a gamepad is no
+longer present. Useful for checking to see if it’s been suddenly
+unplugged.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Param</dt>
+<dt class="field-odd">param</dt>
 <dd class="field-odd"><p>The controller index to retrieve data for.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">return</dt>
 <dd class="field-even"><p>pyasge.GamePad</p>
 </dd>
 </dl>
+</div></blockquote>
+</li>
+<li><p>getGamePad(self: pyasge.Input) -&gt; pyasge.GamePad</p>
+<blockquote>
+<div><p>Retrieves the first connect gamepad.</p>
+<p>If no gamepad can be found then the boolean connected is set
+to false. This can be used to check if a gamepad is present
+and recognised by the game framework.</p>
+<dl class="field-list simple">
+<dt class="field-odd">return</dt>
+<dd class="field-odd"><p>pyasge.GamePad</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+</ol>
 </dd></dl>
 
 <dl class="py method">
@@ -1824,17 +1948,23 @@ management.</p>
 <span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="sd">&#39;&#39;&#39; render to texture &#39;&#39;&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">setRenderTarget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rt</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">viewport</span> <span class="o">=</span> <span class="n">pyasge</span><span class="o">.</span><span class="n">ViewPort</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">768</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">setViewport</span><span class="p">(</span><span class="n">pyasge</span><span class="o">.</span><span class="n">ViewPort</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">768</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">setProjectionMatrix</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">view</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sprite</span><span class="p">)</span>
 <span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="sd">&#39;&#39;&#39; render texture to screen &#39;&#39;&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">setRenderTarget</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">viewport</span> <span class="o">=</span> <span class="n">pyasge</span><span class="o">.</span><span class="n">ViewPort</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">768</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">setViewport</span><span class="p">(</span><span class="n">pyasge</span><span class="o">.</span><span class="n">ViewPort</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">768</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sprite</span><span class="p">)</span>
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
 </div>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyasge.Renderer.createCachedTexture">
+<span class="sig-name descname"><span class="pre">createCachedTexture</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyasge.Renderer" title="pyasge.Renderer"><span class="pre">pyasge.Renderer</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ASGE::Texture2D</span></span></span><a class="headerlink" href="#pyasge.Renderer.createCachedTexture" title="Permalink to this definition"></a></dt>
+<dd><p>Loads a texture using the rendering cache subsystem.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="pyasge.Renderer.createNonCachedTexture">
 <span class="sig-name descname"><span class="pre">createNonCachedTexture</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyasge.Renderer.createNonCachedTexture" title="Permalink to this definition"></a></dt>
@@ -1892,7 +2022,7 @@ management.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyasge.Renderer.loadFont">
-<span class="sig-name descname"><span class="pre">loadFont</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyasge.Renderer" title="pyasge.Renderer"><span class="pre">pyasge.Renderer</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pyasge.Font" title="pyasge.Font"><span class="pre">pyasge.Font</span></a></span></span><a class="headerlink" href="#pyasge.Renderer.loadFont" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">loadFont</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyasge.Renderer" title="pyasge.Renderer"><span class="pre">pyasge.Renderer</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pyasge.Font" title="pyasge.Font"><span class="pre">pyasge.Font</span></a></span></span><a class="headerlink" href="#pyasge.Renderer.loadFont" title="Permalink to this definition"></a></dt>
 <dd><p>Loads a font from the file system.</p>
 <p>In order to render fonts the renderer needs to generate a texture atlas.
 This atlas stores each glyph that might need to be rendered along with
@@ -1900,8 +2030,23 @@ its respective UV co-ordinates. Once loaded a font can be assigned to
 any text that needs rendering.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If the font file can not be loaded successfully, the renderer’s inbuilt
-font used for debugging will be returned.</p>
+<p>If the font file can not be loaded successfully, None will be returned.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyasge.Renderer.loadFontAtlas">
+<span class="sig-name descname"><span class="pre">loadFontAtlas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyasge.Renderer" title="pyasge.Renderer"><span class="pre">pyasge.Renderer</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pyasge.AtlasMetrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">img_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">csv_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pyasge.Font" title="pyasge.Font"><span class="pre">pyasge.Font</span></a></span></span><a class="headerlink" href="#pyasge.Renderer.loadFontAtlas" title="Permalink to this definition"></a></dt>
+<dd><p>Loads a font atlas from the file system.</p>
+<p>Use msdf-atlas-gen to create a font atlas, which can then be imported
+in to the game. In order to successfully map the glyph information it
+needs additional data on both the font face metrics but also the glyph
+positioning. The metrics are provided using a <cite>AtlasMetric</cite> data structure
+and the UV positioning and unicode information via a CSV file. Using these
+a font can be loaded without having to rely on runtime generation.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the font file can not be loaded successfully, None will be returned.</p>
 </div>
 </dd></dl>
 
@@ -1912,38 +2057,64 @@ font used for debugging will be returned.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="pyasge.Renderer.loadTexture">
+<span class="sig-name descname"><span class="pre">loadTexture</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyasge.Renderer" title="pyasge.Renderer"><span class="pre">pyasge.Renderer</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ASGE::Texture2D</span></span></span><a class="headerlink" href="#pyasge.Renderer.loadTexture" title="Permalink to this definition"></a></dt>
+<dd><p>Loads a texture using the rendering cache subsystem.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="pyasge.Renderer.render">
 <span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyasge.Renderer.render" title="Permalink to this definition"></a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
 <li><p>render(self: pyasge.Renderer, sprite: pyasge.Sprite) -&gt; None</p></li>
+<li><p>render(self: pyasge.Renderer, tile: pyasge.Tile, x: float, y: float) -&gt; None</p></li>
 <li><p>render(self: pyasge.Renderer, text: pyasge.Text) -&gt; None</p></li>
-<li><p>render(self: pyasge.Renderer, texture: pyasge.Texture, x: int, y: int) -&gt; None</p></li>
+<li><p>render(self: pyasge.Renderer, texture: pyasge.Texture, x: int, y: int, z: int = 0) -&gt; None</p></li>
+<li><p>render(self: pyasge.Renderer, texture: pyasge.Texture, x: int, y: int, width: int, height: int, z: int = 0) -&gt; None</p></li>
+<li><p>render(self: pyasge.Renderer, texture: pyasge.Texture, rect: list, x: int, y: int, width: int, height: int, z: int = 0) -&gt; None</p></li>
 </ol>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="pyasge.Renderer.resolution">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">resolution</span></span><a class="headerlink" href="#pyasge.Renderer.resolution" title="Permalink to this definition"></a></dt>
-<dd><p>The resolution of the primary monitor.</p>
+<dt class="sig sig-object py" id="pyasge.Renderer.resolution_info">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">resolution_info</span></span><a class="headerlink" href="#pyasge.Renderer.resolution_info" title="Permalink to this definition"></a></dt>
+<dd><p>The renderer’s resolution information.</p>
+<p>The renderer is responsible for overseeing the current window and
+desktop resolutions as well as the most recently applied viewport
+and camera views. All of this information can easily be retrieved
+using this function. For example, it’s simple to obtain the window’s
+width and height or the currently set viewport.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When the user requests a new viewport or camera view, the renderer
+stores this request in a render state. This state is then attached
+to the rendering batches and they will apply these settings when it
+comes time to dispatch the draw counts.</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Getter</dt>
-<dd class="field-odd"><p>Returns the resolution and refresh rate of the primary display.</p>
+<dd class="field-odd"><p>Returns the resolution and current render view settings.</p>
 </dd>
 <dt class="field-even">Type</dt>
-<dd class="field-even"><p>Tuple[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>]</p>
+<dd class="field-even"><p><a class="reference internal" href="#pyasge.Resolution" title="pyasge.Resolution">pyasge.Resolution</a></p>
 </dd>
 </dl>
-<p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">resolution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">resolution</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Desktop Resolution: </span><span class="si">{</span><span class="n">resolution</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">x</span><span class="si">{</span><span class="n">resolution</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">@</span><span class="si">{</span><span class="n">resolution</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s2">Hz&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyasge.Renderer.setBaseResolution">
+<span class="sig-name descname"><span class="pre">setBaseResolution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyasge.Renderer" title="pyasge.Renderer"><span class="pre">pyasge.Renderer</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">policy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyasge.ResolutionPolicy" title="pyasge.ResolutionPolicy"><span class="pre">pyasge.ResolutionPolicy</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#pyasge.Renderer.setBaseResolution" title="Permalink to this definition"></a></dt>
+<dd><p>The base design resolution of the game.</p>
+<p>When designing the game this resolution is used to control how the screen is
+mapped when using a different resolution, whether that be smaller or larger.
+When used correctly sprites positioned on the screen will remain in their
+relative location (depending on the chosen resolution policy).</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyasge.Renderer.setClearColour">
-<span class="sig-name descname"><span class="pre">setClearColour</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyasge.Renderer" title="pyasge.Renderer"><span class="pre">pyasge.Renderer</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyasge.Colour" title="pyasge.Colour"><span class="pre">pyasge.Colour</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#pyasge.Renderer.setClearColour" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">setClearColour</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyasge.Renderer" title="pyasge.Renderer"><span class="pre">pyasge.Renderer</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">colour</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyasge.Colour" title="pyasge.Colour"><span class="pre">pyasge.Colour</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#pyasge.Renderer.setClearColour" title="Permalink to this definition"></a></dt>
 <dd><p>The colour used to clear the buffer each frame.</p>
 <p>When clearing the window’s content each tick, the colour to use can
 easily be adjusted by using this function. Calling it means the
@@ -1979,6 +2150,49 @@ passed through to this function.</p>
 <dd><p>Sets a render target to use for rendering.</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="pyasge.Renderer.setResolutionPolicy">
+<span class="sig-name descname"><span class="pre">setResolutionPolicy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyasge.Renderer" title="pyasge.Renderer"><span class="pre">pyasge.Renderer</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">policy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyasge.ResolutionPolicy" title="pyasge.ResolutionPolicy"><span class="pre">pyasge.ResolutionPolicy</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#pyasge.Renderer.setResolutionPolicy" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the resolution policy to use.</p>
+<p>The resolution policy controls how the game’s view will be mapped to the window
+or to any attached render target. Depending on the policy applied, the view may
+be centered, bordered, stretched or even maintain it’s aspect ration. This is
+used when the game view does not directly map to the viewport.</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id6" title="Permalink to this code"></a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">setResolutionPolicy</span><span class="p">(</span><span class="n">pyasge</span><span class="o">.</span><span class="n">ResolutionPolicy</span><span class="o">.</span><span class="n">CENTER</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If using a custom viewport, it’s recommended to set it after this function
+call, to ensure its size is correct.</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>pyasge.ResolutionPolicy</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyasge.Renderer.setViewport">
+<span class="sig-name descname"><span class="pre">setViewport</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyasge.Renderer" title="pyasge.Renderer"><span class="pre">pyasge.Renderer</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyasge.Viewport" title="pyasge.Viewport"><span class="pre">pyasge.Viewport</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#pyasge.Renderer.setViewport" title="Permalink to this definition"></a></dt>
+<dd><p>The viewport that maps to the rendered window.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Setter</dt>
+<dd class="field-odd"><p>Updates the renderer’s viewport used for mapping to the window.</p>
+</dd>
+<dt class="field-even">Type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#pyasge.Viewport" title="pyasge.Viewport"><code class="xref py py-class docutils literal notranslate"><span class="pre">Viewport</span></code></a></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">setViewport</span><span class="p">(</span><span class="n">pyasge</span><span class="o">.</span><span class="n">Viewport</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">768</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="pyasge.Renderer.shader">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shader</span></span><a class="headerlink" href="#pyasge.Renderer.shader" title="Permalink to this definition"></a></dt>
@@ -1998,53 +2212,6 @@ passed through to this function.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">alpha_shader</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="s2">&quot;alpha&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">shader</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha_shader</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sprite</span><span class="p">)</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="pyasge.Renderer.viewport">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">viewport</span></span><a class="headerlink" href="#pyasge.Renderer.viewport" title="Permalink to this definition"></a></dt>
-<dd><p>The viewport that maps to the rendered window.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Getter</dt>
-<dd class="field-odd"><p>Returns the renderer’s current viewport.</p>
-</dd>
-<dt class="field-even">Setter</dt>
-<dd class="field-even"><p>Updates the renderer’s viewport used for mapping to the window.</p>
-</dd>
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>pyasge.ViewPort</p>
-</dd>
-</dl>
-<p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">viewport</span> <span class="o">=</span> <span class="n">pyasge</span><span class="o">.</span><span class="n">Viewport</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">768</span><span class="p">)</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="pyasge.Renderer.window_size">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">window_size</span></span><a class="headerlink" href="#pyasge.Renderer.window_size" title="Permalink to this definition"></a></dt>
-<dd><p>The framebuffer size attached to the window.</p>
-<p>There is a slight but important distinction between the window size
-and the framebuffer size. This is due to the window being described
-in screen space, where as the framebuffer is in pixel space. Often
-the mapping is the same, but scaling of the window can result in a
-window having more units than the equivalent pixels. For the time
-being it’s just easier to expose the width and height of the window
-in pixel space until a need to differ between the two arises.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Getter</dt>
-<dd class="field-odd"><p>Returns the size of the framebuffer in pixels.</p>
-</dd>
-<dt class="field-even">Type</dt>
-<dd class="field-even"><p>Tuple[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>]</p>
-</dd>
-</dl>
-<p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">window_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">window_size</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Window Size: [</span><span class="si">{</span><span class="n">window_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">window_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -2071,13 +2238,13 @@ setup of such targets is GPU and framework dependent.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Render Function</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="sd">&quot;&quot;&quot; render to texture &quot;&quot;&quot;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">setRenderTarget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rt</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">viewport</span> <span class="o">=</span> <span class="n">pyasge</span><span class="o">.</span><span class="n">Viewport</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1024</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">768</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">setViewport</span><span class="p">(</span><span class="n">pyasge</span><span class="o">.</span><span class="n">Viewport</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1024</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">768</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sprite</span><span class="p">)</span>
 <span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="sd">&quot;&quot;&quot; render the resultant texture &quot;&quot;&quot;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">setRenderTarget</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">rt</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">viewport</span> <span class="o">=</span> <span class="n">pyasge</span><span class="o">.</span><span class="n">Viewport</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">768</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">setViewport</span><span class="p">(</span><span class="n">pyasge</span><span class="o">.</span><span class="n">Viewport</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">768</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rt_texture</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -2141,8 +2308,14 @@ which attachment to specifically update.</p>
 <dd class="field-odd"><p>Texture</p>
 </dd>
 </dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
 <p>You need to call resolve to sample the buffers correctly.</p>
-<p>Texture</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#pyasge.Texture" title="pyasge.Texture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Texture</span></code></a></p>
+</div>
 </div></blockquote>
 </li>
 <li><p>resolve(self: pyasge.RenderTarget) -&gt; List[pyasge.Texture]</p>
@@ -2161,12 +2334,174 @@ normal samplers in the fragment shader.</p>
 <dd class="field-even"><p>list[Texture]</p>
 </dd>
 </dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
 <p>You need to call resolve to sample the buffers correctly.</p>
-<p>Texture</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#pyasge.Texture" title="pyasge.Texture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Texture</span></code></a></p>
+</div>
 </div></blockquote>
 </li>
 </ol>
 </dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="resolution">
+<h1>Resolution<a class="headerlink" href="#resolution" title="Permalink to this headline"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyasge.Resolution">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyasge.</span></span><span class="sig-name descname"><span class="pre">Resolution</span></span><a class="headerlink" href="#pyasge.Resolution" title="Permalink to this definition"></a></dt>
+<dd><p>Resolution contains the display and render resolution information.</p>
+<p>This data structure contains a collection of useful values that can be used
+to determine both the game’s design resolution but also the size of the
+window being rendered. This includes information regarding the viewport and
+the camera view currently assigned to the renderer. These types of information
+are often needed when moving between world and screen space.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pyasge.Resolution.base_aspect_ratio">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">base_aspect_ratio</span></span><a class="headerlink" href="#pyasge.Resolution.base_aspect_ratio" title="Permalink to this definition"></a></dt>
+<dd><p>The base resolution aspect ratio.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyasge.Resolution.base_resolution">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">base_resolution</span></span><a class="headerlink" href="#pyasge.Resolution.base_resolution" title="Permalink to this definition"></a></dt>
+<dd><p>The base resolution of the game.</p>
+<p>The base resolution is simply the resolution the game was designed in. It’s the
+coordinates used when drawing the game world or even checking for collisions.
+Depending on the resolution policy being used, the game will be scaled using
+this resolution. For example if the game resolution is 1280x720 and the window
+is 1920x1080 and a policy of MAINTAIN is requested; the game world will be scaled
+perfectly without any black borders. However, your bounds checks such as
+<cite>if x &gt; 1280:</cite> remain valid.</p>
+<p>The idea behind the base resolution is to make the game independent of the window
+resolution. Instead the PyASGE will handle the scaling for you, where possible.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyasge.Resolution.desktop_aspect_ratio">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">desktop_aspect_ratio</span></span><a class="headerlink" href="#pyasge.Resolution.desktop_aspect_ratio" title="Permalink to this definition"></a></dt>
+<dd><p>The desktop’s resolution aspect ratio.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyasge.Resolution.desktop_resolution">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">desktop_resolution</span></span><a class="headerlink" href="#pyasge.Resolution.desktop_resolution" title="Permalink to this definition"></a></dt>
+<dd><p>The resolution of the primary monitor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Getter</dt>
+<dd class="field-odd"><p>Returns the resolution and refresh rate of the primary display.</p>
+</dd>
+<dt class="field-even">Type</dt>
+<dd class="field-even"><p>List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>]</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">resolution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">resolution_info</span><span class="o">.</span><span class="n">desktop_resolution</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Desktop Resolution: </span><span class="si">{</span><span class="n">resolution</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">x</span><span class="si">{</span><span class="n">resolution</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">@</span><span class="si">{</span><span class="n">resolution</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s2">Hz&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyasge.Resolution.view">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">view</span></span><a class="headerlink" href="#pyasge.Resolution.view" title="Permalink to this definition"></a></dt>
+<dd><p>The view (camera) that frames the content drawn in the viewport.</p>
+<p>The camera view controls the orthogonal projection used to frame the game’s action. To see
+more of the game world the view can be increased in size. It’s not measured in pixels but
+rather world space.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Getter</dt>
+<dd class="field-odd"><p>Returns the camera’s view of the world.</p>
+</dd>
+<dt class="field-even">Type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#pyasge.CameraView" title="pyasge.CameraView">pyasge.CameraView</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyasge.Resolution.viewport">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">viewport</span></span><a class="headerlink" href="#pyasge.Resolution.viewport" title="Permalink to this definition"></a></dt>
+<dd><p>The viewport that maps to the rendered window.</p>
+<p>Whilst the projection matrix (camera view) controls what part of the game scene is being
+shown, the viewport looks after how it’s view is mapped to the game window or to any
+attached render targets that are active.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Getter</dt>
+<dd class="field-odd"><p>Returns the how the view will be mapped to the screen or to the <a class="reference internal" href="#pyasge.RenderTarget" title="pyasge.RenderTarget"><code class="xref py py-class docutils literal notranslate"><span class="pre">RenderTarget</span></code></a>.</p>
+</dd>
+<dt class="field-even">Type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#pyasge.Viewport" title="pyasge.Viewport">pyasge.Viewport</a></p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It is the view port that controls the scaling properties when the window is resized. It
+is used to map the camera view to resultant area on the screen. A viewport does not have
+to necessarily fit the whole screen either, it can be used for concepts such as
+picture-in-picture.</p>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyasge.Resolution.window_aspect_ratio">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">window_aspect_ratio</span></span><a class="headerlink" href="#pyasge.Resolution.window_aspect_ratio" title="Permalink to this definition"></a></dt>
+<dd><p>The game window’s resolution aspect ratio.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyasge.Resolution.window_resolution">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">window_resolution</span></span><a class="headerlink" href="#pyasge.Resolution.window_resolution" title="Permalink to this definition"></a></dt>
+<dd><p>The framebuffer size attached to the window.</p>
+<p>There is a slight but important distinction between the window size and the framebuffer
+size. This is due to the window being described in screen space, where as the
+framebuffer is in pixel space. Often the mapping is the same, but scaling of the
+window can result in a window having more units than the equivalent pixels. For the
+time being it’s just easier to expose the width and height of the window in pixel space
+until a need to differ between the two arises.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Getter</dt>
+<dd class="field-odd"><p>Returns the size of the framebuffer in pixels.</p>
+</dd>
+<dt class="field-even">Type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)">list</a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>,<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>]</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">window_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">resolution_info</span><span class="o">.</span><span class="n">window_resolution</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Window Size: [</span><span class="si">{</span><span class="n">window_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">window_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyasge.ResolutionPolicy">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyasge.</span></span><span class="sig-name descname"><span class="pre">ResolutionPolicy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyasge.ResolutionPolicy" title="pyasge.ResolutionPolicy"><span class="pre">pyasge.ResolutionPolicy</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#pyasge.ResolutionPolicy" title="Permalink to this definition"></a></dt>
+<dd><blockquote>
+<div><p>The resolution policy controls how the viewport will be scaled when the window
+size does not match the base resolution set for the game. This can be used to
+control scaling and any offsets applied to keep the content centered. For
+example using the option <em>SCALE</em> will keep the viewport the same size as the
+window and stretch any rendered content.</p>
+</div></blockquote>
+<p>Members:</p>
+<blockquote>
+<div><p>NONE : Does not apply any offset or scaling to the game.</p>
+<p>MAINTAIN : Maintains the aspect ratio and centers the view.</p>
+<p>CENTER : Centers but does not scale the viewport.</p>
+<p>SCALE : Fills the window which may lead to stretching or distortion.</p>
+</div></blockquote>
+<dl class="py property">
+<dt class="sig sig-object py" id="pyasge.ResolutionPolicy.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pyasge.ResolutionPolicy.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -2181,7 +2516,36 @@ normal samplers in the fragment shader.</p>
 shader is fixed and not easily adjustable, which means the inputs in to the
 fragment shaders remain consistent. At present only uniform mapping is
 provided, the addition of extra samplers within the pixel shader is not
-supported.</p>
+supported. Provided below is a working fragment shader that can be loaded
+and used to render a custom alpha channel effect.</p>
+<p class="rubric">Example</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#version 330 core</span>
+<span class="cp">#define FRAG_COLOUR     0</span>
+<span class="n">in</span><span class="w"> </span><span class="n">VertexData</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">vec2</span><span class="w">    </span><span class="n">uvs</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">vec4</span><span class="w">    </span><span class="n">rgba</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">fs_in</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">// user defined</span>
+<span class="n">uniform</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">alpha</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">// engine related</span>
+<span class="n">uniform</span><span class="w"> </span><span class="n">sampler2D</span><span class="w"> </span><span class="n">image</span><span class="p">;</span><span class="w"></span>
+<span class="n">layout</span><span class="w">  </span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FRAG_COLOUR</span><span class="p">,</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">out</span><span class="w"> </span><span class="n">vec4</span><span class="w"> </span><span class="n">fragColor</span><span class="p">;</span><span class="w"></span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">fragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec4</span><span class="p">(</span><span class="n">fs_in</span><span class="p">.</span><span class="n">rgba</span><span class="p">.</span><span class="n">rgb</span><span class="p">,</span><span class="w"> </span><span class="n">alpha</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">texture</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="w"> </span><span class="n">fs_in</span><span class="p">.</span><span class="n">uvs</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">shader</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha_shader</span>  <span class="c1"># activates a shader globally</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sprite</span><span class="p">)</span>         <span class="c1"># renders a sprite using it</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">shader</span> <span class="o">=</span> <span class="kc">None</span>               <span class="c1"># resets and uses the default shader</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sprite</span><span class="p">)</span>         <span class="c1"># renders a sprite using the default shader</span>
+</pre></div>
+</div>
 <p>Default constructor.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="pyasge.Shader.id">
@@ -2192,7 +2556,14 @@ supported.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pyasge.Shader.uniform">
 <span class="sig-name descname"><span class="pre">uniform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyasge.Shader" title="pyasge.Shader"><span class="pre">pyasge.Shader</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pyasge.Value" title="pyasge.Value"><span class="pre">pyasge.Value</span></a></span></span><a class="headerlink" href="#pyasge.Shader.uniform" title="Permalink to this definition"></a></dt>
-<dd><p>Retrieves a uniform by its str name.</p>
+<dd><p>Retrieves a uniform by its str name. This can be used to update the
+value of the global shader data. The name and type must match the
+variable defined inside the shader i.e. a uniform named alpha of
+type float must be addressed as such.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">shader</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="s2">&quot;alpha&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py property">
@@ -2223,6 +2594,31 @@ the texture’s UV coordinates. In default state, the texture
 is rendered from top left. When flipped the UV positions
 are inverted.</p>
 <dl class="py class">
+<dt class="sig sig-object py" id="pyasge.Sprite.AttachFlags">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">AttachFlags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyasge.Sprite.AttachFlags" title="pyasge.Sprite.AttachFlags"><span class="pre">pyasge.Sprite.AttachFlags</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#pyasge.Sprite.AttachFlags" title="Permalink to this definition"></a></dt>
+<dd><p>Attach mode flags.</p>
+<blockquote>
+<div><p>When attaching a texture to the sprite, by default the sprite’s
+settings will be reset to match the newly attached texture. These
+flags allow the user to prevent certain resets from occurs.</p>
+</div></blockquote>
+<p>Members:</p>
+<blockquote>
+<div><p>DEFAULT : Clobbers the existing sprite’s settings</p>
+<p>KEEP_DIMS : Retain the sprite’s dimensions</p>
+<p>KEEP_UVS : Retain the sprite’s UV settings</p>
+<p>KEEP_TINT : Retain the sprite’s tint</p>
+<p>KEEP_ROTATION : Retain the sprite’s rotation</p>
+<p>GENERATE_MIPS : Generate a new set of MipMaps for the texture</p>
+</div></blockquote>
+<dl class="py property">
+<dt class="sig sig-object py" id="pyasge.Sprite.AttachFlags.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pyasge.Sprite.AttachFlags.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="pyasge.Sprite.FlipFlags">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FlipFlags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyasge.Sprite.FlipFlags" title="pyasge.Sprite.FlipFlags"><span class="pre">pyasge.Sprite.FlipFlags</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#pyasge.Sprite.FlipFlags" title="Permalink to this definition"></a></dt>
 <dd><p>Texture flipping flags.</p>
@@ -2237,6 +2633,7 @@ are inverted.</p>
 <div><p>NORMAL : Texture is not flipped.</p>
 <p>FLIP_X : Texture is flipped on the x axis.</p>
 <p>FLIP_Y : Texture is flipped on the y axis.</p>
+<p>FLIP_XY : Texture is flipped diagonally.</p>
 <p>FLIP_BOTH : Texture is flipped on both axis.</p>
 </div></blockquote>
 <dl class="py property">
@@ -2291,26 +2688,74 @@ transparent.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyasge.Sprite.attach">
-<span class="sig-name descname"><span class="pre">attach</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyasge.Sprite" title="pyasge.Sprite"><span class="pre">pyasge.Sprite</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">texture</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyasge.Texture" title="pyasge.Texture"><span class="pre">pyasge.Texture</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#pyasge.Sprite.attach" title="Permalink to this definition"></a></dt>
-<dd><p>Attaches a <code class="docutils literal notranslate"><span class="pre">Texture</span></code> object to the sprite.</p>
+<span class="sig-name descname"><span class="pre">attach</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyasge.Sprite.attach" title="Permalink to this definition"></a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic">
+<li><p>attach(self: pyasge.Sprite, texture: pyasge.Texture, attach_mode: pyasge.Sprite.AttachFlags) -&gt; bool</p>
+<blockquote>
+<div><p>Attaches a <a class="reference internal" href="#pyasge.Texture" title="pyasge.Texture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Texture</span></code></a> object to the sprite.</p>
 <p>When sprites are rendered they sample images or textures to colour the
 pixels. You can use this function to replace the texture that’s being
 used during the rendering phase.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>texture</strong> (<a class="reference internal" href="#pyasge.Texture" title="pyasge.Texture"><em>Texture</em></a>) – The replacement texture to attach.</p>
+<dt class="field-odd">texture</dt>
+<dd class="field-odd"><p>The replacement texture to attach</p>
+</dd>
+<dt class="field-even">type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#pyasge.Texture" title="pyasge.Texture"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyasge.Texture</span></code></a></p>
+</dd>
+<dt class="field-odd">attach_mode</dt>
+<dd class="field-odd"><p>The flags to apply when attaching the texture to the sprite</p>
+</dd>
+<dt class="field-even">type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pyasge.Sprite.AttachMode</span></code></p>
 </dd>
 </dl>
-<p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">sprite</span> <span class="o">=</span> <span class="n">pyasge</span><span class="o">.</span><span class="n">Sprite</span><span class="p">()</span>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id7" title="Permalink to this code"></a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">sprite</span> <span class="o">=</span> <span class="n">pyasge</span><span class="o">.</span><span class="n">Sprite</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">texture</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">createNonCachedTexture</span><span class="p">(</span><span class="s2">&quot;/data/image.png&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">texture</span><span class="p">,</span> <span class="n">pyasge</span><span class="o">.</span><span class="n">Sprite</span><span class="o">.</span><span class="n">AttachFlags</span><span class="p">(</span>
+<span class="go">    pyasge.Sprite.AttachFlags.KEEP_UVS |</span>
+<span class="go">    pyasge.Sprite.AttachFlags.KEEP_ROTATION))</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>pyasge.Texture</p>
+</div>
+</div></blockquote>
+</li>
+<li><p>attach(self: pyasge.Sprite, texture: pyasge.Texture) -&gt; bool</p>
+<blockquote>
+<div><p>Attaches a <a class="reference internal" href="#pyasge.Texture" title="pyasge.Texture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Texture</span></code></a> object to the sprite.</p>
+<p>When sprites are rendered they sample images or textures to colour the
+pixels. You can use this function to replace the texture that’s being
+used during the rendering phase.</p>
+<dl class="field-list simple">
+<dt class="field-odd">texture</dt>
+<dd class="field-odd"><p>The replacement texture to attach</p>
+</dd>
+<dt class="field-even">type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#pyasge.Texture" title="pyasge.Texture"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyasge.Texture</span></code></a></p>
+</dd>
+</dl>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id8" title="Permalink to this code"></a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">sprite</span> <span class="o">=</span> <span class="n">pyasge</span><span class="o">.</span><span class="n">Sprite</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">texture</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">createNonCachedTexture</span><span class="p">(</span><span class="s2">&quot;/data/image.png&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">texture</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="#pyasge.Texture" title="pyasge.Texture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Texture</span></code></a></p>
+<p>pyasge.Texture</p>
 </div>
+</div></blockquote>
+</li>
+</ol>
 </dd></dl>
 
 <dl class="py property">
@@ -2325,13 +2770,9 @@ used during the rendering phase.</p>
 <dd class="field-even"><p>Sets the sprite’s colour.</p>
 </dd>
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#pyasge.Colour" title="pyasge.Colour">Colour</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="#pyasge.Colour" title="pyasge.Colour">pyasge.Colour</a></p>
 </dd>
 </dl>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p><a class="reference internal" href="#pyasge.Colour" title="pyasge.Colour"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Colour</span></code></a></p>
-</div>
 </dd></dl>
 
 <dl class="py method">
@@ -2531,6 +2972,22 @@ This will check to see if the X axis is flipped.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="pyasge.Sprite.isFlippedOnXY">
+<span class="sig-name descname"><span class="pre">isFlippedOnXY</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyasge.Sprite" title="pyasge.Sprite"><span class="pre">pyasge.Sprite</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#pyasge.Sprite.isFlippedOnXY" title="Permalink to this definition"></a></dt>
+<dd><p>Checks to see if the texture is flipped  diagonally.</p>
+<p>It is possible to flip the UV coordinates used on the sprite’s texture.
+This will check to see if the XY axis are flipped with each other.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>If the texture is flipped diagonally.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="pyasge.Sprite.isFlippedOnY">
 <span class="sig-name descname"><span class="pre">isFlippedOnY</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyasge.Sprite" title="pyasge.Sprite"><span class="pre">pyasge.Sprite</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#pyasge.Sprite.isFlippedOnY" title="Permalink to this definition"></a></dt>
 <dd><p>Checks to see if the texture is flipped on the Y axis.</p>
@@ -2548,7 +3005,7 @@ This will check to see if the Y axis is flipped.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyasge.Sprite.loadTexture">
-<span class="sig-name descname"><span class="pre">loadTexture</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyasge.Sprite" title="pyasge.Sprite"><span class="pre">pyasge.Sprite</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#pyasge.Sprite.loadTexture" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">loadTexture</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyasge.Sprite" title="pyasge.Sprite"><span class="pre">pyasge.Sprite</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#pyasge.Sprite.loadTexture" title="Permalink to this definition"></a></dt>
 <dd><p>Loads a texture and attaches it to the sprite.</p>
 <p>Uses a texture caching system to attempt to load the file from the ASGE
 IO subsystem. If it loads successfully, the texture is cached and the
@@ -2570,6 +3027,34 @@ whether or not it loaded successfully.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sprite</span> <span class="o">=</span> <span class="n">pyasge</span><span class="o">.</span><span class="n">Sprite</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="n">sprite</span><span class="o">.</span><span class="n">loadTexture</span><span class="p">(</span><span class="s2">&quot;/data/game/background.jpg&quot;</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
 <span class="gp">&gt;&gt;&gt; </span>  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;texture loaded&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyasge.Sprite.midpoint">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">midpoint</span></span><a class="headerlink" href="#pyasge.Sprite.midpoint" title="Permalink to this definition"></a></dt>
+<dd><p>Calculates the mid-point of the sprite.</p>
+<p>Sprites origins are normally 0,0, which maps to the top left. This
+function returns the mid-point of the sprite based on its width and height
+and also the x,y position it’s currently in.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Getter</dt>
+<dd class="field-odd"><p>Will return the calculated midpoint of the sprite based on its
+position in the world and its length and width. This function
+automatically applies the sprite’s scale.</p>
+</dd>
+<dt class="field-even">Type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#pyasge.Point2D" title="pyasge.Point2D">Point2D</a></p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This midpoint is scaled using the sprites scale factor.</p>
+</div>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># set a camera to follow the player&#39;s mid-point</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">lookAt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">player</span><span class="o">.</span><span class="n">midpoint</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -2886,10 +3371,10 @@ to control the render ordering.</p>
 <p>In this image you can see an example of when the z-order for a sprite is
 not set correctly. The blocks below the player should have a lower z-order
 than the player’s sprite, to ensure they are rendered first.</p>
-<figure class="align-default" id="id4">
+<figure class="align-default" id="id9">
 <img alt="https://gamedev.stackexchange.com/questions/130703/2d-voxel-isometric-rendering-with-non-grid-aligned-objects" src="https://i.stack.imgur.com/8aGig.png" />
 <figcaption>
-<p><span class="caption-text">GameDev &#64; StackExchange</span><a class="headerlink" href="#id4" title="Permalink to this image"></a></p>
+<p><span class="caption-text">GameDev &#64; StackExchange</span><a class="headerlink" href="#id9" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </dd></dl>
@@ -2957,10 +3442,10 @@ of the baseline. The baseline is the point at which all characters should
 lay along and allows consistent positioning of text irrespective of the
 strings context.</p>
 <blockquote>
-<div><figure class="align-default" id="id5">
+<div><figure class="align-default" id="id10">
 <img alt="https://www.freetype.org/freetype2/docs/glyphs/glyphs-3.html" src="https://www.freetype.org/freetype2/docs/glyphs/layout.png" />
 <figcaption>
-<p><span class="caption-text">The FreeType project</span><a class="headerlink" href="#id5" title="Permalink to this image"></a></p>
+<p><span class="caption-text">The FreeType project</span><a class="headerlink" href="#id10" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </div></blockquote>
@@ -3341,10 +3826,10 @@ range, wrapping modes can be used to control the resultant sampled pixel.
 For example, REPEAT will continuously wrap the texture. This is good for
 when you want to sample outside the normal [0,1] range but still obtain a
 resultant pixel. A use case for this is a scrolling background layer.</p>
-<figure class="align-default" id="id6">
+<figure class="align-default" id="id11">
 <img alt="https://learnopengl.com/Getting-started/Textures" src="https://learnopengl.com/img/getting-started/texture_wrapping.png" />
 <figcaption>
-<p><span class="caption-text">learnopengl.com</span><a class="headerlink" href="#id6" title="Permalink to this image"></a></p>
+<p><span class="caption-text">learnopengl.com</span><a class="headerlink" href="#id11" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </div></blockquote>
@@ -3464,10 +3949,10 @@ to create simple animations such as scrolling backgrounds.</p>
 </ul>
 </dd>
 </dl>
-<figure class="align-default" id="id7">
+<figure class="align-default" id="id12">
 <img alt="https://learnopengl.com/Getting-started/Textures" src="https://learnopengl.com/img/getting-started/texture_wrapping.png" />
 <figcaption>
-<p><span class="caption-text">learnopengl.com</span><a class="headerlink" href="#id7" title="Permalink to this image"></a></p>
+<p><span class="caption-text">learnopengl.com</span><a class="headerlink" href="#id12" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 <p class="rubric">Example</p>
@@ -3504,6 +3989,181 @@ to create simple animations such as scrolling backgrounds.</p>
 
 </dd></dl>
 
+</section>
+<section id="tile">
+<h1>Tile<a class="headerlink" href="#tile" title="Permalink to this headline"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyasge.Tile">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyasge.</span></span><span class="sig-name descname"><span class="pre">Tile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyasge.Tile" title="Permalink to this definition"></a></dt>
+<dd><p>An PyASGE supported tile.</p>
+<p>Tiles, whilst sharing much of the same functionality as the Sprites
+are conceptually quite different. Instead they are used to build more
+complex scenes and game maps. Because of this their position is
+normally dictated by the map itself and typically consists of using rows,
+columns and tile sizes to determine their exact positioning.</p>
+<p>The aim of this class is to easily allow this kind of functionality to
+exist within PyASGE. Instead of having to construct instances of Sprites
+with their own positional data, you can use a Tile instead.</p>
+<p>When rendering a Tile you will need to provide the XY position that it’s
+to appear in World Space. Remember that by default origins in PyASGE
+for positions (not rotations) are calculated from the top-left.</p>
+<p>Mozilla’s developer documentation (<a class="reference external" href="https://developer.mozilla.org/en-US/docs/Games/Techniques/Tilemaps">https://developer.mozilla.org/en-US/docs/Games/Techniques/Tilemaps</a>)
+does a great job of introducing tile maps and how conceptually they
+operate. This might help if you’re unsure about when you would use a
+Tile instead of a Sprite.</p>
+<figure class="align-default" id="id13">
+<img alt="https://developer.mozilla.org/en-US/docs/Games/Techniques/Tilemaps" src="https://developer.mozilla.org/en-US/docs/Games/Techniques/Tilemaps/tile_atlas.png" />
+<figcaption>
+<p><span class="caption-text">Mozilla Developer Documentation: Tilemaps</span><a class="headerlink" href="#id13" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># create a tile</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pyasge_tile</span> <span class="o">=</span> <span class="n">pyasge</span><span class="o">.</span><span class="n">Tile</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pyasge_tile</span><span class="o">.</span><span class="n">texture</span> <span class="o">=</span> <span class="n">renderer</span><span class="o">.</span><span class="n">loadTexture</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pyasge_tile</span><span class="o">.</span><span class="n">texture</span><span class="o">.</span><span class="n">setMagFilter</span><span class="p">(</span><span class="n">pyasge</span><span class="o">.</span><span class="n">MagFilter</span><span class="o">.</span><span class="n">NEAREST</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pyasge_tile</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pyasge_tile</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pyasge_tile</span><span class="o">.</span><span class="n">src_rect</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">32</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pyasge_tile</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># render a tile map by looping through layers of tiles</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">map</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>  <span class="k">for</span> <span class="n">row_index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">layer</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">for</span> <span class="n">col_index</span><span class="p">,</span> <span class="n">tile</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>      <span class="k">if</span> <span class="n">tile</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>         <span class="n">renderer</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">tile</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>                         <span class="n">col_index</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">tile_size</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+<span class="gp">&gt;&gt;&gt; </span>                         <span class="n">row_index</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">tile_size</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#pyasge.Sprite" title="pyasge.Sprite"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Sprite</span></code></a></p>
+</div>
+<p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>__init__(self: pyasge.Tile) -&gt; None</p></li>
+<li><p>__init__(self: pyasge.Tile, arg0: pyasge.Tile) -&gt; None</p></li>
+</ol>
+<dl class="py property">
+<dt class="sig sig-object py" id="pyasge.Tile.height">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">height</span></span><a class="headerlink" href="#pyasge.Tile.height" title="Permalink to this definition"></a></dt>
+<dd><p>Controls alpha for the rendered tile</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyasge.Tile.load">
+<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pyasge.Tile" title="pyasge.Tile"><span class="pre">pyasge.Tile</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#pyasge.Tile.load" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyasge.Tile.opacity">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">opacity</span></span><a class="headerlink" href="#pyasge.Tile.opacity" title="Permalink to this definition"></a></dt>
+<dd><p>Controls alpha for the rendered tile</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyasge.Tile.rotation">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rotation</span></span><a class="headerlink" href="#pyasge.Tile.rotation" title="Permalink to this definition"></a></dt>
+<dd><p>Rotation for the tile</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyasge.Tile.src_rect">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">src_rect</span></span><a class="headerlink" href="#pyasge.Tile.src_rect" title="Permalink to this definition"></a></dt>
+<dd><p>Source rectangle for the texture.</p>
+<p>The source rectangle allows the developer to specify what part of
+a texture should be sampled during rendering. This allows the
+use of sprite sheets, where for example each cell might represent
+an animation. By changing the source rectangle, a single cell
+of animation could be selected, ignoring the others.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Direct access to the source rectangle used for texture mapping.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>numpy.ndarray[numpy.float]</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>Selecting a specific tile on a sprite sheet requires setting the
+source rectangle’s starting position and its length. In the
+example that follows, a sprite sheet is loaded and then a single cell
+is used for rendering by modifying the source rectangle’s starting x
+position and its length.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pyasge_tile</span> <span class="o">=</span> <span class="n">pyasge</span><span class="o">.</span><span class="n">Tile</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pyasge_tile</span><span class="o">.</span><span class="n">texture</span> <span class="o">=</span> <span class="n">renderer</span><span class="o">.</span><span class="n">loadTexture</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pyasge_tile</span><span class="o">.</span><span class="n">src_rect</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">227</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pyasge_tile</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="mi">44</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyasge.Tile.texture">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">texture</span></span><a class="headerlink" href="#pyasge.Tile.texture" title="Permalink to this definition"></a></dt>
+<dd><p>The texture attached to the tile.</p>
+<p>When tiles are rendered they sample images or textures to colour the
+pixels. You can use this property to replace the texture that’s being
+used during the rendering phase or to retrieve the currently attached
+one.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Getter</dt>
+<dd class="field-odd"><p>Will return a reference to the currently active texture
+assigned to to the tile. It’s possible that a tile may
+have no texture, so it contents should be checked to make
+sure it is not <code class="docutils literal notranslate"><span class="pre">None</span></code> to prevent undefined behaviour.</p>
+</dd>
+<dt class="field-even">Setter</dt>
+<dd class="field-even"><p>Attaches a <code class="docutils literal notranslate"><span class="pre">Texture</span></code> object to the sprite. This will replace
+the texture that’s being used during the rendering phase.</p>
+</dd>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#pyasge.Texture" title="pyasge.Texture">Texture</a></p>
+</dd>
+</dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>As a reference is being returned, the texture is only safe to access whilst
+it has not been destroyed. Once the texture’s  memory is freed, this reference
+will no longer be valid.</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#pyasge.Texture" title="pyasge.Texture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Texture</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyasge.Tile.tint">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tint</span></span><a class="headerlink" href="#pyasge.Tile.tint" title="Permalink to this definition"></a></dt>
+<dd><p>Rotation for the tile</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyasge.Tile.width">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">width</span></span><a class="headerlink" href="#pyasge.Tile.width" title="Permalink to this definition"></a></dt>
+<dd><p>Controls alpha for the rendered tile</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyasge.Tile.z">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">z</span></span><a class="headerlink" href="#pyasge.Tile.z" title="Permalink to this definition"></a></dt>
+<dd><p>Controls alpha for the rendered tile</p>
+</dd></dl>
+
+</dd></dl>
+
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+</tbody>
+</table>
 </section>
 <section id="value">
 <h1>Value<a class="headerlink" href="#value" title="Permalink to this headline"></a></h1>
@@ -3570,9 +4230,9 @@ used to frame the action, before one sprite is rendered and then another.</p>
 <span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="gp">&gt;&gt;&gt; </span>  <span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">setProjectionMatrix</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">view</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span>  <span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">viewport</span> <span class="o">=</span> <span class="n">pyasge</span><span class="o">.</span><span class="n">Viewport</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">384</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>  <span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">setViewport</span><span class="p">(</span><span class="n">pyasge</span><span class="o">.</span><span class="n">Viewport</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">384</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">256</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span>  <span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sprite</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span>  <span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">viewport</span> <span class="o">=</span> <span class="n">pyasge</span><span class="o">.</span><span class="n">Viewport</span><span class="p">(</span><span class="mi">384</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">384</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>  <span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">setViewport</span><span class="p">(</span><span class="n">pyasge</span><span class="o">.</span><span class="n">Viewport</span><span class="p">(</span><span class="mi">384</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">384</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">256</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span>  <span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sprite2</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -3591,6 +4251,7 @@ your viewport has a different aspect ratio compared to the camera.</p>
 <ol class="arabic simple">
 <li><p>__init__(self: pyasge.Viewport) -&gt; None</p></li>
 <li><p>__init__(self: pyasge.Viewport, arg0: float, arg1: float, arg2: float, arg3: float) -&gt; None</p></li>
+<li><p>__init__(self: pyasge.Viewport, arg0: pyasge.Viewport) -&gt; None</p></li>
 </ol>
 <dl class="py property">
 <dt class="sig sig-object py" id="pyasge.Viewport.h">
@@ -3682,7 +4343,7 @@ the relevant information about the event itself.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, James Huxtable.</p>
+    <p>&#169; Copyright 2022, James Huxtable.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

@@ -7,6 +7,7 @@
   <title>ChangeLog &mdash; pyasge  documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/rtd_sphinx_search.min.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,6 +17,8 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
         <script src="../_static/js/rtd_sphinx_search.min.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -42,6 +45,9 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="about.html">PyASGE</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#version-2-0-0">Version 2.0.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-2-0-0a2">Version 2.0.0a2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-2-0-0a1">Version 2.0.0a1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#version-1-1-0">Version 1.1.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#version-1-0-3">Version 1.0.3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id1">Version 1.0.3</a></li>
@@ -82,6 +88,60 @@
              
   <section id="changelog">
 <h1>ChangeLog<a class="headerlink" href="#changelog" title="Permalink to this headline"></a></h1>
+<section id="version-2-0-0">
+<h2>Version 2.0.0<a class="headerlink" href="#version-2-0-0" title="Permalink to this headline"></a></h2>
+<dl class="field-list simple">
+<dt class="field-odd">Date</dt>
+<dd class="field-odd"><p>Feb 28, 2022</p>
+</dd>
+</dl>
+<p>🎉 <strong>v2.0.0 release of PyASGE</strong> 🎉</p>
+<p>Moving to 2.0.0 due to general stability in the wild. Whilst performance still needs further optimisations
+the engine has been stable under use and the features implemented are working as intended.</p>
+<ul class="simple">
+<li><p>Upgraded to ASGE v3.2.0 [<a class="reference external" href="https://github.com/HuxyUK/ASGE/commit/fffe04fda5542b4d06d6398e38cfe02c8f6ab1c6">fffe04f</a>] (<a class="reference external" href="https://github.com/HuxyUK/pyasge/commit/69f1dc1f1d75148c9ba052c5bbb0943adde05335">#69f1dc1</a>)</p></li>
+<li><p>Bumped ASGE version [<a class="reference external" href="https://github.com/HuxyUK/ASGE/commit/c9f10124722ea159521dcbde32efb3b3cb62385b">c9f1012</a>] (<a class="reference external" href="https://github.com/HuxyUK/pyasge/commit/e7f01fc0e2081c9a6c6fd16c4c9b9ba6b8be32f4">#126fb00</a>)</p></li>
+<li><p>Support for GamePad lists(<a class="reference external" href="https://github.com/HuxyUK/pyasge/commit/4ad2c28e80fa0f5454b1bcaf66d77a196314fd48">#4ad2c28</a>)</p></li>
+</ul>
+<p><strong>Known Issues</strong></p>
+<ul class="simple">
+<li><p>Generating SDFs for font faces can be slow.</p></li>
+<li><p>Rendering large numbers of sprites i.e. many thousands can bottleneck the CPU. This appears to be the cost
+of “casting” them back to the correct types in the C++ library.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="version-2-0-0a2">
+<h2>Version 2.0.0a2<a class="headerlink" href="#version-2-0-0a2" title="Permalink to this headline"></a></h2>
+<dl class="field-list simple">
+<dt class="field-odd">Date</dt>
+<dd class="field-odd"><p>Jan 17, 2022</p>
+</dd>
+</dl>
+<ul class="simple">
+<li><p>Added support for loading font atlases directly from the file system.</p></li>
+</ul>
+<p><strong>Notes</strong>
+Pleas see previous notes on alpha1 regarding compatibility.</p>
+</section>
+<hr class="docutils" />
+<section id="version-2-0-0a1">
+<h2>Version 2.0.0a1<a class="headerlink" href="#version-2-0-0a1" title="Permalink to this headline"></a></h2>
+<dl class="field-list simple">
+<dt class="field-odd">Date</dt>
+<dd class="field-odd"><p>Jan 14, 2022</p>
+</dd>
+</dl>
+<p><strong>Notes</strong>
+A pre-release version of the upcoming 2.0.0 release. There have been a
+significant number of improvements and features added to ASGE including
+support for proper viewport scaling, SDF font rendering and a new Tile
+data structure. Due to the wide spread changes a pre-release cycle is
+being used.</p>
+<p><em>Some of the changes have broken API compatibility so users upgrading
+should expect some minor issues that would need resolving.</em></p>
+</section>
+<hr class="docutils" />
 <section id="version-1-1-0">
 <h2>Version 1.1.0<a class="headerlink" href="#version-1-1-0" title="Permalink to this headline"></a></h2>
 <dl class="field-list simple">
@@ -91,7 +151,7 @@
 </dl>
 <ul class="simple">
 <li><p>Bumped ASGE version [<a class="reference external" href="https://github.com/HuxyUK/ASGE/commit/620596bce52b284d488fb887b7febb51ec559712">620596b</a>] (<a class="reference external" href="https://github.com/HuxyUK/pyasge/commit/7b773c196b7fcc66c4ada3b8d7350518439ad080">#7b773c1</a>)</p></li>
-<li><p>Added a new function to calculate Y bounds for text(<a class="reference external" href="https://github.com/HuxyUK/pyasge/commit/bdb3a546c6bb9951b3f0e0269b225638ecb1a2ac">#bdb3a54</a>)</p></li>
+<li><p>Added a new function to calculate Y bounds for text (<a class="reference external" href="https://github.com/HuxyUK/pyasge/commit/bdb3a546c6bb9951b3f0e0269b225638ecb1a2ac">#bdb3a54</a>)</p></li>
 </ul>
 <p><strong>Notes</strong></p>
 <ul class="simple">
@@ -133,7 +193,7 @@ The solution to this is to simply increase the imported size of the font.</p></l
 </dd>
 </dl>
 <ul class="simple">
-<li><p>Bumped ASGE version [<a href="#id2"><span class="problematic" id="id3">435d35d_</span></a>] (<a class="reference external" href="https://github.com/HuxyUK/pyasge/commit/f7269f44e1e90ea75a5987b015d5cd2d4a881016">#f7269f4</a>)</p></li>
+<li><p>Bumped ASGE version [<a class="reference external" href="https://github.com/HuxyUK/ASGE/commit/9d42f9bd075af0a86b2e3cc1f28a8eda04050422">435d35d</a>] (<a class="reference external" href="https://github.com/HuxyUK/pyasge/commit/f7269f44e1e90ea75a5987b015d5cd2d4a881016">#f7269f4</a>)</p></li>
 </ul>
 </section>
 <hr class="docutils" />
@@ -244,7 +304,7 @@ using the same custom pixel shader.</p></li>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, James Huxtable.</p>
+    <p>&#169; Copyright 2022, James Huxtable.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

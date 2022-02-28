@@ -6,6 +6,7 @@
   <title>Index &mdash; pyasge  documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/rtd_sphinx_search.min.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
@@ -15,6 +16,8 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
         <script src="_static/js/rtd_sphinx_search.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="#" />
@@ -109,15 +112,21 @@
       </ul></li>
       <li><a href="_pages/pyasge.module.html#pyasge.Input.addCallback">addCallback() (pyasge.Input method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_pages/pyasge.module.html#pyasge.Sprite.alpha">alpha (pyasge.Sprite property)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_pages/pyasge.module.html#pyasge.ASGEGame">ASGEGame (class in pyasge)</a>
 </li>
       <li><a href="_pages/pyasge.module.html#pyasge.Sprite.attach">attach() (pyasge.Sprite method)</a>
 </li>
-      <li><a href="_pages/pyasge.module.html#pyasge.GamePad.axis_count">axis_count (pyasge.GamePad property)</a>
+      <li><a href="_pages/pyasge.module.html#pyasge.GamePad.AXIS_LEFT_X">AXIS_LEFT_X (pyasge.GamePad property)</a>
+</li>
+      <li><a href="_pages/pyasge.module.html#pyasge.GamePad.AXIS_LEFT_Y">AXIS_LEFT_Y (pyasge.GamePad property)</a>
+</li>
+      <li><a href="_pages/pyasge.module.html#pyasge.GamePad.AXIS_RIGHT_X">AXIS_RIGHT_X (pyasge.GamePad property)</a>
+</li>
+      <li><a href="_pages/pyasge.module.html#pyasge.GamePad.AXIS_RIGHT_Y">AXIS_RIGHT_Y (pyasge.GamePad property)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -125,23 +134,23 @@
 <h2 id="B">B</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_pages/pyasge.module.html#pyasge.Colour.b">b (pyasge.Colour property)</a>
-</li>
       <li><a href="_pages/pyasge.module.html#pyasge.GamePad.B">B (pyasge.GamePad property)</a>
 </li>
       <li><a href="_pages/pyasge.module.html#pyasge.GamePad.BACK">BACK (pyasge.GamePad property)</a>
 </li>
-      <li><a href="_pages/pyasge.module.html#pyasge.Font.boundsY">boundsY() (pyasge.Font method)</a>
+      <li><a href="_pages/pyasge.module.html#pyasge.Resolution.base_aspect_ratio">base_aspect_ratio (pyasge.Resolution property)</a>
 </li>
-      <li><a href="_pages/pyasge.module.html#pyasge.Texture.buffer">buffer (pyasge.Texture property)</a>
+      <li><a href="_pages/pyasge.module.html#pyasge.Resolution.base_resolution">base_resolution (pyasge.Resolution property)</a>
+</li>
+      <li><a href="_pages/pyasge.module.html#pyasge.Font.boundsY">boundsY() (pyasge.Font method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_pages/pyasge.module.html#pyasge.Texture.buffer">buffer (pyasge.Texture property)</a>
+</li>
       <li><a href="_pages/pyasge.module.html#pyasge.RenderTarget.buffers">buffers (pyasge.RenderTarget property)</a>
 </li>
       <li><a href="_pages/pyasge.module.html#pyasge.ClickEvent.button">button (pyasge.ClickEvent property)</a>
-</li>
-      <li><a href="_pages/pyasge.module.html#pyasge.GamePad.button_count">button_count (pyasge.GamePad property)</a>
 </li>
       <li><a href="_pages/pyasge.mouse.html#pyasge.MOUSE.BUTTON_PRESSED">BUTTON_PRESSED (pyasge.MOUSE attribute)</a>
 </li>
@@ -159,6 +168,8 @@
 </li>
       <li><a href="_pages/pyasge.module.html#pyasge.GamePad.CIRCLE">CIRCLE (pyasge.GamePad property)</a>
 </li>
+      <li><a href="_pages/pyasge.module.html#pyasge.Camera.clamp">clamp() (pyasge.Camera method)</a>
+</li>
       <li><a href="_pages/pyasge.module.html#pyasge.ClickEvent">ClickEvent (class in pyasge)</a>
 </li>
       <li><a href="_pages/pyasge.module.html#pyasge.Colour">Colour (class in pyasge)</a>
@@ -172,6 +183,8 @@
 </li>
       </ul></li>
       <li><a href="_pages/pyasge.module.html#pyasge.GamePad.connected">connected (pyasge.GamePad property)</a>
+</li>
+      <li><a href="_pages/pyasge.module.html#pyasge.Renderer.createCachedTexture">createCachedTexture() (pyasge.Renderer method)</a>
 </li>
       <li><a href="_pages/pyasge.module.html#pyasge.Renderer.createNonCachedTexture">createNonCachedTexture() (pyasge.Renderer method)</a>
 </li>
@@ -187,14 +200,18 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_pages/pyasge.module.html#pyasge.PixelBuffer.data">data (pyasge.PixelBuffer property)</a>
 </li>
+      <li><a href="_pages/pyasge.module.html#pyasge.Resolution.desktop_aspect_ratio">desktop_aspect_ratio (pyasge.Resolution property)</a>
+</li>
+      <li><a href="_pages/pyasge.module.html#pyasge.Resolution.desktop_resolution">desktop_resolution (pyasge.Resolution property)</a>
+</li>
       <li><a href="_pages/pyasge.module.html#pyasge.Sprite.dimensions">dimensions() (pyasge.Sprite method)</a>
 </li>
       <li><a href="_pages/pyasge.module.html#pyasge.Point2D.distance">distance() (pyasge.Point2D method)</a>
 </li>
-      <li><a href="_pages/pyasge.module.html#pyasge.PixelBuffer.download">download() (pyasge.PixelBuffer method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_pages/pyasge.module.html#pyasge.PixelBuffer.download">download() (pyasge.PixelBuffer method)</a>
+</li>
       <li><a href="_pages/pyasge.module.html#pyasge.GamePad.DPAD_DOWN">DPAD_DOWN (pyasge.GamePad property)</a>
 </li>
       <li><a href="_pages/pyasge.module.html#pyasge.GamePad.DPAD_LEFT">DPAD_LEFT (pyasge.GamePad property)</a>
@@ -251,9 +268,9 @@
 <h2 id="G">G</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_pages/pyasge.module.html#pyasge.Colour.g">g (pyasge.Colour property)</a>
-</li>
       <li><a href="_pages/pyasge.module.html#pyasge.GamePad">GamePad (class in pyasge)</a>
+</li>
+      <li><a href="_pages/pyasge.module.html#pyasge.Input.gamepads">gamepads (pyasge.Input property)</a>
 </li>
       <li><a href="_pages/pyasge.module.html#pyasge.GameSettings">GameSettings (class in pyasge)</a>
 </li>
@@ -292,6 +309,8 @@
 </li>
         <li><a href="_pages/pyasge.module.html#pyasge.Texture.height">(pyasge.Texture property)</a>
 </li>
+        <li><a href="_pages/pyasge.module.html#pyasge.Tile.height">(pyasge.Tile property)</a>
+</li>
       </ul></li>
   </ul></td>
 </tr></table>
@@ -316,6 +335,8 @@
       <li><a href="_pages/pyasge.module.html#pyasge.ASGEGame.inputs">inputs (pyasge.ASGEGame property)</a>
 </li>
       <li><a href="_pages/pyasge.module.html#pyasge.Sprite.isFlippedOnX">isFlippedOnX() (pyasge.Sprite method)</a>
+</li>
+      <li><a href="_pages/pyasge.module.html#pyasge.Sprite.isFlippedOnXY">isFlippedOnXY() (pyasge.Sprite method)</a>
 </li>
       <li><a href="_pages/pyasge.module.html#pyasge.Sprite.isFlippedOnY">isFlippedOnY() (pyasge.Sprite method)</a>
 </li>
@@ -449,14 +470,22 @@
 </li>
       <li><a href="_pages/pyasge.module.html#pyasge.Text.line_spacing">line_spacing (pyasge.Text property)</a>
 </li>
+      <li><a href="_pages/pyasge.module.html#pyasge.Tile.load">load() (pyasge.Tile method)</a>
+</li>
+      <li><a href="_pages/pyasge.module.html#pyasge.Renderer.loadFont">loadFont() (pyasge.Renderer method)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_pages/pyasge.module.html#pyasge.Renderer.loadFont">loadFont() (pyasge.Renderer method)</a>
+      <li><a href="_pages/pyasge.module.html#pyasge.Renderer.loadFontAtlas">loadFontAtlas() (pyasge.Renderer method)</a>
 </li>
       <li><a href="_pages/pyasge.module.html#pyasge.Renderer.loadPixelShader">loadPixelShader() (pyasge.Renderer method)</a>
 </li>
-      <li><a href="_pages/pyasge.module.html#pyasge.Sprite.loadTexture">loadTexture() (pyasge.Sprite method)</a>
+      <li><a href="_pages/pyasge.module.html#pyasge.Renderer.loadTexture">loadTexture() (pyasge.Renderer method)</a>
+
+      <ul>
+        <li><a href="_pages/pyasge.module.html#pyasge.Sprite.loadTexture">(pyasge.Sprite method)</a>
 </li>
+      </ul></li>
       <li><a href="_pages/pyasge.module.html#pyasge.Text.local_bounds">local_bounds (pyasge.Text property)</a>
 </li>
       <li><a href="_pages/pyasge.module.html#pyasge.Camera.lookAt">lookAt() (pyasge.Camera method)</a>
@@ -470,6 +499,8 @@
       <li><a href="_pages/pyasge.module.html#pyasge.GameSettings.mag_filter">mag_filter (pyasge.GameSettings property)</a>
 </li>
       <li><a href="_pages/pyasge.module.html#pyasge.MagFilter">MagFilter (class in pyasge)</a>
+</li>
+      <li><a href="_pages/pyasge.module.html#pyasge.Sprite.midpoint">midpoint (pyasge.Sprite property)</a>
 </li>
       <li><a href="_pages/pyasge.module.html#pyasge.Point2D.midpoint">midpoint() (pyasge.Point2D method)</a>
 </li>
@@ -485,14 +516,14 @@
 </li>
       <li><a href="_pages/pyasge.keys.html#pyasge.KEYS.MOD_SUPER">MOD_SUPER (pyasge.KEYS attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_pages/pyasge.module.html#pyasge.ClickEvent.mods">mods (pyasge.ClickEvent property)</a>
 
       <ul>
         <li><a href="_pages/pyasge.module.html#pyasge.KeyEvent.mods">(pyasge.KeyEvent property)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     module
 
@@ -525,7 +556,13 @@
       <ul>
         <li><a href="_pages/pyasge.module.html#pyasge.EventType.name">(pyasge.EventType property)</a>
 </li>
+        <li><a href="_pages/pyasge.module.html#pyasge.GamePad.name">(pyasge.GamePad property)</a>
+</li>
         <li><a href="_pages/pyasge.module.html#pyasge.MagFilter.name">(pyasge.MagFilter property)</a>
+</li>
+        <li><a href="_pages/pyasge.module.html#pyasge.ResolutionPolicy.name">(pyasge.ResolutionPolicy property)</a>
+</li>
+        <li><a href="_pages/pyasge.module.html#pyasge.Sprite.AttachFlags.name">(pyasge.Sprite.AttachFlags property)</a>
 </li>
         <li><a href="_pages/pyasge.module.html#pyasge.Sprite.FlipFlags.name">(pyasge.Sprite.FlipFlags property)</a>
 </li>
@@ -550,6 +587,8 @@
 
       <ul>
         <li><a href="_pages/pyasge.module.html#pyasge.Text.opacity">(pyasge.Text property)</a>
+</li>
+        <li><a href="_pages/pyasge.module.html#pyasge.Tile.opacity">(pyasge.Tile property)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -587,8 +626,6 @@
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_pages/pyasge.module.html#pyasge.Colour.r">r (pyasge.Colour property)</a>
-</li>
       <li><a href="_pages/pyasge.module.html#pyasge.Input.removeCallback">removeCallback() (pyasge.Input method)</a>
 </li>
       <li><a href="_pages/pyasge.module.html#pyasge.ASGEGame.render">render() (pyasge.ASGEGame method)</a>
@@ -603,11 +640,15 @@
 </li>
       <li><a href="_pages/pyasge.module.html#pyasge.RenderTarget">RenderTarget (class in pyasge)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_pages/pyasge.module.html#pyasge.Camera.resize">resize() (pyasge.Camera method)</a>
 </li>
-      <li><a href="_pages/pyasge.module.html#pyasge.Renderer.resolution">resolution (pyasge.Renderer property)</a>
+      <li><a href="_pages/pyasge.module.html#pyasge.Resolution">Resolution (class in pyasge)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_pages/pyasge.module.html#pyasge.Renderer.resolution_info">resolution_info (pyasge.Renderer property)</a>
+</li>
+      <li><a href="_pages/pyasge.module.html#pyasge.ResolutionPolicy">ResolutionPolicy (class in pyasge)</a>
 </li>
       <li><a href="_pages/pyasge.module.html#pyasge.RenderTarget.resolve">resolve() (pyasge.RenderTarget method)</a>
 </li>
@@ -618,7 +659,11 @@
       <li><a href="_pages/pyasge.module.html#pyasge.GamePad.RIGHT_TRIGGER">RIGHT_TRIGGER (pyasge.GamePad property)</a>
 </li>
       <li><a href="_pages/pyasge.module.html#pyasge.Sprite.rotation">rotation (pyasge.Sprite property)</a>
+
+      <ul>
+        <li><a href="_pages/pyasge.module.html#pyasge.Tile.rotation">(pyasge.Tile property)</a>
 </li>
+      </ul></li>
       <li><a href="_pages/pyasge.module.html#pyasge.ASGEGame.run">run() (pyasge.ASGEGame method)</a>
 </li>
   </ul></td>
@@ -639,13 +684,17 @@
 </li>
       <li><a href="_pages/pyasge.module.html#pyasge.Value.set">set() (pyasge.Value method)</a>
 </li>
+      <li><a href="_pages/pyasge.module.html#pyasge.Renderer.setBaseResolution">setBaseResolution() (pyasge.Renderer method)</a>
+</li>
       <li><a href="_pages/pyasge.module.html#pyasge.Renderer.setClearColour">setClearColour() (pyasge.Renderer method)</a>
 </li>
       <li><a href="_pages/pyasge.module.html#pyasge.Input.setCursorMode">setCursorMode() (pyasge.Input method)</a>
 </li>
-      <li><a href="_pages/pyasge.module.html#pyasge.Sprite.setMagFilter">setMagFilter() (pyasge.Sprite method)</a>
+      <li><a href="_pages/pyasge.module.html#pyasge.Font.setMagFilter">setMagFilter() (pyasge.Font method)</a>
 
       <ul>
+        <li><a href="_pages/pyasge.module.html#pyasge.Sprite.setMagFilter">(pyasge.Sprite method)</a>
+</li>
         <li><a href="_pages/pyasge.module.html#pyasge.Texture.setMagFilter">(pyasge.Texture method)</a>
 </li>
       </ul></li>
@@ -653,12 +702,16 @@
 </li>
       <li><a href="_pages/pyasge.module.html#pyasge.Renderer.setRenderTarget">setRenderTarget() (pyasge.Renderer method)</a>
 </li>
+      <li><a href="_pages/pyasge.module.html#pyasge.Renderer.setResolutionPolicy">setResolutionPolicy() (pyasge.Renderer method)</a>
+</li>
       <li><a href="_pages/pyasge.module.html#pyasge.Texture.setUVMode">setUVMode() (pyasge.Texture method)</a>
 </li>
-      <li><a href="_pages/pyasge.module.html#pyasge.Shader">Shader (class in pyasge)</a>
+      <li><a href="_pages/pyasge.module.html#pyasge.Renderer.setViewport">setViewport() (pyasge.Renderer method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_pages/pyasge.module.html#pyasge.Shader">Shader (class in pyasge)</a>
+</li>
       <li><a href="_pages/pyasge.module.html#pyasge.Renderer.shader">shader (pyasge.Renderer property)</a>
 
       <ul>
@@ -671,6 +724,8 @@
 </li>
       <li><a href="_pages/pyasge.module.html#pyasge.Sprite">Sprite (class in pyasge)</a>
 </li>
+      <li><a href="_pages/pyasge.module.html#pyasge.Sprite.AttachFlags">Sprite.AttachFlags (class in pyasge)</a>
+</li>
       <li><a href="_pages/pyasge.module.html#pyasge.Sprite.FlipFlags">Sprite.FlipFlags (class in pyasge)</a>
 </li>
       <li><a href="_pages/pyasge.module.html#pyasge.Sprite.SourceRectIndex">Sprite.SourceRectIndex (class in pyasge)</a>
@@ -680,7 +735,11 @@
       <li><a href="_pages/pyasge.module.html#pyasge.GamePad.SQUARE">SQUARE (pyasge.GamePad property)</a>
 </li>
       <li><a href="_pages/pyasge.module.html#pyasge.Sprite.src_rect">src_rect (pyasge.Sprite property)</a>
+
+      <ul>
+        <li><a href="_pages/pyasge.module.html#pyasge.Tile.src_rect">(pyasge.Tile property)</a>
 </li>
+      </ul></li>
       <li><a href="_pages/pyasge.module.html#pyasge.PixelBuffer.stale">stale() (pyasge.PixelBuffer method)</a>
 </li>
       <li><a href="_pages/pyasge.module.html#pyasge.GamePad.START">START (pyasge.GamePad property)</a>
@@ -698,13 +757,21 @@
       <li><a href="_pages/pyasge.module.html#pyasge.Texture">Texture (class in pyasge)</a>
 </li>
       <li><a href="_pages/pyasge.module.html#pyasge.Sprite.texture">texture (pyasge.Sprite property)</a>
+
+      <ul>
+        <li><a href="_pages/pyasge.module.html#pyasge.Tile.texture">(pyasge.Tile property)</a>
 </li>
+      </ul></li>
       <li><a href="_pages/pyasge.module.html#pyasge.Texture.Format">Texture.Format (class in pyasge)</a>
 </li>
       <li><a href="_pages/pyasge.module.html#pyasge.Texture.UVWrapMode">Texture.UVWrapMode (class in pyasge)</a>
 </li>
+      <li><a href="_pages/pyasge.module.html#pyasge.Tile">Tile (class in pyasge)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_pages/pyasge.module.html#pyasge.Tile.tint">tint (pyasge.Tile property)</a>
+</li>
       <li><a href="_pages/pyasge.module.html#pyasge.ASGEGame.toggleFPS">toggleFPS() (pyasge.ASGEGame method)</a>
 </li>
       <li><a href="_pages/pyasge.module.html#pyasge.Camera.translate">translate() (pyasge.Camera method)</a>
@@ -750,12 +817,16 @@
       <li><a href="_pages/pyasge.module.html#pyasge.Value">Value (class in pyasge)</a>
 </li>
       <li><a href="_pages/pyasge.module.html#pyasge.Camera.view">view (pyasge.Camera property)</a>
+
+      <ul>
+        <li><a href="_pages/pyasge.module.html#pyasge.Resolution.view">(pyasge.Resolution property)</a>
 </li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_pages/pyasge.module.html#pyasge.Viewport">Viewport (class in pyasge)</a>
 </li>
-      <li><a href="_pages/pyasge.module.html#pyasge.Renderer.viewport">viewport (pyasge.Renderer property)</a>
+      <li><a href="_pages/pyasge.module.html#pyasge.Resolution.viewport">viewport (pyasge.Resolution property)</a>
 </li>
       <li><a href="_pages/pyasge.module.html#pyasge.Vsync">Vsync (class in pyasge)</a>
 </li>
@@ -778,14 +849,18 @@
 </li>
         <li><a href="_pages/pyasge.module.html#pyasge.Texture.width">(pyasge.Texture property)</a>
 </li>
+        <li><a href="_pages/pyasge.module.html#pyasge.Tile.width">(pyasge.Tile property)</a>
+</li>
       </ul></li>
-      <li><a href="_pages/pyasge.module.html#pyasge.GameSettings.window_height">window_height (pyasge.GameSettings property)</a>
+      <li><a href="_pages/pyasge.module.html#pyasge.Resolution.window_aspect_ratio">window_aspect_ratio (pyasge.Resolution property)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_pages/pyasge.module.html#pyasge.GameSettings.window_height">window_height (pyasge.GameSettings property)</a>
+</li>
       <li><a href="_pages/pyasge.module.html#pyasge.GameSettings.window_mode">window_mode (pyasge.GameSettings property)</a>
 </li>
-      <li><a href="_pages/pyasge.module.html#pyasge.Renderer.window_size">window_size (pyasge.Renderer property)</a>
+      <li><a href="_pages/pyasge.module.html#pyasge.Resolution.window_resolution">window_resolution (pyasge.Resolution property)</a>
 </li>
       <li><a href="_pages/pyasge.module.html#pyasge.GameSettings.window_title">window_title (pyasge.GameSettings property)</a>
 </li>
@@ -807,11 +882,9 @@
 </li>
       <li><a href="_pages/pyasge.module.html#pyasge.GamePad.X">X (pyasge.GamePad property)</a>
 </li>
-      <li><a href="_pages/pyasge.module.html#pyasge.GamePad.x">x (pyasge.GamePad property)</a>
+      <li><a href="_pages/pyasge.module.html#pyasge.MoveEvent.x">x (pyasge.MoveEvent property)</a>
 
       <ul>
-        <li><a href="_pages/pyasge.module.html#pyasge.MoveEvent.x">(pyasge.MoveEvent property)</a>
-</li>
         <li><a href="_pages/pyasge.module.html#pyasge.Point2D.x">(pyasge.Point2D property)</a>
 </li>
         <li><a href="_pages/pyasge.module.html#pyasge.Sprite.x">(pyasge.Sprite property)</a>
@@ -825,8 +898,6 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_pages/pyasge.module.html#pyasge.ScrollEvent.x_delta">x_delta (pyasge.ScrollEvent property)</a>
 </li>
-      <li><a href="_pages/pyasge.module.html#pyasge.GamePad.x_right_axis">x_right_axis (pyasge.GamePad property)</a>
-</li>
   </ul></td>
 </tr></table>
 
@@ -837,11 +908,9 @@
 </li>
       <li><a href="_pages/pyasge.module.html#pyasge.GamePad.Y">Y (pyasge.GamePad property)</a>
 </li>
-      <li><a href="_pages/pyasge.module.html#pyasge.GamePad.y">y (pyasge.GamePad property)</a>
+      <li><a href="_pages/pyasge.module.html#pyasge.MoveEvent.y">y (pyasge.MoveEvent property)</a>
 
       <ul>
-        <li><a href="_pages/pyasge.module.html#pyasge.MoveEvent.y">(pyasge.MoveEvent property)</a>
-</li>
         <li><a href="_pages/pyasge.module.html#pyasge.Point2D.y">(pyasge.Point2D property)</a>
 </li>
         <li><a href="_pages/pyasge.module.html#pyasge.Sprite.y">(pyasge.Sprite property)</a>
@@ -855,14 +924,14 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_pages/pyasge.module.html#pyasge.ScrollEvent.y_delta">y_delta (pyasge.ScrollEvent property)</a>
 </li>
-      <li><a href="_pages/pyasge.module.html#pyasge.GamePad.y_right_axis">y_right_axis (pyasge.GamePad property)</a>
-</li>
   </ul></td>
 </tr></table>
 
 <h2 id="Z">Z</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_pages/pyasge.module.html#pyasge.Tile.z">z (pyasge.Tile property)</a>
+</li>
       <li><a href="_pages/pyasge.module.html#pyasge.Sprite.z_order">z_order (pyasge.Sprite property)</a>
 
       <ul>
@@ -885,7 +954,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, James Huxtable.</p>
+    <p>&#169; Copyright 2022, James Huxtable.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
